@@ -62,7 +62,7 @@ export class WindowManager {
     // Setup event listeners
     this.setupWindowEvents(id, windowEl, header);
     this.setupTaskButtonEvents(id, taskButton);
-    this.setupWindowControls(id, minimizeBtn, maximizeBtn, closeBtn);
+    this.setupWindowControls(id, closeBtn, minimizeBtn, maximizeBtn);
     
     this.activateWindow(id);
     
