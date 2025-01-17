@@ -31,7 +31,7 @@ export function clockManager() {
       toggleMenu();
     }
   });
-
+  
   updateClock();
   setInterval(updateClock, 1000);
 }
