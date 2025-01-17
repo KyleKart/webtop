@@ -28,9 +28,9 @@ export class WindowManager {
     const controls = document.createElement('div');
     controls.className = 'window-controls';
     
-    const minimizeBtn = this.createWindowButton('./min.svg');
-    const maximizeBtn = this.createWindowButton('./max.svg');
-    const closeBtn = this.createWindowButton('./close.svg');
+    const minimizeBtn = this.createWindowButton('icons/min.svg');
+    const maximizeBtn = this.createWindowButton('icons/max.svg');
+    const closeBtn = this.createWindowButton('icons/close.svg');
     
     controls.append(maximizeBtn, minimizeBtn);
     header.append(closeBtn, titleEl, controls);
@@ -116,7 +116,7 @@ export class WindowManager {
   createWindowButton(text) {
     const button = document.createElement('button');
     button.className = 'window-button';
-    button.style.backgroundImage = `url(${text})`;
+    button.style.backgroundImage = `${text}`;
     return button;
   }
 
