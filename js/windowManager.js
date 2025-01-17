@@ -117,7 +117,7 @@ export class WindowManager {
     const button = document.createElement('button');
     button.className = 'window-button';
     button.style.backgroundImage = `url(${text})`;
-    button.style.backgroundSize = 'cover';
+    button.style.backgroundSize = '20px 20px';
     button.style.backgroundPosition = 'center';
     button.style.backgroundRepeat = 'no-repeat';
     return button;
