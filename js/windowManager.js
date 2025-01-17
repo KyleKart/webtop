@@ -107,10 +107,10 @@ export class WindowManager {
     });
   }
 
-  setupWindowControls(id, minimizeBtn, maximizeBtn, closeBtn) {
-    minimizeBtn.addEventListener('click', () => this.minimizeWindow(id));
-    maximizeBtn.addEventListener('click', () => this.maximizeWindow(id));
-    closeBtn.addEventListener('click', () => this.closeWindow(id));
+  setupWindowControls(id, Btn1, Btn2, Btn3) {
+    Btn2.addEventListener('click', () => this.minimizeWindow(id));
+    Btn3.addEventListener('click', () => this.maximizeWindow(id));
+    Btn1.addEventListener('click', () => this.closeWindow(id));
   }
 
   createWindowButton(text) {
