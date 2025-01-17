@@ -38,6 +38,10 @@ body {
   border-top: 1px solid #444;
 }
 
+#clock {
+  font-size: 10px;
+}
+
 #start-button {
   display: flex;
   align-items: center;
