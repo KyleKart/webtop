@@ -145,6 +145,19 @@ body {
   padding: 10px;
   z-index: 1001;
 }
+#option-menu {
+  position: fixed;
+  bottom: var(--taskbar-height);
+  right: 10px;
+  width: 300px;
+  background: rgba(40, 40, 40, 0.95);
+  backdrop-filter: blur(10px);
+  border: var(--window-border);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  z-index: 1001;
+}
 
 .hidden {
   display: none;

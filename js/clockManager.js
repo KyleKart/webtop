@@ -1,5 +1,6 @@
 export function clockManager() {
   const clockElement = document.getElementById('clock');
+  const optionMenu = document.getElementById('option-menu');
 
   function updateClock() {
     const now = new Date();
@@ -13,7 +14,32 @@ export function clockManager() {
 
     clockElement.innerHTML = `${hours}:${minutes}<br>${year}-${month}-${day}`;
   }
+  let isOpen = false;
 
+  function toggleMenu() {
+    isOpen = !isOpen;
+    optionMenu.classList.toggle('hidden', !isOpen);
+  }
+
+  clock.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (isOpen && !optionMenu.contains(e.target)) {
+      toggleMenu();
+    }
+  });
+
+  return {
+    isOpen: () => isOpen,
+    toggle: toggleMenu,
+    close: () => {
+      isOpen = false;
+      optionMenu.classList.add('hidden');
+    }
+  };
   updateClock();
   setInterval(updateClock, 1000);
 }
