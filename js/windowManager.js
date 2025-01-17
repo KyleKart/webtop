@@ -62,7 +62,7 @@ export class WindowManager {
     // Setup event listeners
     this.setupWindowEvents(id, windowEl, header);
     this.setupTaskButtonEvents(id, taskButton);
-    this.setupWindowControls(id, closeBtn, minimizeBtn, maximizeBtn);
+    this.setupWindowControls(id, closeBtn, maximizeBtn, minimizeBtn);
     
     this.activateWindow(id);
     
@@ -108,8 +108,8 @@ export class WindowManager {
   }
 
   setupWindowControls(id, Btn1, Btn2, Btn3) {
-    Btn2.addEventListener('click', () => this.minimizeWindow(id));
-    Btn3.addEventListener('click', () => this.maximizeWindow(id));
+    Btn3.addEventListener('click', () => this.minimizeWindow(id));
+    Btn2.addEventListener('click', () => this.maximizeWindow(id));
     Btn1.addEventListener('click', () => this.closeWindow(id));
   }
 
