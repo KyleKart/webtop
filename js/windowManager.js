@@ -28,8 +28,8 @@ export class WindowManager {
     const controls = document.createElement('div');
     controls.className = 'window-controls';
     
-    const minimizeBtn = this.createWindowButton('_');
-    const maximizeBtn = this.createWindowButton('+');
+    const minimizeBtn = this.createWindowButton(`=`);
+    const maximizeBtn = this.createWindowButton('O');
     const closeBtn = this.createWindowButton('X');
     
     controls.append(maximizeBtn, minimizeBtn);
@@ -116,7 +116,7 @@ export class WindowManager {
   createWindowButton(text) {
     const button = document.createElement('button');
     button.className = 'window-button';
-    button.style.backgroundImage = `text`;
+    button.textContent = text;
     return button;
   }
 
