@@ -116,7 +116,7 @@ export class WindowManager {
   createWindowButton(text) {
     const button = document.createElement('button');
     button.className = 'window-button';
-    button.style.backgroundImage = `${text}`;
+    button.style.backgroundImage = `url(${text})`;
     return button;
   }
 
