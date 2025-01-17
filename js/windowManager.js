@@ -28,9 +28,9 @@ export class WindowManager {
     const controls = document.createElement('div');
     controls.className = 'window-controls';
     
-    const minimizeBtn = this.createWindowButton('icons/min.svg');
-    const maximizeBtn = this.createWindowButton('icons/max.svg');
-    const closeBtn = this.createWindowButton('icons/close.svg');
+    const minimizeBtn = this.createWindowButton('icons/min.svg', "10px");
+    const maximizeBtn = this.createWindowButton('icons/max.svg', "16px");
+    const closeBtn = this.createWindowButton('icons/close.svg', "16px");
     
     controls.append(maximizeBtn, minimizeBtn);
     header.append(closeBtn, titleEl, controls);
@@ -113,11 +113,11 @@ export class WindowManager {
     Btn1.addEventListener('click', () => this.closeWindow(id));
   }
 
-  createWindowButton(text) {
+  createWindowButton(text, size) {
     const button = document.createElement('button');
     button.className = 'window-button';
     button.style.backgroundImage = `url(${text})`;
-    button.style.backgroundSize = '20px 20px';
+    button.style.backgroundSize = `${size} ${size}`;
     button.style.backgroundPosition = 'center';
     button.style.backgroundRepeat = 'no-repeat';
     return button;
