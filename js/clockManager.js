@@ -32,14 +32,6 @@ export function clockManager() {
     }
   });
 
-  return {
-    isOpen: () => isOpen,
-    toggle: toggleMenu,
-    close: () => {
-      isOpen = false;
-      optionMenu.classList.add('hidden');
-    }
-  };
   updateClock();
   setInterval(updateClock, 1000);
 }
