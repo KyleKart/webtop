@@ -1,5 +1,5 @@
 :root {
-  --taskbar-height: 50px;
+  --taskbar-height: 45px;
   --window-border: 1px solid #666;
   --window-header-height: 32px;
 }
@@ -33,12 +33,13 @@ body {
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
+  padding: 0 10px;
   z-index: 1000;
   border-top: 1px solid #444;
 }
 
 #clock {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 #start-button {
