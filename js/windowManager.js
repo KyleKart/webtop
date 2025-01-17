@@ -28,7 +28,7 @@ export class WindowManager {
     const controls = document.createElement('div');
     controls.className = 'window-controls';
     
-    const minimizeBtn = this.createWindowButton('icons/min.svg', "10px");
+    const minimizeBtn = this.createWindowButton('icons/min.svg', "16px");
     const maximizeBtn = this.createWindowButton('icons/max.svg', "16px");
     const closeBtn = this.createWindowButton('icons/close.svg', "16px");
     
