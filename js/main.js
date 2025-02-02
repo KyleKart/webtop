@@ -9,6 +9,7 @@ clockManager();
 
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
+  alert(query);
   if (query) {
       windowManager.createWindow({
           title: `Search: ${query}`,
