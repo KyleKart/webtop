@@ -205,3 +205,25 @@ body {
 .task-button.active {
   background: rgba(255, 255, 255, 0.2);
 }
+
+.taskbar-input {
+  flex: 1; /* Allows it to fill available space */
+  max-width: 200px; /* Adjust width as needed */
+  padding: 5px 10px;
+  border: 1px solid #555;
+  background: rgba(50, 50, 50, 0.9);
+  color: #fff;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+.taskbar-input::placeholder {
+  color: #aaa;
+}
+
+.taskbar-input:focus {
+  border-color: #888;
+  background: rgba(60, 60, 60, 0.95);
+}
