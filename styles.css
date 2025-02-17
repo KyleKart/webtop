@@ -79,7 +79,7 @@ body {
   position: absolute;
   min-width: 300px;
   min-height: 200px;
-  background: rgba(40, 40, 40, 0.95);
+  background: rgba(40, 40, 40, 0.80);
   backdrop-filter: blur(10px);
   border: var(--window-border);
   border-radius: 8px;
