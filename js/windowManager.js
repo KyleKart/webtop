@@ -28,8 +28,8 @@ export class WindowManager {
     const controls = document.createElement('div');
     controls.className = 'window-controls';
 
-    const maximizeBtn = this.createWindowButton('➕');
-    const minimizeBtn = this.createWindowButton(`➖`);
+    const maximizeBtn = this.createWindowButton('➖');
+    const minimizeBtn = this.createWindowButton(`➕`);
     const closeBtn = this.createWindowButton('✖️');
     
     controls.append(maximizeBtn, minimizeBtn);
