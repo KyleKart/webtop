@@ -11,13 +11,13 @@ document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {
       windowManager.createWindow({
-        title: query,
-        content: `<iframe src="query" width="100%" height="100%" style="border:none;"></iframe>`,
-        x: 200,
-        y: 150,
-        width: 800,
-        height: 600
-    });
+          title: `Search: ${query}`,
+          content: `<iframe src="http://frogfind.de/?q=${encodeURIComponent(query)}?lg=en-us" width="100%" height="100%" style="border:none;"></iframe>`,
+          x: 200,
+          y: 150,
+          width: 800,
+          height: 600
+      });
   }
 });
 
