@@ -31,28 +31,20 @@ windowManager.createWindow({
 
 document.querySelectorAll('.desktop-icon').forEach(icon => {
   icon.addEventListener('dblclick', () => {
-    if (icon.getAttribute('data-app') === "MCC") {
-        windowManager.createWindow({
-          title: `Minecraft Classic`,
-          icon: icon.querySelector('img').getAttribute('src'),
-          content: `<iframe src="https://classic.minecraft.net" width="100%" height="100%" style="border:none;"></iframe>`,
-          x: 200,
-          y: 150,
-          width: 782,
-          height: 472
-        });
-      } else if (icon.getAttribute('data-app') === "Discord") {
-        windowManager.createWindow({
-          title: `Discord`,
-          icon: icon.querySelector('img').getAttribute('src'),
-          content: `<iframe src="https://www.discord.com/app" width="100%" height="100%" style="border:none;"></iframe>`,
-          x: 200,
-          y: 150,
-          width: 1024,
-          height: 700
-        });
-      } else {
-        alert(`Unknown app: ${icon.getAttribute('data-app')}`);
-    }
+    const title = icon.getAttribute('data-title');
+    const url = icon.getAttribute('data-url');
+    const width = icon.getAttribute('data-width');
+    const height = icon.getAttribute('data-height');
+    const iconSrc = icon.querySelector('img').getAttribute('src');
+
+    windowManager.createWindow({
+      title: title,
+      icon: iconSrc,
+      content: `<iframe src="${url}" width="100%" height="100%" style="border:none;"></iframe>`,
+      x: 200,
+      y: 150,
+      width: width,
+      height: height
+    });
   });
 });
