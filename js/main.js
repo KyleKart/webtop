@@ -42,7 +42,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
           width: 782,
           height: 472
         });
-        else if (icon.getAttribute('data-app') === "Discord") {
+      } else if (icon.getAttribute('data-app') === "Discord") {
           windowManager.createWindow({
             title: `Minecraft Classic`,
             content: `<iframe src="https://www.discord.com/app" width="100%" height="100%" style="border:none;"></iframe>`,
