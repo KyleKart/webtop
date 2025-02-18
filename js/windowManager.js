@@ -28,10 +28,15 @@ export class WindowManager {
 
     const maximizeBtn = this.createWindowButton('➖');
     const minimizeBtn = this.createWindowButton(`➕`);
-    const closeBtn = this.createWindowIcon(icon);
+    if (icon) {
+    let closeBtn = this.createWindowIcon(icon);
+    header.append(closeBtn, titleEl, controls);
+    } else {
+    let closeBtn = this.createWindowButton(`❌`);
+    header.append(closeBtn, titleEl, controls);
+    }
     
     controls.append(maximizeBtn, minimizeBtn);
-    header.append(closeBtn, titleEl, controls);
     
     const contentEl = document.createElement('div');
     contentEl.className = 'window-content';
