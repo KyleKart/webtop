@@ -14,14 +14,25 @@ document.getElementById('search-button').addEventListener('click', () => {
     iframe.src = query;
     iframe.width = "100%";
     iframe.height = "100%";
-    windowManager.createWindow({
-      title: iframe.title,
-      content: iframe,
-      x: 200,
-      y: 150,
-      width: 800,
-      height: 600
-  });
+        const wrapper = document.createElement("div");
+    wrapper.appendChild(iframe);
+    
+    const win = windowManager.createWindow({
+        title: "Loading...", // Temporary title
+        content: wrapper,
+        x: 200,
+        y: 150,
+        width: 800,
+        height: 600
+    });
+    
+    iframe.onload = () => {
+        try {
+            win.setTitle(iframe.contentDocument.title || "No Title"); // Update title
+        } catch (e) {
+            win.setTitle("External Page"); // Fallback for cross-origin errors
+        }
+    };    
   }
 });
 
