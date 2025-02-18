@@ -30,6 +30,10 @@ windowManager.createWindow({
 });
 
 document.querySelectorAll('.desktop-icon').forEach(icon => {
+  const title = icon.getAttribute('data-title');
+  const span = document.createElement('span');
+  span.textContent = title;
+  icon.appendChild(span);
   icon.addEventListener('dblclick', () => {
     const title = icon.getAttribute('data-title');
     const url = icon.getAttribute('data-url');
