@@ -118,11 +118,15 @@ export class WindowManager {
     return button;
   }
   createWindowIcon(text) {
-    const button = document.createElement('img');
+    const button = document.createElement('button');
     button.className = 'window-button';
-    button.src = text;
+    const image = document.createElement('img');
+    image.className = 'window-icon';
+    image.src = text;  
+    button.appendChild(image);  
     return button;
   }
+  
 
   activateWindow(id) {
     this.windows.forEach((win, winId) => {
