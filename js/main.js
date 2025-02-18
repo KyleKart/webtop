@@ -10,9 +10,15 @@ clockManager();
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {
+    fetch("https://api.allorigins.win/get?url=${encodeURIComponent(query)}")
+  .then(response => response.json())
+  .then(data => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data.contents, "text/html");
+  });
       windowManager.createWindow({
-          title: `Search: ${query}`,
-          content: `<iframe src="https://www.google.com/search?q=${encodeURIComponent(query)}" width="100%" height="100%" style="border:none;"></iframe>`,
+          title: doc.querySelector("title").innerText,
+          content: `<iframe src="query" width="100%" height="100%" style="border:none;"></iframe>`,
           x: 200,
           y: 150,
           width: 800,
