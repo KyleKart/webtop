@@ -10,19 +10,17 @@ clockManager();
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {
-    fetch("https://api.allorigins.win/get?url=${encodeURIComponent(query)}")
-  .then(response => response.json())
-  .then(data => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data.contents, "text/html");
-      windowManager.createWindow({
-        title: doc.querySelector("title").innerText,
-        content: `<iframe src="query" width="100%" height="100%" style="border:none;"></iframe>`,
-        x: 200,
-        y: 150,
-        width: 800,
-        height: 600
-    });
+    const iframe = document.createElement("iframe");
+    iframe.src = query;
+    iframe.width = "100%";
+    iframe.height = "100%";
+    windowManager.createWindow({
+      title: iframe.title,
+      content: iframe,
+      x: 200,
+      y: 150,
+      width: 800,
+      height: 600
   });
   }
 });
