@@ -52,7 +52,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
             height: 700
           });
     } else {
-      alert(`Unknown app: ${app}`);
+      alert(`Unknown app: ${icon.getAttribute('data-app}`);
     }
   });
 });
