@@ -40,7 +40,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
           x: 200,
           y: 150,
           width: 782,
-          height: 440
+          height: 472
         });
     } else {
       alert(`Unknown app: ${app}`);
