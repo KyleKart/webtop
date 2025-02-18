@@ -33,10 +33,10 @@ windowManager.createWindow({
 
 document.querySelectorAll('.desktop-icon').forEach(icon => {
   icon.addEventListener('dblclick', () => {
-    if (icon.getAttribute('data-app') === "ClassiCube") {
+    if (icon.getAttribute('data-app') === "MCC") {
         windowManager.createWindow({
-          title: `ClassiCube`,
-          content: `<iframe src="https://www.classicube.net/server/play/?warned=true" width="100%" height="100%" style="border:none;"></iframe>`,
+          title: `Minecraft Classic`,
+          content: `<iframe src="https://classic.minecraft.net" width="100%" height="100%" style="border:none;"></iframe>`,
           x: 200,
           y: 150,
           width: 782,
