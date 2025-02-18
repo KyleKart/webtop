@@ -244,11 +244,12 @@ body {
   text-align: center;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.2s;
+  transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
 .desktop-icon:hover {
-  transform: scale(1.1);
+  filter: brightness(1.2);
+  opacity: 0.9;
 }
 
 .desktop-icon svg {
