@@ -12,27 +12,32 @@ document.getElementById('search-button').addEventListener('click', () => {
   if (query) {
     const iframe = document.createElement("iframe");
     iframe.src = query;
-    iframe.width = "100%";
-    iframe.height = "100%";
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none"; // Optional: Remove border
     
+    // Wrap it in a div to prevent raw object output
+    const wrapper = document.createElement("div");
+    wrapper.appendChild(iframe);
+    
+    // Create the window
     const win = windowManager.createWindow({
         title: "Loading...",
-        content: "", // Start with empty content
+        content: wrapper, // Ensure wrapper is passed
         x: 200,
         y: 150,
         width: 800,
         height: 600
     });
     
-    win.content.appendChild(iframe);
-    
+    // Update title when iframe loads
     iframe.onload = () => {
         try {
-            win.setTitle(iframe.contentDocument.title || query);
+            win.setTitle(iframe.contentDocument.title || "No Title");
         } catch (e) {
-            win.setTitle(query);
+            win.setTitle("External Page"); // Cross-origin fallback
         }
-    };  
+    };    
   }
 });
 
