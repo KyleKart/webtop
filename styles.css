@@ -90,7 +90,6 @@ body {
   height: var(--window-header-height);
   display: flex;
   align-items: center;
-  padding: 0 5px;
   background: rgba(50, 50, 50, 0.9);
   border-bottom: var(--window-border);
   border-radius: 8px 8px 0 0;
@@ -110,8 +109,8 @@ body {
 }
 
 .window-button {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border: none;
   background: transparent;
   color: #fff;
@@ -121,7 +120,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  padding: 5px;
 }
 
 .window-button:hover {
