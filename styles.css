@@ -18,7 +18,7 @@ body {
 #desktop {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  background: "./backgrounds/moon.png";
   position: relative;
 }
 
