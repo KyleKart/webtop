@@ -33,9 +33,7 @@ windowManager.createWindow({
 
 document.querySelectorAll('.desktop-icon').forEach(icon => {
   icon.addEventListener('dblclick', () => {
-    let app = icon.getAttribute('data-app');
-
-    if (app === "ClassiCube") {
+    if (icon.getAttribute('data-app') === "ClassiCube") {
       let query = prompt("Enter search query:");
       if (query) {
         windowManager.createWindow({
