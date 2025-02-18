@@ -34,8 +34,6 @@ windowManager.createWindow({
 document.querySelectorAll('.desktop-icon').forEach(icon => {
   icon.addEventListener('dblclick', () => {
     if (icon.getAttribute('data-app') === "ClassiCube") {
-      let query = prompt("Enter search query:");
-      if (query) {
         windowManager.createWindow({
           title: `ClassiCube`,
           content: `<iframe src="https://www.classicube.net/server/play/?warned=true" width="100%" height="100%" style="border:none;"></iframe>`,
@@ -44,7 +42,6 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
           width: 782,
           height: 440
         });
-      }
     } else {
       alert(`Unknown app: ${app}`);
     }
