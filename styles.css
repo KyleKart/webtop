@@ -256,6 +256,11 @@ body {
   margin: 0 auto;
   fill: white;
 }
+.desktop-icon img {
+  display: block;
+  margin: 0 auto;
+  fill: white;
+}
 
 .desktop-icon span {
   color: white;
