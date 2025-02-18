@@ -12,7 +12,7 @@ document.getElementById('search-button').addEventListener('click', () => {
   if (query) {
       windowManager.createWindow({
           title: `Search: ${query}`,
-          content: `<iframe src="https://frogfind.de/?q=${encodeURIComponent(query)}?lg=en-us" width="100%" height="100%" style="border:none;"></iframe>`,
+          content: `<iframe src="https://4get.ca/web?s=${encodeURIComponent(query)}" width="100%" height="100%" style="border:none;"></iframe>`,
           x: 200,
           y: 150,
           width: 800,
