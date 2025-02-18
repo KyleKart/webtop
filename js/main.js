@@ -44,7 +44,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
     windowManager.createWindow({
       title: title,
       icon: iconSrc,
-      content: `<iframe src="${url}" width="100%" height="100%" style="border:none;"></iframe>`,
+      content: `<iframe src="${url}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
       x: 200,
       y: 150,
       width: width,
