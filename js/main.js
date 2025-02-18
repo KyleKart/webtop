@@ -23,7 +23,6 @@ document.getElementById('search-button').addEventListener('click', () => {
 windowManager.createWindow({
   title: 'Welcome',
   content: 'Welcome to Web Desktop!',
-  icon: "./icons/close.svg",
   x: 100,
   y: 100,
   width: 400,
