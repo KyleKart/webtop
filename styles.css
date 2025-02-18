@@ -256,11 +256,15 @@ body {
   display: block;
   margin: 0 auto;
   fill: white;
+  width: 32px;
+  height: 32px;
 }
 .desktop-icon img {
   display: block;
   margin: 0 auto;
   fill: white;
+  width: 32px;
+  height: 32px;
 }
 
 .desktop-icon span {
