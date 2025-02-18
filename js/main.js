@@ -15,15 +15,15 @@ document.getElementById('search-button').addEventListener('click', () => {
   .then(data => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(data.contents, "text/html");
-  });
       windowManager.createWindow({
-          title: doc.querySelector("title").innerText,
-          content: `<iframe src="query" width="100%" height="100%" style="border:none;"></iframe>`,
-          x: 200,
-          y: 150,
-          width: 800,
-          height: 600
-      });
+        title: doc.querySelector("title").innerText,
+        content: `<iframe src="query" width="100%" height="100%" style="border:none;"></iframe>`,
+        x: 200,
+        y: 150,
+        width: 800,
+        height: 600
+    });
+  });
   }
 });
 
