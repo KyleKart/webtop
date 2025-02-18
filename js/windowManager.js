@@ -6,10 +6,9 @@ export class WindowManager {
     this.taskList = document.getElementById('task-list');
   }
 
-  createWindow({ title, content, x, y, width, height }) {
+  createWindow({ title, icon, content, x, y, width, height }) {
     const id = this.windowIdCounter++;
     
-    // Create window element
     const windowEl = document.createElement('div');
     windowEl.className = 'window';
     windowEl.style.width = `${width}px`;
@@ -17,7 +16,6 @@ export class WindowManager {
     windowEl.style.left = `${x}px`;
     windowEl.style.top = `${y}px`;
     
-    // Create window header
     const header = document.createElement('div');
     header.className = 'window-header';
     
@@ -30,12 +28,11 @@ export class WindowManager {
 
     const maximizeBtn = this.createWindowButton('➖');
     const minimizeBtn = this.createWindowButton(`➕`);
-    const closeBtn = this.createWindowButton('❌');
+    const closeBtn = this.createWindowIcon(icon);
     
     controls.append(maximizeBtn, minimizeBtn);
     header.append(closeBtn, titleEl, controls);
     
-    // Create window content
     const contentEl = document.createElement('div');
     contentEl.className = 'window-content';
     contentEl.innerHTML = content;
@@ -43,7 +40,6 @@ export class WindowManager {
     windowEl.append(header, contentEl);
     document.getElementById('windows').appendChild(windowEl);
     
-    // Create taskbar button
     const taskButton = document.createElement('button');
     taskButton.className = 'task-button';
     taskButton.textContent = title;
@@ -59,7 +55,6 @@ export class WindowManager {
     
     this.windows.set(id, windowData);
     
-    // Setup event listeners
     this.setupWindowEvents(id, windowEl, header);
     this.setupTaskButtonEvents(id, taskButton);
     this.setupWindowControls(id, closeBtn, minimizeBtn, maximizeBtn);
@@ -117,6 +112,12 @@ export class WindowManager {
     const button = document.createElement('button');
     button.className = 'window-button';
     button.textContent = text;
+    return button;
+  }
+  createWindowIcon(text) {
+    const button = document.createElement('img');
+    button.className = 'window-button';
+    button.src = text;
     return button;
   }
 
