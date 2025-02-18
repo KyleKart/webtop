@@ -23,6 +23,7 @@ document.getElementById('search-button').addEventListener('click', () => {
 windowManager.createWindow({
   title: 'Welcome',
   content: 'Welcome to Web Desktop!',
+  icon: "./icons/close.svg",
   x: 100,
   y: 100,
   width: 400,
@@ -44,6 +45,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
       } else if (icon.getAttribute('data-app') === "Discord") {
         windowManager.createWindow({
           title: `Discord`,
+          icon: icon.querySelector('img').getAttribute('src'),
           content: `<iframe src="https://www.discord.com/app" width="100%" height="100%" style="border:none;"></iframe>`,
           x: 200,
           y: 150,
