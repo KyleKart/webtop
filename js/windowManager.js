@@ -28,15 +28,14 @@ export class WindowManager {
 
     const maximizeBtn = this.createWindowButton('➖');
     const minimizeBtn = this.createWindowButton(`➕`);
+    let closeBtn = this.createWindowButton(`❌`)
+
     controls.append(maximizeBtn, minimizeBtn);
     if (icon) {
-    let closeBtn = this.createWindowIcon(icon);
-    header.append(closeBtn, titleEl, controls);
-    } else {
-    let closeBtn = this.createWindowButton(`❌`);
-    header.append(closeBtn, titleEl, controls);
+    closeBtn = this.createWindowIcon(icon);
     }
-        
+    header.append(closeBtn, titleEl, controls);
+
     const contentEl = document.createElement('div');
     contentEl.className = 'window-content';
     contentEl.innerHTML = content;
