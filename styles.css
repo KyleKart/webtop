@@ -229,3 +229,37 @@ body {
   border-color: #888;
   background: rgba(60, 60, 60, 0.95);
 }
+
+#desktop-icons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.desktop-icon {
+  width: 64px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.desktop-icon:hover {
+  transform: scale(1.1);
+}
+
+.desktop-icon svg {
+  display: block;
+  margin: 0 auto;
+  fill: white;
+}
+
+.desktop-icon span {
+  color: white;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}

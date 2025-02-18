@@ -31,3 +31,24 @@ windowManager.createWindow({
   height: 300
 });
 
+document.querySelectorAll('.desktop-icon').forEach(icon => {
+  icon.addEventListener('dblclick', () => {
+    let app = icon.getAttribute('data-app');
+
+    if (app === "ClassiCube") {
+      let query = prompt("Enter search query:");
+      if (query) {
+        windowManager.createWindow({
+          title: `ClassiCube`,
+          content: `<iframe src="https://www.classicube.net/server/play/?warned=true" width="100%" height="100%" style="border:none;"></iframe>`,
+          x: 200,
+          y: 150,
+          width: 782,
+          height: 440
+        });
+      }
+    } else {
+      alert(`Unknown app: ${app}`);
+    }
+  });
+});
