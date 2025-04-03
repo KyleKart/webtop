@@ -236,7 +236,7 @@ body {
   font-size: 14px;
   transition: all 0.2s ease-in-out;
   gap: 5px;
-  margin: 0 10px;
+  margin: 10px 0px 10px 10px;
 }
 
 .taskbar-input::placeholder {
