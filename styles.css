@@ -38,6 +38,7 @@ body {
 }
 
 #search-button {
+  max-width: 20px;
   flex: 1;
   padding: 5px 10px;
   border: 1px solid #555;
