@@ -46,6 +46,11 @@ body {
   outline: none;
   font-size: 14px;
   gap: 5px;
+  cursor: default;
+}
+
+#search-button:hover {
+  cursor: pointer;
 }
 
 #clock {
