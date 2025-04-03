@@ -39,7 +39,6 @@ body {
 
 #search-button {
   flex: 1;
-  max-width: 200px;
   padding: 5px 10px;
   border: 1px solid #555;
   background: rgba(50, 50, 50, 0.9);
