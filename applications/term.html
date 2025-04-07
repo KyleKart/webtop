@@ -49,6 +49,16 @@
     const terminal = document.getElementById('terminal');
     const input = document.getElementById('input');
     addInputLine();
+
+    const getBrowserName = () => {
+    const ua = navigator.userAgent;
+    if (ua.includes("Firefox/")) return "Firefox";
+    if (ua.includes("Edg/")) return "Edge";
+    if (ua.includes("Chrome/")) return "Chrome";
+    if (ua.includes("Safari/") && !ua.includes("Chrome/")) return "Safari";
+    return "Unknown";
+  };
+    const browser = getBrowserName();
     const commands = {
       help: "Available commands: help, about, clear",
       about: "Webtop Terminal v0.1",
