@@ -58,16 +58,15 @@
     if (ua.includes("Safari/") && !ua.includes("Chrome/")) return "Safari";
     return "Unknown";
   };
-    const browser = getBrowserName();
     const commands = {
-      help: "Available commands: help, about, clear",
+      help: "Available commands: help, about, weofetch, clear",
       about: "Webtop Terminal v0.1",
       clear: () => {
         terminal.innerHTML = '';
         addInputLine();
       },
       weofetch: 
-      `System: Webtop/${browser}\nCPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}\nRAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`
+      `System: Webtop/${getBrowserName()}\nCPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}\nRAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`
       };
 
     function addInputLine() {
