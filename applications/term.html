@@ -55,8 +55,12 @@
       clear: () => {
         terminal.innerHTML = '';
         addInputLine();
-      }
-    };
+      },
+      weofetch: 
+      `System: Webtop/${browser}\n` +
+      `CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}\n` +
+      `RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}\n`
+      };
 
     function addInputLine() {
       const newLine = document.createElement('div');
