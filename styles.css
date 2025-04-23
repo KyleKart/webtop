@@ -231,8 +231,8 @@ body {
 .taskbar-input {
   flex: 1;
   max-width: 200px;
-  padding: 5px 10px;
-  border: 1px solid #555;
+  padding: 9px 10px;
+  border: 0px;
   background: rgba(50, 50, 50, 0.9);
   color: #fff;
   border-radius: 4px;
@@ -240,7 +240,7 @@ body {
   font-size: 14px;
   transition: all 0.2s ease-in-out;
   gap: 5px;
-  margin: 10px 0px 10px 10px;
+  margin: 5px;
 }
 
 .taskbar-input::placeholder {
