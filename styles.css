@@ -36,14 +36,13 @@ body {
   right: 0;
 }
 #search-button {
-  padding: 5px 10px;
-  border: 1px solid #555;
+  padding: 8px 10px;
+  border: none;
   background: rgba(50, 50, 50, 0.9);
   color: #fff;
   border-radius: 4px;
   outline: none;
   font-size: 14px;
-  gap: 5px;
   cursor: default;
 }
 
@@ -231,8 +230,8 @@ body {
 .taskbar-input {
   flex: 1;
   max-width: 200px;
-  padding: 9px 10px;
-  border: 0px;
+  padding: 8px 10px;
+  border: none;
   background: rgba(50, 50, 50, 0.9);
   color: #fff;
   border-radius: 4px;
