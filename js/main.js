@@ -52,3 +52,12 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
     });
   });
 });
+
+window.addEventListener('beforeunload', (event) => {
+  const confirmation = confirm("Webtop got a shutdown request. Was this what you wanted?");
+  if (!confirmation) {
+    event.preventDefault();
+    event.returnValue = '';
+  } else {
+  }
+});

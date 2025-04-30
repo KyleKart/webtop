@@ -70,10 +70,11 @@
         addInputLine();
       },
       weofetch: () => {
-  return `System: Webtop/${getBrowserName()}
-CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
-RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
-}
+        return `System: Webtop/${getBrowserName()}
+          CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
+          RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
+      },
+      echo: (...args) => args.join(' ')
       };
 
     function addInputLine() {
