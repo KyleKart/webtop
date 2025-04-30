@@ -104,21 +104,20 @@ RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
     }
 
     function runCommand(cmd) {
-      const output = document.createElement('div');
-      const response = commands[cmd];
+  const output = document.createElement('pre'); // use <pre> for formatting
+  const response = commands[cmd];
 
-      if (typeof response === 'function') {
-        response();
-        return;
-      } else if (response) {
-        output.textContent = response;
-      } else {
-        output.textContent = `'${cmd}' is not recognized. Type 'help'.`;
-      }
+  if (typeof response === 'function') {
+    output.textContent = response(); // capture return value
+  } else if (response) {
+    output.textContent = response;
+  } else {
+    output.textContent = `'${cmd}' is not recognized. Type 'help'.`;
+  }
 
-      terminal.appendChild(output);
-      addInputLine();
-    }
+  terminal.appendChild(output);
+  addInputLine();
+}
 
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
