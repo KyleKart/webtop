@@ -74,8 +74,19 @@
           CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
           RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
       },
-      echo: (...args) => args.join(' ')
-      };
+      shutdown: () => {
+    const confirmation = confirm("Webtop got a shutdown request. Was this what you wanted?");
+    if (confirmation) {
+      window.close();
+    }
+  },
+  reboot: () => {
+    const confirmation = confirm("Webtop got a restart request. Was this what you wanted?");
+    if (confirmation) {
+      location.reload();
+    }
+  }
+    };
 
     function addInputLine() {
       const newLine = document.createElement('pre');
