@@ -65,8 +65,11 @@
         terminal.innerHTML = '';
         addInputLine();
       },
-      weofetch: 
-      `System: Webtop/${getBrowserName()}\nCPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}\nRAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`
+      weofetch: () => {
+  return `System: Webtop/${getBrowserName()}
+CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
+RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
+}
       };
 
     function addInputLine() {
