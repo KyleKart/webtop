@@ -68,29 +68,33 @@ export class WindowManager {
   }
 
   setupWindowEvents(id, windowEl, header) {
-    let isDragging = false;
-    let dragOffset = { x: 0, y: 0 };
-
+    let mouseDown = false;
+    let clickDifferenceX = 0;
+    let clickDifferenceY = 0;
+  
     windowEl.addEventListener('mousedown', () => this.activateWindow(id));
-
+  
     header.addEventListener('mousedown', (e) => {
-      isDragging = true;
+      if (e.button !== 0) return; // Only handle left-clicks
+      mouseDown = true;
+      e.preventDefault();
       const rect = windowEl.getBoundingClientRect();
-      dragOffset.x = e.clientX - rect.left;
-      dragOffset.y = e.clientY - rect.top;
+      clickDifferenceX = e.clientX - rect.left;
+      clickDifferenceY = e.clientY - rect.top;
     });
-
+  
     document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        windowEl.style.left = `${e.clientX - dragOffset.x}px`;
-        windowEl.style.top = `${e.clientY - dragOffset.y}px`;
-      }
+      if (!mouseDown) return;
+      e.preventDefault();
+      windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
+      windowEl.style.top = `${e.clientY - clickDifferenceY}px`;
     });
-
+  
     document.addEventListener('mouseup', () => {
-      isDragging = false;
+      if (!mouseDown) return;
+      mouseDown = false;
     });
-  }
+  }  
 
   setupTaskButtonEvents(id, taskButton) {
     taskButton.addEventListener('click', () => {
