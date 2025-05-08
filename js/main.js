@@ -55,7 +55,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
 
 const optionMenu = document.getElementById('option-menu');
 optionMenu.addEventListener('click', (e) => {
-  const target = e.target.closest('settings');
+  const target = e.target.closest('#settings');
   if (target) {
     windowManager.createWindow({
       title: title,
