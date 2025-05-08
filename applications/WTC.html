@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webtop Code</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/monokai.min.css">
   <style>
     html, body {
       margin: 0;
@@ -26,15 +27,10 @@
       background-color: transparent !important;
       height: 100vh;
       width: 100vw;
-      color: white;
     }
 
     .CodeMirror-gutters {
   background-color: rgba(0, 0, 0, 0.4);
-}
-
-.CodeMirror-linenumbers {
-  color: white;
 }
   </style>
 </head>
@@ -49,7 +45,7 @@
     var editor = CodeMirror(document.getElementById('editor'), {
       lineNumbers: true,
       mode: "javascript",
-      theme: "default",
+      theme: "monokai",
       indentUnit: 2,
       tabSize: 2,
     });
