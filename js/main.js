@@ -53,7 +53,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
   });
 });
 
-const settingsItem = document.getElementById('menu-settings');
+const settingsItem = document.getElementById('settings');
 settingsItem.addEventListener('click', (e) => {
   windowManager.createWindow({
     title: title,
