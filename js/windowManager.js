@@ -82,6 +82,9 @@ export class WindowManager {
       clickDifferenceX = e.clientX - rect.left;
       clickDifferenceY = e.clientY - rect.top;
     });
+   
+    header.addEventListener('dblclick', () => this.maximizeWindow(id));
+
   
     document.addEventListener('mousemove', (e) => {
       if (!mouseDown) return;
