@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webtop Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    @font-face {
+      font-family: 'Miracode';
+      src: url('https://github.com/IdreesInc/Miracode/releases/download/v1.0/Miracode.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .CodeMirror {
+      font-family: 'Miracode', monospace;
+      font-feature-settings: "liga" 1;
+      background-color: transparent !important;
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="editor"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.js"></script>
+
+  <script>
+    var editor = CodeMirror(document.getElementById('editor'), {
+      lineNumbers: true,
+      mode: "javascript",
+      theme: "default",
+      indentUnit: 2,
+      tabSize: 2,
+    });
+  </script>
+
+</body>
+</html>
