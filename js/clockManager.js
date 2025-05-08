@@ -1,3 +1,5 @@
+import { WindowManager } from './windowManager.js';
+
 export function clockManager() {
   const clockElement = document.getElementById('clock');
   const optionMenu = document.getElementById('option-menu');
@@ -25,6 +27,19 @@ export function clockManager() {
     e.stopPropagation();
     toggleMenu();
   });
+ 
+  const settingsItem = document.getElementById('menu-settings');
+settingsItem.addEventListener('click', (e) => {
+  windowManager.createWindow({
+    title: title,
+    icon: iconSrc,
+    content: `<iframe src="./applications/settings.html" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
+    x: 200,
+    y: 150,
+    width: width,
+    height: height
+  });
+});
 
   document.addEventListener('click', (e) => {
     if (isOpen && !optionMenu.contains(e.target)) {
