@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: transparent;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px 0;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05); /* light transparent white */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Webtop Settings</h2>
+      <a href="#">Wallpaper</a>
+    </div>
+    <div class="main-content">
+      <h1>Welcome</h1>
+      <p>This is a WIP settings application for Webtop.</p>
+      <p>You can use this to change your wallpaper.</p>
+    </div>
+  </div>
+</body>
+</html>
