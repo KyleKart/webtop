@@ -53,6 +53,19 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
   });
 });
 
+const settingsItem = document.getElementById('menu-settings');
+settingsItem.addEventListener('click', (e) => {
+  windowManager.createWindow({
+    title: title,
+    icon: iconSrc,
+    content: `<iframe src="./applications/settings.html" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
+    x: 200,
+    y: 150,
+    width: width,
+    height: height
+  });
+});
+
 window.addEventListener('beforeunload', (event) => {
   const confirmation = confirm("Webtop got a shutdown request. Was this what you wanted?");
   if (!confirmation) {
