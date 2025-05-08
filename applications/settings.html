@@ -46,6 +46,25 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0.05); /* light transparent white */
     }
+    .image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.image-grid img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.image-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
   </style>
 </head>
 <body>
@@ -58,6 +77,16 @@
       <h1>Welcome</h1>
       <p>This is a WIP settings application for Webtop.</p>
       <p>You can use this to change your wallpaper.</p>
+
+<div class="image-grid">
+  <img src="backgrounds/moon.png"/>
+  <img src="backgrounds/light.png"/>
+  <img src="backgrounds/dark.png"/>
+  <img src="backgrounds/red.png"/>
+  <img src="backgrounds/day.png"/>
+  <img src="backgrounds/midday.png"/>
+  <img src="backgrounds/night.png"/>
+</div>
     </div>
   </div>
 </body>
