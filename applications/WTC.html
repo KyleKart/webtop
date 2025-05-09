@@ -75,9 +75,7 @@
   <div id="container">
     <div id="sidebar">
       <button class="sidebar-btn" id="saveBtn">💾</button>
-      <button class="sidebar-btn">+</button>
-      <button class="sidebar-btn">-</button>
-      <button class="sidebar-btn">⚙</button>
+      <button class="sidebar-btn" id="reloadBtn">🔄</button>
     </div>
     <div id="editor"></div>
   </div>
@@ -98,8 +96,6 @@
 
   async function saveFile() {
     const content = editor.getValue();
-
-    if ('showSaveFilePicker' in window) {
       try {
         if (!fileHandle) {
           fileHandle = await window.showSaveFilePicker({
@@ -114,19 +110,27 @@
         const writable = await fileHandle.createWritable();
         await writable.write(content);
         await writable.close();
-        alert('File saved!');
       } catch (err) {
         console.error('Save cancelled or failed:', err);
       }
-    } else {
-      const blob = new Blob([content], { type: 'text/javascript' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'code.js';
-      a.click();
-    }
   }
 
+  async function readFile() {
+  if (!fileHandle) {
+    console.warn("No file selected.");
+    return;
+  }
+
+  try {
+    const file = await fileHandle.getFile();
+    const text = await file.text();
+    editor.setValue(text);
+  } catch (err) {
+    console.error('Error reading file:', err);
+  }
+}
+
+  document.getElementById('reloadBtn').addEventListener('click', readFile);
   document.getElementById('saveBtn').addEventListener('click', saveFile);
 </script>
 
