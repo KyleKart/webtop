@@ -74,6 +74,7 @@
 
   <div id="container">
     <div id="sidebar">
+      <button class="sidebar-btn" id="newBtn">📄</button>
       <button class="sidebar-btn" id="loadBtn">📂</button>
       <button class="sidebar-btn" id="saveBtn">💾</button>
       <button class="sidebar-btn" id="reloadBtn">🔄</button>
@@ -94,6 +95,14 @@
   });
 
   let fileHandle = null;
+
+function newFile() {
+  const confirmNew = confirm("Discard current file and start a new one?");
+  if (confirmNew) {
+    editor.setValue('');
+    fileHandle = null;
+  }
+}
 
   async function saveFile() {
     const content = editor.getValue();
@@ -149,7 +158,7 @@
   document.getElementById('reloadBtn').addEventListener('click', readFile);
   document.getElementById('saveBtn').addEventListener('click', saveFile);
   document.getElementById('loadBtn').addEventListener('click', loadFile);
+  document.getElementById('newBtn').addEventListener('click', newFile);
 </script>
-
 </body>
 </html>
