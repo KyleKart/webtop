@@ -74,6 +74,7 @@
 
   <div id="container">
     <div id="sidebar">
+      <button class="sidebar-btn" id="saveBtn">💾</button>
       <button class="sidebar-btn">+</button>
       <button class="sidebar-btn">-</button>
       <button class="sidebar-btn">⚙</button>
@@ -84,15 +85,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.js"></script>
 
-  <script>
-    var editor = CodeMirror(document.getElementById('editor'), {
-      lineNumbers: true,
-      mode: "javascript",
-      theme: "monokai",
-      indentUnit: 2,
-      tabSize: 2,
-    });
-  </script>
+<script>
+  var editor = CodeMirror(document.getElementById('editor'), {
+    lineNumbers: true,
+    mode: "javascript",
+    theme: "monokai",
+    indentUnit: 2,
+    tabSize: 2,
+  });
+
+  let fileHandle = null;
+
+  async function saveFile() {
+    const content = editor.getValue();
+
+    if ('showSaveFilePicker' in window) {
+      try {
+        if (!fileHandle) {
+          fileHandle = await window.showSaveFilePicker({
+            suggestedName: "code.js",
+            types: [{
+              description: 'JavaScript Files',
+              accept: {'application/javascript': ['.js']}
+            }]
+          });
+        }
+
+        const writable = await fileHandle.createWritable();
+        await writable.write(content);
+        await writable.close();
+        alert('File saved!');
+      } catch (err) {
+        console.error('Save cancelled or failed:', err);
+      }
+    } else {
+      const blob = new Blob([content], { type: 'text/javascript' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'code.js';
+      a.click();
+    }
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', saveFile);
+</script>
 
 </body>
 </html>
