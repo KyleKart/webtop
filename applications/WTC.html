@@ -74,6 +74,7 @@
 
   <div id="container">
     <div id="sidebar">
+      <button class="sidebar-btn" id="loadBtn">📂</button>
       <button class="sidebar-btn" id="saveBtn">💾</button>
       <button class="sidebar-btn" id="reloadBtn">🔄</button>
     </div>
@@ -115,6 +116,21 @@
       }
   }
 
+  async function loadFile() {
+  try {
+    [fileHandle] = await window.showOpenFilePicker({
+      types: [{
+        description: 'JavaScript Files',
+        accept: { 'application/javascript': ['.js'] }
+      }]
+    });
+
+    await readFile();
+  } catch (err) {
+    console.error('File load cancelled or failed:', err);
+  }
+}
+
   async function readFile() {
   if (!fileHandle) {
     console.warn("No file selected.");
@@ -132,6 +148,7 @@
 
   document.getElementById('reloadBtn').addEventListener('click', readFile);
   document.getElementById('saveBtn').addEventListener('click', saveFile);
+  document.getElementById('loadBtn').addEventListener('click', loadFile);
 </script>
 
 </body>
