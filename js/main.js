@@ -1,4 +1,4 @@
-import { WindowManager } from './windowManager.js';
+import { windowManager } from './windowManager.js';
 import { startMenuManager } from './startMenuManager.js';
 import { clockManager } from './clockManager.js';
 
