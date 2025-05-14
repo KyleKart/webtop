@@ -3,27 +3,27 @@ export class WindowManager {
     this.windows = new Map();
     this.activeWindow = null;
     this.windowIdCounter = 0;
-    this.taskList = document.getElementById('task-list');
+    this.taskList = window.parent.document.getElementById('task-list');
   }
 
   createWindow({ title, icon, content, x, y, width, height }) {
     const id = this.windowIdCounter++;
     
-    const windowEl = document.createElement('div');
+    const windowEl = window.parent.document.createElement('div');
     windowEl.className = 'window';
     windowEl.style.width = `${width}px`;
     windowEl.style.height = `${height}px`;
     windowEl.style.left = `${x}px`;
     windowEl.style.top = `${y}px`;
     
-    const header = document.createElement('div');
+    const header = window.parent.document.createElement('div');
     header.className = 'window-header';
     
-    const titleEl = document.createElement('div');
+    const titleEl = window.parent.document.createElement('div');
     titleEl.className = 'window-title';
     titleEl.textContent = title;
     
-    const controls = document.createElement('div');
+    const controls = window.parent.document.createElement('div');
     controls.className = 'window-controls';
 
     const maximizeBtn = this.createWindowButton('➖');
@@ -36,14 +36,14 @@ export class WindowManager {
     }
     header.append(closeBtn, titleEl, controls);
 
-    const contentEl = document.createElement('div');
+    const contentEl = window.parent.document.createElement('div');
     contentEl.className = 'window-content';
     contentEl.innerHTML = content;
     
     windowEl.append(header, contentEl);
-    document.getElementById('windows').appendChild(windowEl);
+    window.parent.document.getElementById('windows').appendChild(windowEl);
     
-    const taskButton = document.createElement('button');
+    const taskButton = window.parent.document.createElement('button');
     taskButton.className = 'task-button';
     taskButton.textContent = title;
     this.taskList.appendChild(taskButton);
@@ -86,14 +86,14 @@ export class WindowManager {
     header.addEventListener('dblclick', () => this.maximizeWindow(id));
 
   
-    document.addEventListener('mousemove', (e) => {
+    window.parent.document.addEventListener('mousemove', (e) => {
       if (!mouseDown) return;
       e.preventDefault();
       windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
       windowEl.style.top = `${e.clientY - clickDifferenceY}px`;
     });
   
-    document.addEventListener('mouseup', () => {
+    window.parent.document.addEventListener('mouseup', () => {
       if (!mouseDown) return;
       mouseDown = false;
     });
@@ -119,15 +119,15 @@ export class WindowManager {
   }
 
   createWindowButton(text) {
-    const button = document.createElement('button');
+    const button = window.parent.document.createElement('button');
     button.className = 'window-button';
     button.textContent = text;
     return button;
   }
   createWindowIcon(text) {
-    const button = document.createElement('button');
+    const button = window.parent.document.createElement('button');
     button.className = 'window-button';
-    const image = document.createElement('img');
+    const image = window.parent.document.createElement('img');
     image.className = 'window-icon';
     image.src = text;  
     button.appendChild(image);  
