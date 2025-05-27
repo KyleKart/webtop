@@ -60,7 +60,7 @@ body {
   background: transparent;
   border: none;
   color: #fff;
-  padding: 0 var(--taskbar-height);
+  padding: 0 10px;
   cursor: pointer;
   height: var(--taskbar-height);
 }
