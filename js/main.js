@@ -53,12 +53,9 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
   });
 });
 
-const optionMenu = document.getElementById('option-menu');
+const optionMenu = document.getElementById('settings');
 
 optionMenu.addEventListener('click', (e) => {
-  const target = e.target.closest('#settings');
-
-  if (target) {
     windowManager.createWindow({
       title: 'Settings',
       content: `<iframe src="./applications/settings.html" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
@@ -67,7 +64,6 @@ optionMenu.addEventListener('click', (e) => {
       width: 800,
       height: 600
     });
-  }
 });
 
 window.addEventListener('beforeunload', (event) => {
