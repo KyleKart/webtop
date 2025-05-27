@@ -72,12 +72,17 @@ export class WindowManager {
     let clickDifferenceX = 0;
     let clickDifferenceY = 0;
   
+    const iframe = windowEl.querySelector('iframe');
+
     windowEl.addEventListener('mousedown', () => this.activateWindow(id));
   
     header.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return; // Only handle left-clicks
       mouseDown = true;
       e.preventDefault();
+
+      if (iframe) iframe.style.pointerEvents = 'none';
+
       const rect = windowEl.getBoundingClientRect();
       clickDifferenceX = e.clientX - rect.left;
       clickDifferenceY = e.clientY - rect.top;
@@ -96,6 +101,8 @@ export class WindowManager {
     window.parent.document.addEventListener('mouseup', () => {
       if (!mouseDown) return;
       mouseDown = false;
+      
+      if (iframe) iframe.style.pointerEvents = 'auto';
     });
   }  
 
