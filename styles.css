@@ -54,7 +54,7 @@ body {
   font-size: 14px;
 }
 
-#start-button, #settings {
+#settings {
   display: flex;
   align-items: center;
   background: transparent;
@@ -65,8 +65,12 @@ body {
   height: var(--taskbar-height);
 }
 
-#start-button:hover, #settings:hover {
+#settings:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+#start-button {
+  display:none;
 }
 
 #task-list {
