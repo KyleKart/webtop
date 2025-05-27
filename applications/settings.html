@@ -89,5 +89,13 @@
 </div>
     </div>
   </div>
+    <script>
+    document.querySelectorAll('.image-grid img').forEach(img => {
+      img.addEventListener('click', () => {
+        const bgUrl = `url('${img.src}')`;
+        window.parent.document.body.style.backgroundImage = bgUrl;
+      });
+    });
+  </script>
 </body>
 </html>
