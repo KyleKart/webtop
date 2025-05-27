@@ -57,14 +57,12 @@ body {
 #start-button, #settings {
   display: flex;
   align-items: center;
-  gap: 5px;
   background: transparent;
   border: none;
   color: #fff;
   padding: 0 5px;
   cursor: pointer;
   height: var(--taskbar-height);
-  width: var(--taskbar-height);
 }
 
 #start-button:hover, #settings:hover {
