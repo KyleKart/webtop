@@ -54,7 +54,7 @@ body {
   font-size: 14px;
 }
 
-#start-button {
+#start-button, #settings {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -66,20 +66,8 @@ body {
   border-radius: 4px;
 }
 
-#start-button:hover {
+#start-button:hover, #settings:hover {
   background: rgba(255, 255, 255, 0.1);
-}
-
-#settings {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
 }
 
 #task-list {
