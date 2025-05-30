@@ -166,24 +166,30 @@ export class WindowManager {
     win.taskButton.classList.remove('active');
   }
 
-  shadeWindow(id) {
-    const win = this.windows.get(id);
-    const windowEl = win.element;
+shadeWindow(id) {
+  const win = this.windows.get(id);
+  const windowEl = win.element;
 
-    if (!windowEl.dataset.originalHeight) {
-      windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
-    }
-
-    const isShaded = windowEl.classList.contains('shaded');
-
-    if (isShaded) {
-      windowEl.style.height = windowEl.dataset.originalHeight;
-      windowEl.classList.remove('shaded');
-    } else {
-      windowEl.style.height = '32px';
-      windowEl.classList.add('shaded');
-    }
+  if (!windowEl.dataset.originalHeight) {
+    windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
   }
+
+  const isShaded = windowEl.classList.contains('shaded');
+
+  const windowIcons = windowEl.querySelectorAll('.window-control img.window-icon');
+  if (windowIcons.length <= 2) return;
+  const shadeImg = windowIcons[2];
+
+  if (isShaded) {
+    windowEl.style.height = windowEl.dataset.originalHeight;
+    windowEl.classList.remove('shaded');
+    shadeImg.src = './icons/controls/shade_up.svg';
+  } else {
+    windowEl.style.height = '32px';
+    windowEl.classList.add('shaded');
+    shadeImg.src = './icons/controls/shade_down.svg';
+  }
+}
 
   restoreWindow(id) {
     const win = this.windows.get(id);
