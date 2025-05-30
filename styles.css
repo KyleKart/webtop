@@ -127,7 +127,7 @@ body {
 }
 
 .window-button {
-  width: 26px;
+  width: 29px;
   height: 26px;
   border: none;
   background: transparent;
@@ -143,10 +143,6 @@ body {
 .window-icon {
   width: 20px;
   height: 20px;
-}
-
-.window-button:hover {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .window-content {
