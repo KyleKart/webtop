@@ -26,14 +26,17 @@ export class WindowManager {
     const controls = window.parent.document.createElement('div');
     controls.className = 'window-controls';
 
-    const maximizeBtn = this.createWindowButton('➖');
-    const minimizeBtn = this.createWindowButton(`➕`);
-    let closeBtn = this.createWindowButton(`❌`)
+    const shadeBtn = this.createWindowButton(`➕`);
+    const minimizeBtn = this.createWindowButton('➖');
+    const maximizeBtn = this.createWindowButton(`➕`);
+    const closeBtn = this.createWindowButton(`❌`)
+
+    const shadeBtn2 = this.createWindowIcon(`./icons/controls/shade_up.svg`);
+    const minimizeBtn2 = this.createWindowIcon('./icons/controls/minimize.svg');
+    const maximizeBtn2 = this.createWindowIcon(`./icons/controls/maximize.svg`);
+    const closeBtn2 = this.createWindowIcon(`./icons/controls/close.svg`)
 
     controls.append(maximizeBtn, minimizeBtn);
-    if (icon) {
-    closeBtn = this.createWindowIcon(icon);
-    }
     header.append(closeBtn, titleEl, controls);
 
     const contentEl = window.parent.document.createElement('div');
@@ -60,7 +63,7 @@ export class WindowManager {
     
     this.setupWindowEvents(id, windowEl, header);
     this.setupTaskButtonEvents(id, taskButton);
-    this.setupWindowControls(id, closeBtn, minimizeBtn, maximizeBtn);
+    this.setupWindowControls(id, closeBtn2, maximizeBtn2, minimizeBtn2, shadeBtn2);
     
     this.activateWindow(id);
     
@@ -119,10 +122,11 @@ export class WindowManager {
     });
   }
 
-  setupWindowControls(id, Btn1, Btn2, Btn3) {
+  setupWindowControls(id, Btn1, Btn2, Btn3, Btn4) {
     Btn2.addEventListener('click', () => this.maximizeWindow(id));
     Btn3.addEventListener('click', () => this.minimizeWindow(id));
-    Btn1.addEventListener('dblclick', () => this.closeWindow(id));
+    Btn1.addEventListener('click', () => this.closeWindow(id));
+    Btn4.addEventListener('click', () => this.closeWindow(id));
   }
 
   createWindowButton(text) {
