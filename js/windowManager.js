@@ -36,7 +36,7 @@ export class WindowManager {
     const maximizeBtn2 = this.createWindowIcon(`./icons/controls/maximize.svg`);
     const closeBtn2 = this.createWindowIcon(`./icons/controls/close.svg`)
 
-    controls.append(minimizeBtn2, maximizeBtn2);
+    controls.append(minimizeBtn2, shadeBtn2, maximizeBtn2);
     header.append(closeBtn2, titleEl, controls);
 
     const contentEl = window.parent.document.createElement('div');
