@@ -94,7 +94,7 @@ body {
 .window {
   position: absolute;
   min-width: 300px;
-  min-height: 200px;
+  min-height: 32px;
   background: rgba(40, 40, 40, 0.60);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);

@@ -177,20 +177,14 @@ export class WindowManager {
       windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
     }
 
-    if (!contentEl.dataset.originalHeight) {
-      contentEl.dataset.originalHeight = contentEl.offsetHeight + 'px';
-    }
-
     const isShaded = windowEl.classList.contains('shaded');
 
     if (isShaded) {
       windowEl.style.height = windowEl.dataset.originalHeight;
-      contentEl.style.height = contentEl.dataset.originalHeight;
       contentEl.style.display = 'block';
       windowEl.classList.remove('shaded');
     } else {
       windowEl.style.height = '32px';
-      contentEl.style.height = '32px';
       contentEl.style.display = 'none';
       windowEl.classList.add('shaded');
     }
