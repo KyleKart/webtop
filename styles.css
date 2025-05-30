@@ -123,11 +123,10 @@ body {
 
 .window-controls {
   display: flex;
-  gap: 2px;
 }
 
 .window-button {
-  width: 29px;
+  width: 26px;
   height: 26px;
   border: none;
   background: transparent;
@@ -143,6 +142,10 @@ body {
 .window-icon {
   width: 20px;
   height: 20px;
+}
+
+.window-button:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .window-content {
