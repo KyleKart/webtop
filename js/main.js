@@ -22,7 +22,7 @@ document.getElementById('search-button').addEventListener('click', () => {
 
 windowManager.createWindow({
   title: 'Welcome',
-  content: `<!DOCTYPE html><html><head><title>Welcome</title><style>html, body {height: 100%; margin: 0; padding: 0; background: rgba(0, 0, 0, 0.7);} h1, p, b, ul {color: #fff; line-height: 1.5;}</style></head><body><div class="message"><h1>Welcome to Your Webtop!</h1><p>This should feel familiar if you've used a desktop interface before.</p><p><b>Window Controls, similar to early versions of Microsoft Windows, work as follows:</b></p><ul><li><b>Left Side:</b> If the program has an icon, it appears here; otherwise, a red ❌ is shown. <b>Double-click</b> to close the window.</li><li><b>Right Side:</b> <b>➖ Minus (-)</b> minimizes the window, and <b>➕ Plus (+)</b> maximizes/restores it.</li></ul><p>Enjoy browsing your Webtop!</p></div></body></html>`,
+  content: `<iframe src="./applications/welcome.html" width="100%" height="100%" style="border:none;"></iframe>`,
   x: 100,
   y: 100,
   width: 800,
