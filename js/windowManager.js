@@ -8,21 +8,21 @@ export class WindowManager {
 
   createWindow({ title, icon, content, x, y, width, height }) {
     const id = this.windowIdCounter++;
-    
+
     const windowEl = window.parent.document.createElement('div');
     windowEl.className = 'window';
     windowEl.style.width = `${width}px`;
     windowEl.style.height = `${height}px`;
     windowEl.style.left = `${x}px`;
     windowEl.style.top = `${y}px`;
-    
+
     const header = window.parent.document.createElement('div');
     header.className = 'window-header';
-    
+
     const titleEl = window.parent.document.createElement('div');
     titleEl.className = 'window-title';
     titleEl.textContent = title;
-    
+
     const controls = window.parent.document.createElement('div');
     controls.className = 'window-controls';
 
@@ -42,15 +42,15 @@ export class WindowManager {
     const contentEl = window.parent.document.createElement('div');
     contentEl.className = 'window-content';
     contentEl.innerHTML = content;
-    
+
     windowEl.append(header, contentEl);
     window.parent.document.getElementById('windows').appendChild(windowEl);
-    
+
     const taskButton = window.parent.document.createElement('button');
     taskButton.className = 'task-button';
     taskButton.textContent = title;
     this.taskList.appendChild(taskButton);
-    
+
     // Store window data
     const windowData = {
       element: windowEl,
@@ -58,15 +58,15 @@ export class WindowManager {
       title,
       isMinimized: false
     };
-    
+
     this.windows.set(id, windowData);
-    
+
     this.setupWindowEvents(id, windowEl, header);
     this.setupTaskButtonEvents(id, taskButton);
     this.setupWindowControls(id, closeBtn2, maximizeBtn2, minimizeBtn2, shadeBtn2);
-    
+
     this.activateWindow(id);
-    
+
     return id;
   }
 
@@ -74,11 +74,11 @@ export class WindowManager {
     let mouseDown = false;
     let clickDifferenceX = 0;
     let clickDifferenceY = 0;
-  
+
     const iframe = windowEl.querySelector('iframe');
 
     windowEl.addEventListener('mousedown', () => this.activateWindow(id));
-  
+
     header.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return; // Only handle left-clicks
       mouseDown = true;
@@ -90,24 +90,24 @@ export class WindowManager {
       clickDifferenceX = e.clientX - rect.left;
       clickDifferenceY = e.clientY - rect.top;
     });
-   
+
     header.addEventListener('dblclick', () => this.maximizeWindow(id));
 
-  
+
     window.parent.document.addEventListener('mousemove', (e) => {
       if (!mouseDown) return;
       e.preventDefault();
       windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
       windowEl.style.top = `${e.clientY - clickDifferenceY}px`;
     });
-  
+
     window.parent.document.addEventListener('mouseup', () => {
       if (!mouseDown) return;
       mouseDown = false;
-      
+
       if (iframe) iframe.style.pointerEvents = 'auto';
     });
-  }  
+  }
 
   setupTaskButtonEvents(id, taskButton) {
     taskButton.addEventListener('click', () => {
@@ -126,7 +126,7 @@ export class WindowManager {
     Btn2.addEventListener('click', () => this.maximizeWindow(id));
     Btn3.addEventListener('click', () => this.minimizeWindow(id));
     Btn1.addEventListener('click', () => this.closeWindow(id));
-    Btn4.addEventListener('click', () => this.closeWindow(id));
+    Btn4.addEventListener('click', () => this.shadeWindow(id));
   }
 
   createWindowButton(text) {
@@ -140,11 +140,11 @@ export class WindowManager {
     button.className = 'window-button';
     const image = window.parent.document.createElement('img');
     image.className = 'window-icon';
-    image.src = text;  
-    button.appendChild(image);  
+    image.src = text;
+    button.appendChild(image);
     return button;
   }
-  
+
 
   activateWindow(id) {
     this.windows.forEach((win, winId) => {
@@ -166,6 +166,15 @@ export class WindowManager {
     win.taskButton.classList.remove('active');
   }
 
+  shadeWindow(id) {
+    const win = this.windows.get(id);
+    const innerElement = win.element.querySelector('.window-content');
+    if (innerElement) {
+      const currentDisplay = getComputedStyle(innerElement).display;
+      innerElement.style.display = (currentDisplay === 'none') ? 'block' : 'none';
+    }
+  }
+
   restoreWindow(id) {
     const win = this.windows.get(id);
     win.element.style.display = 'flex';
@@ -176,7 +185,7 @@ export class WindowManager {
   maximizeWindow(id) {
     const win = this.windows.get(id);
     const isMaximized = win.element.style.width === '100vw';
-    
+
     if (isMaximized) {
       win.element.style.width = win.prevWidth || '400px';
       win.element.style.height = win.prevHeight || '300px';
@@ -187,7 +196,7 @@ export class WindowManager {
       win.prevHeight = win.element.style.height;
       win.prevLeft = win.element.style.left;
       win.prevTop = win.element.style.top;
-      
+
       win.element.style.width = '100vw';
       win.element.style.height = `calc(100vh - var(--taskbar-height))`;
       win.element.style.left = '0';
