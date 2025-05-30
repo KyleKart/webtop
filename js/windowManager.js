@@ -168,10 +168,25 @@ export class WindowManager {
 
   shadeWindow(id) {
     const win = this.windows.get(id);
-    const innerElement = win.element.querySelector('.window-content');
-    if (innerElement) {
-      const currentDisplay = getComputedStyle(innerElement).display;
-      innerElement.style.display = (currentDisplay === 'none') ? 'block' : 'none';
+    const windowEl = win.element;
+    const contentEl = windowEl.querySelector('.window-content');
+
+    if (!contentEl) return;
+
+    if (!windowEl.dataset.originalHeight) {
+      windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
+    }
+
+    const isShaded = windowEl.classList.contains('shaded');
+
+    if (isShaded) {
+      windowEl.style.height = windowEl.dataset.originalHeight;
+      contentEl.style.display = 'block';
+      windowEl.classList.remove('shaded');
+    } else {
+      windowEl.style.height = '32px';
+      contentEl.style.display = 'none';
+      windowEl.classList.add('shaded');
     }
   }
 
