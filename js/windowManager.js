@@ -169,9 +169,6 @@ export class WindowManager {
   shadeWindow(id) {
     const win = this.windows.get(id);
     const windowEl = win.element;
-    const contentEl = windowEl.querySelector('.window-content');
-
-    if (!contentEl) return;
 
     if (!windowEl.dataset.originalHeight) {
       windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
@@ -181,11 +178,9 @@ export class WindowManager {
 
     if (isShaded) {
       windowEl.style.height = windowEl.dataset.originalHeight;
-      contentEl.style.display = 'block';
       windowEl.classList.remove('shaded');
     } else {
       windowEl.style.height = '32px';
-      contentEl.style.display = 'none';
       windowEl.classList.add('shaded');
     }
   }
