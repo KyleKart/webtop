@@ -89,13 +89,16 @@
 </div>
     </div>
   </div>
-    <script>
-    document.querySelectorAll('.image-grid img').forEach(img => {
-      img.addEventListener('click', () => {
-        const bgUrl = `url('${img.src}')`;
-        window.parent.document.body.style.backgroundImage = bgUrl;
-      });
+<script>
+  document.querySelectorAll('.image-grid img').forEach(img => {
+    img.addEventListener('click', () => {
+      const bgUrl = `url('${img.src}')`;
+      const targetDiv = window.parent.document.getElementById('desktop');
+      if (targetDiv) {
+        targetDiv.style.backgroundImage = bgUrl;
+      }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
