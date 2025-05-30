@@ -2,39 +2,53 @@
 <html>
 
 <head>
-    <title>Welcome</title>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: rgba(0, 0, 0, 0.7);
-        }
+  <title>Welcome</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.7);
+      font-family: sans-serif;
+    }
 
-        h1,
-        p,
-        b,
-        ul {
-            color: #fff;
-            line-height: 1.5;
-        }
-    </style>
+    .message {
+      padding: 20px;
+    }
+
+    h1,
+    p,
+    b,
+    ul {
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="message">
-        <h1>Welcome to Your Webtop!</h1>
-        <p>This should feel familiar if you've used a desktop interface before.</p>
-        <p><b>Window Controls, similar to early versions of Microsoft Windows, work as follows:</b></p>
+  <div class="message">
+    <h1>Welcome to Your Webtop!</h1>
+
+    <p><b>Window Controls:</b></p>
+    <ul>
+      <li><b>Left Side:</b> A single-clickable ❌ icon is always present and closes the window.</li>
+      <li><b>Right Side:</b> Contains three controls:
         <ul>
-            <li><b>Left Side:</b> If the program has an icon, it appears here; otherwise, a red ❌ is shown.
-                <b>Double-click</b> to close the window.</li>
-            <li><b>Right Side:</b> <b>➖ Minus (-)</b> minimizes the window, and <b>➕ Plus (+)</b> maximizes/restores it.
-            </li>
+          <li><b>➖ Minimize:</b> Hides the window from view (minimizes it).</li>
+          <li><b>&gt; Shade:</b> Collapses the window to titlebar height. Will change to a down-pointing arrow <b>▼</b> when collapsed/shaded.</li>
+          <li><b>➕ Maximize:</b> Maximizes/restores the window to its full size.</li>
         </ul>
-        <p>Enjoy browsing your Webtop!</p>
-    </div>
+      </li>
+    </ul>
+
+    <p>Enjoy exploring your Webtop!</p>
+  </div>
 </body>
 
 </html>
