@@ -115,6 +115,7 @@
     </div>
     <div id="statusbar">
       <span id="line">Ln 1, Col 1, Pos 1</span>
+      <span id="indent">Spaces: 2</span>
     </div>
   </div>
 
@@ -129,6 +130,7 @@
       indentUnit: 2,
       tabSize: 2,
     });
+    document.getElementById("indent").textContent = `Spaces: ${editor.getOption("indentUnit")}`;
 
     editor.on("cursorActivity", () => {
       const cursor = editor.getCursor();
