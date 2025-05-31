@@ -25,10 +25,15 @@
 
     #container {
       display: flex;
+      flex-direction: column;
       height: 100vh;
       width: 100vw;
+    }
+
+    #main-content {
+      display: flex;
+      flex: 1 1 auto;
       overflow: hidden;
-      flex-direction: column;
     }
 
     #sidebar {
@@ -95,13 +100,15 @@
 <body>
 
   <div id="container">
-    <div id="sidebar">
-      <button class="sidebar-btn" id="newBtn"><img src="../icons/wtc/new.svg" alt="New"></button>
-      <button class="sidebar-btn" id="loadBtn"><img src="../icons/wtc/load.svg" alt="Load"></button>
-      <button class="sidebar-btn" id="saveBtn"><img src="../icons/wtc/save.svg" alt="Save"></button>
-      <button class="sidebar-btn" id="reloadBtn"><img src="../icons/wtc/reload.svg" alt="Reload"></button>
+    <div id="main-content">
+      <div id="sidebar">
+        <button class="sidebar-btn" id="newBtn"><img src="../icons/wtc/new.svg" alt="New"></button>
+        <button class="sidebar-btn" id="loadBtn"><img src="../icons/wtc/load.svg" alt="Load"></button>
+        <button class="sidebar-btn" id="saveBtn"><img src="../icons/wtc/save.svg" alt="Save"></button>
+        <button class="sidebar-btn" id="reloadBtn"><img src="../icons/wtc/reload.svg" alt="Reload"></button>
+      </div>
+      <div id="editor"></div>
     </div>
-    <div id="editor"></div>
     <div id="statusbar">Ready</div>
   </div>
 
