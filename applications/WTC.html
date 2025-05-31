@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/monokai.min.css">
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -71,14 +73,15 @@
     }
   </style>
 </head>
+
 <body>
 
   <div id="container">
     <div id="sidebar">
-      <button class="sidebar-btn" id="newBtn">📄</button>
-      <button class="sidebar-btn" id="loadBtn">📂</button>
-      <button class="sidebar-btn" id="saveBtn">💾</button>
-      <button class="sidebar-btn" id="reloadBtn">🔄</button>
+      <button class="sidebar-btn" id="newBtn"><img src="./icons/wtc/new.svg" alt="New"></button>
+      <button class="sidebar-btn" id="loadBtn"><img src="./icons/wtc/load.svg" alt="Load"></button>
+      <button class="sidebar-btn" id="saveBtn"><img src="./icons/wtc/save.svg" alt="Save"></button>
+      <button class="sidebar-btn" id="reloadBtn"><img src="./icons/wtc/reload.svg" alt="Reload"></button>
     </div>
     <div id="editor"></div>
   </div>
@@ -86,34 +89,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.js"></script>
 
-<script>
-  var editor = CodeMirror(document.getElementById('editor'), {
-    lineNumbers: true,
-    mode: "javascript",
-    theme: "monokai",
-    indentUnit: 2,
-    tabSize: 2,
-  });
+  <script>
+    var editor = CodeMirror(document.getElementById('editor'), {
+      lineNumbers: true,
+      mode: "javascript",
+      theme: "monokai",
+      indentUnit: 2,
+      tabSize: 2,
+    });
 
-  let fileHandle = null;
+    let fileHandle = null;
 
-function newFile() {
-  const confirmNew = confirm("Discard current file and start a new one?");
-  if (confirmNew) {
-    editor.setValue('');
-    fileHandle = null;
-  }
-}
+    function newFile() {
+      const confirmNew = confirm("Discard current file and start a new one?");
+      if (confirmNew) {
+        editor.setValue('');
+        fileHandle = null;
+      }
+    }
 
-  async function saveFile() {
-    const content = editor.getValue();
+    async function saveFile() {
+      const content = editor.getValue();
       try {
         if (!fileHandle) {
           fileHandle = await window.showSaveFilePicker({
             suggestedName: "code.js",
             types: [{
               description: 'JavaScript Files',
-              accept: {'application/javascript': ['.js']}
+              accept: { 'application/javascript': ['.js'] }
             }]
           });
         }
@@ -124,42 +127,43 @@ function newFile() {
       } catch (err) {
         console.error('Save cancelled or failed:', err);
       }
-  }
+    }
 
-  async function loadFile() {
-  try {
-    [fileHandle] = await window.showOpenFilePicker({
-      types: [{
-        description: 'JavaScript Files',
-        accept: { 'application/javascript': ['.js'] }
-      }]
-    });
+    async function loadFile() {
+      try {
+        [fileHandle] = await window.showOpenFilePicker({
+          types: [{
+            description: 'JavaScript Files',
+            accept: { 'application/javascript': ['.js'] }
+          }]
+        });
 
-    await readFile();
-  } catch (err) {
-    console.error('File load cancelled or failed:', err);
-  }
-}
+        await readFile();
+      } catch (err) {
+        console.error('File load cancelled or failed:', err);
+      }
+    }
 
-  async function readFile() {
-  if (!fileHandle) {
-    console.warn("No file selected.");
-    return;
-  }
+    async function readFile() {
+      if (!fileHandle) {
+        console.warn("No file selected.");
+        return;
+      }
 
-  try {
-    const file = await fileHandle.getFile();
-    const text = await file.text();
-    editor.setValue(text);
-  } catch (err) {
-    console.error('Error reading file:', err);
-  }
-}
+      try {
+        const file = await fileHandle.getFile();
+        const text = await file.text();
+        editor.setValue(text);
+      } catch (err) {
+        console.error('Error reading file:', err);
+      }
+    }
 
-  document.getElementById('reloadBtn').addEventListener('click', readFile);
-  document.getElementById('saveBtn').addEventListener('click', saveFile);
-  document.getElementById('loadBtn').addEventListener('click', loadFile);
-  document.getElementById('newBtn').addEventListener('click', newFile);
-</script>
+    document.getElementById('reloadBtn').addEventListener('click', readFile);
+    document.getElementById('saveBtn').addEventListener('click', saveFile);
+    document.getElementById('loadBtn').addEventListener('click', loadFile);
+    document.getElementById('newBtn').addEventListener('click', newFile);
+  </script>
 </body>
+
 </html>
