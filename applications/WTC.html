@@ -114,7 +114,7 @@
       <div id="editor"></div>
     </div>
     <div id="statusbar">
-      <span id="line">Ln 1, Col 1</span>
+      <span id="line">Ln 1, Col 1, Pos 1</span>
     </div>
   </div>
 
@@ -132,11 +132,12 @@
 
     editor.on("cursorActivity", () => {
       const cursor = editor.getCursor();
+      const pos = editor.indexFromPos(cursor);
       const line = cursor.line + 1;
       const ch = cursor.ch + 1;
-      document.getElementById('line').textContent = `Ln ${line}, Col ${ch}`;
-    });
 
+      document.getElementById('line').textContent = `Ln ${line}, Col ${ch}, Pos ${pos + 1}`;
+    });
 
     let fileHandle = null;
 
