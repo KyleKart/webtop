@@ -94,6 +94,10 @@
       font-family: 'Miracode', monospace;
       user-select: none;
     }
+
+    #statusbar span {
+      margin-right: 20px;
+    }
   </style>
 </head>
 
@@ -109,7 +113,10 @@
       </div>
       <div id="editor"></div>
     </div>
-    <div id="statusbar">Webtop Code</div>
+    <div id="statusbar">
+      <span id="status-message">Ready</span>
+      <span id="status">idk, something here</span>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.js"></script>
