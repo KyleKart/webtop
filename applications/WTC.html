@@ -114,8 +114,7 @@
       <div id="editor"></div>
     </div>
     <div id="statusbar">
-      <span id="status-message">Ready</span>
-      <span id="status">idk, something here</span>
+      <span id="line">Ln 1, Col 1</span>
     </div>
   </div>
 
@@ -130,6 +129,14 @@
       indentUnit: 2,
       tabSize: 2,
     });
+
+    editor.on("cursorActivity", () => {
+      const cursor = editor.getCursor();
+      const line = cursor.line + 1;
+      const ch = cursor.ch + 1;
+      document.getElementById('line').textContent = `Ln ${line}, Col ${ch}`;
+    });
+
 
     let fileHandle = null;
 
