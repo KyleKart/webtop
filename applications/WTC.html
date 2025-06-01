@@ -98,6 +98,10 @@
     #statusbar span {
       margin-right: 20px;
     }
+
+    #file-name {
+      right: 0;
+    }
   </style>
 </head>
 
@@ -116,6 +120,7 @@
     <div id="statusbar">
       <span id="line">Ln ?, Col ?, Pos ?</span>
       <span id="indent">Spaces: ?</span>
+      <span id="file-name">???</span>
     </div>
   </div>
 
@@ -197,6 +202,7 @@
         const file = await fileHandle.getFile();
         const text = await file.text();
         editor.setValue(text);
+        document.getElementById("file-name").textContent = file.name;
       } catch (err) {
         console.error('Error reading file:', err);
       }
