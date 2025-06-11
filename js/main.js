@@ -39,11 +39,9 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
     const url = icon.getAttribute('data-url');
     const width = icon.getAttribute('data-width');
     const height = icon.getAttribute('data-height');
-    const iconSrc = icon.querySelector('img').getAttribute('src');
 
     windowManager.createWindow({
       title: title,
-      icon: iconSrc,
       content: `<iframe src="${url}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
       x: 200,
       y: 150,
