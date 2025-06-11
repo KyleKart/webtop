@@ -74,3 +74,112 @@ window.addEventListener('beforeunload', (event) => {
   } else {
   }
 });
+
+async function generateIconSVGFromImage(imgUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Important if icons are from other origins
+    img.src = imgUrl;
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      function getPixelColor(x, y) {
+        const data = ctx.getImageData(x, y, 1, 1).data;
+        return [data[0], data[1], data[2]];
+      }
+
+      const positions = [
+        [Math.floor(img.width / 2), 0],
+        [Math.floor(img.width / 2), img.height - 1],
+        [0, Math.floor(img.height / 2)],
+        [img.width - 1, Math.floor(img.height / 2)],
+      ];
+
+      const colorCount = {};
+      function rgbToKey(rgb) { return rgb.join(','); }
+      function keyToRgb(key) { return key.split(',').map(Number); }
+
+      positions.forEach(pos => {
+        const color = getPixelColor(pos[0], pos[1]);
+        const key = rgbToKey(color);
+        colorCount[key] = (colorCount[key] || 0) + 1;
+      });
+
+      let mostFrequentKey = null;
+      let maxCount = 0;
+      for (const key in colorCount) {
+        if (colorCount[key] > maxCount) {
+          maxCount = colorCount[key];
+          mostFrequentKey = key;
+        }
+      }
+      const bgRgb = keyToRgb(mostFrequentKey);
+
+      const darkenColor = (rgb) => rgb.map(c => Math.max(0, Math.min(255, Math.floor(c * 0.8))));
+      const rgbToHex = (rgb) => '#' + rgb.map(c => c.toString(16).padStart(2, '0')).join('');
+      const bgColor = rgbToHex(bgRgb);
+      const strokeColor = rgbToHex(darkenColor(bgRgb));
+
+      const smallCanvas = document.createElement('canvas');
+      smallCanvas.width = 32;
+      smallCanvas.height = 32;
+      const sCtx = smallCanvas.getContext('2d');
+
+      const scale = Math.max(32 / img.width, 32 / img.height);
+      const sw = img.width * scale;
+      const sh = img.height * scale;
+      const sx = (32 - sw) / 2;
+      const sy = (32 - sh) / 2;
+
+      sCtx.clearRect(0, 0, 32, 32);
+      sCtx.drawImage(img, sx, sy, sw, sh);
+      const base64Image = smallCanvas.toDataURL('image/png');
+
+      const svgInner = `
+        <rect x="1" y="1" width="30" height="30" rx="4" ry="4"
+          fill="${bgColor}" stroke="${strokeColor}" stroke-width="2"/>
+        <image href="${base64Image}" x="3" y="3" width="26" height="26" />
+      `;
+
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          ${svgInner}
+        </svg>
+      `;
+
+      resolve(svg);
+    };
+
+    img.onerror = () => {
+      resolve(null);
+    };
+  });
+}
+
+async function replaceAllDesktopIcons() {
+  // Select all desktop icon images
+  const iconImgs = document.querySelectorAll('.desktop-icon img');
+
+  for (const img of iconImgs) {
+    const svg = await generateIconSVGFromImage(img.src);
+    if (svg) {
+      // Create a container for SVG
+      const svgContainer = document.createElement('div');
+      svgContainer.className = 'icon-svg-container';
+      svgContainer.innerHTML = svg;
+
+      // Replace the <img> with the generated SVG container
+      img.parentNode.replaceChild(svgContainer, img);
+    }
+  }
+}
+
+// Run the replacement after DOM is loaded
+window.addEventListener('DOMContentLoaded', () => {
+  replaceAllDesktopIcons();
+});
