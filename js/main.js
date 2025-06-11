@@ -161,25 +161,26 @@ async function generateIconSVGFromImage(imgUrl) {
   });
 }
 
-async function replaceAllDesktopIcons() {
-  // Select all desktop icon images
+async function replaceIconWithSVG(img) {
+  const svgString = await generateIconSVGFromImage(img);
+  if (!svgString) return;
+
+  // Parse SVG string to DOM element
+  const parser = new DOMParser();
+  const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+  const svgElement = svgDoc.documentElement;
+
+  // Replace the <img> with the <svg> node directly (keeps the DOM clean)
+  img.parentNode.replaceChild(svgElement, img);
+}
+
+async function processDesktopIcons() {
   const iconImgs = document.querySelectorAll('.desktop-icon img');
-
   for (const img of iconImgs) {
-    const svg = await generateIconSVGFromImage(img.src);
-    if (svg) {
-      // Create a container for SVG
-      const svgContainer = document.createElement('div');
-      svgContainer.className = 'icon-svg-container';
-      svgContainer.innerHTML = svg;
-
-      // Replace the <img> with the generated SVG container
-      img.parentNode.replaceChild(svgContainer, img);
-    }
+    await replaceIconWithSVG(img);
   }
 }
 
-// Run the replacement after DOM is loaded
 window.addEventListener('DOMContentLoaded', () => {
-  replaceAllDesktopIcons();
+  processDesktopIcons();
 });
