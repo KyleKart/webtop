@@ -39,11 +39,12 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
     const url = icon.getAttribute('data-url');
     const width = icon.getAttribute('data-width');
     const height = icon.getAttribute('data-height');
+    const betaUrl = `beta${url.replace(/^\./, '')}`;
 
       if (e.shiftKey) {
     windowManager.createWindow({
       title: title,
-      content: `<iframe src="beta${url}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
+      content: `<iframe src="${betaUrl}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
       x: 200,
       y: 150,
       width: width,
