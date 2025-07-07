@@ -34,12 +34,22 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
   const span = document.createElement('span');
   span.textContent = title;
   icon.appendChild(span);
-  icon.addEventListener('dblclick', () => {
+  icon.addEventListener('dblclick', (e) => {
     const title = icon.getAttribute('data-title');
     const url = icon.getAttribute('data-url');
     const width = icon.getAttribute('data-width');
     const height = icon.getAttribute('data-height');
 
+      if (e.shiftKey) {
+    windowManager.createWindow({
+      title: title,
+      content: `<iframe src="beta${url}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
+      x: 200,
+      y: 150,
+      width: width,
+      height: height
+    });
+  } else {
     windowManager.createWindow({
       title: title,
       content: `<iframe src="${url}" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
@@ -47,7 +57,7 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
       y: 150,
       width: width,
       height: height
-    });
+    });  }
   });
 });
 
