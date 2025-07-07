@@ -98,8 +98,9 @@
             },
             weofetch: () => {
                 return `System: Webtop/${getBrowserName()}
-CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
-RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
+                        CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
+                        RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}
+                        Screen: ${window.screen.width}x${window.screen.height} @ ${window.devicePixelRatio}x`;
             },
         };
 
