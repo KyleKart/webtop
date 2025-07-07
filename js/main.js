@@ -176,6 +176,7 @@ async function replaceAllDesktopIcons() {
 }
 
 // Run the replacement after DOM is loaded
-window.addEventListener('DOMContentLoaded', () => {
+/* window.addEventListener('DOMContentLoaded', () => {
   replaceAllDesktopIcons();
 });
+*/
