@@ -91,7 +91,7 @@
         };
 
         const commands = {
-            help: "Available commands: help, about, weofetch, clear, shutdown, reboot",
+            help: "Available commands: help, about, weofetch, clear",
             about: "Webtop Terminal v0.1",
             clear: () => {
                 terminal.innerHTML = '';
@@ -101,18 +101,6 @@
 CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unknown"}
 RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}`;
             },
-            shutdown: () => {
-                const confirmation = confirm("Webtop got a shutdown request. Was this what you wanted?");
-                if (confirmation) {
-                    window.close();
-                }
-            },
-            reboot: () => {
-                const confirmation = confirm("Webtop got a restart request. Was this what you wanted?");
-                if (confirmation) {
-                    location.reload();
-                }
-            }
         };
 
         function addInputLine() {
