@@ -99,8 +99,14 @@
 
     <script>
       const sidebar = document.getElementById("sidebar");
-      const bg = window.getComputedStyle(sidebar).backgroundColor;
-      sidebar.style.backgroundColor = window.parent.getAccent(bg);
+
+      function updateSidebarAccent() {
+        const bg = window.getComputedStyle(sidebar).backgroundColor;
+        sidebar.style.backgroundColor = window.parent.getAccent(bg);
+        requestAnimationFrame(updateSidebarAccent);
+      }
+
+      updateSidebarAccent();
 
       const links = document.querySelectorAll('.sidebar a');
       const tabs = {
