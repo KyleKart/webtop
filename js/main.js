@@ -12,8 +12,18 @@ window.getAccent = function(rgbaInput) {
 
   const taskbarColor = window.parent.getComputedStyle(taskbar).backgroundColor;
 
-  const alpha = rgbaInput.match(/rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)/)?.[1] || "1";
-  const rgb = taskbarColor.match(/rgba?\((\s*\d+\s*,\s*\d+\s*,\s*\d+)/)?.[1] || "0,0,0";
+  // Match RGBA from rgbaInput
+  const inputMatch = rgbaInput.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+  const alpha = inputMatch?.[4];
+
+  if (!alpha) {
+    console.warn("Alpha not found in input:", rgbaInput);
+    return rgbaInput;
+  }
+
+  // Match RGB from taskbar
+  const taskbarMatch = taskbarColor.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  const rgb = taskbarMatch ? `${taskbarMatch[1]}, ${taskbarMatch[2]}, ${taskbarMatch[3]}` : "0,0,0";
 
   return `rgba(${rgb}, ${alpha})`;
 };
