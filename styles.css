@@ -38,7 +38,7 @@ body {
 #search-button {
   padding: 8px 10px;
   border: none;
-  background: rgba(50, 50, 50, 0.9);
+  background: rgba(50, 50, 50, 0.6);
   color: #fff;
   border-radius: 4px;
   outline: none;
@@ -236,7 +236,7 @@ body {
   max-width: 200px;
   padding: 8px 10px;
   border: none;
-  background: rgba(50, 50, 50, 0.9);
+  background: rgba(50, 50, 50, 0.6);
   color: #fff;
   border-radius: 4px;
   outline: none;
