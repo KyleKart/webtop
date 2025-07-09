@@ -6,6 +6,18 @@ const windowManager = new WindowManager();
 const startMenu = startMenuManager();
 clockManager();
 
+window.getAccent = function(rgbaInput) {
+  const taskbar = window.parent.document.getElementById("taskbar");
+  if (!taskbar) return rgbaInput;
+
+  const taskbarColor = window.parent.getComputedStyle(taskbar).backgroundColor;
+
+  const alpha = rgbaInput.match(/rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)/)?.[1] || "1";
+  const rgb = taskbarColor.match(/rgba?\((\s*\d+\s*,\s*\d+\s*,\s*\d+)/)?.[1] || "0,0,0";
+
+  return `rgba(${rgb}, ${alpha})`;
+};
+
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {

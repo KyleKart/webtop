@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,27 +47,28 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0);
     }
+
     .image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
-}
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
 
-.image-grid img {
-  width: 100%;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
+    .image-grid img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
 
-.image-grid img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
+    .image-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="sidebar">
@@ -74,56 +76,61 @@
       <a href="#">Wallpaper</a>
       <a href="#">Accent</a>
     </div>
-<div class="main-content">
-  <h1>Welcome</h1>
-  <p>This is a WIP settings application for Webtop.</p>
+    <div class="main-content">
+      <h1>Welcome</h1>
+      <p>This is a WIP settings application for Webtop.</p>
 
-  <div id="wallpaper-tab">
-    <p>You can use this to change your wallpaper.</p>
-    <div class="image-grid">
-      <img src="../backgrounds/moon.png" />
-      <img src="../backgrounds/dark.png" />
-      <img src="../backgrounds/red.png" />
-      <img src="../backgrounds/night.png" />
-      <img src="../backgrounds/borealis1.png" />
-      <img src="../backgrounds/borealis2.png" />
+      <div id="wallpaper-tab">
+        <p>You can use this to change your wallpaper.</p>
+        <div class="image-grid">
+          <img src="../backgrounds/moon.png" />
+          <img src="../backgrounds/dark.png" />
+          <img src="../backgrounds/red.png" />
+          <img src="../backgrounds/night.png" />
+          <img src="../backgrounds/borealis1.png" />
+          <img src="../backgrounds/borealis2.png" />
+        </div>
+      </div>
+
+      <div id="accent-tab" style="display:none">
+        <p>Accent colour settings will be shown here when I add them.</p>
+      </div>
     </div>
-  </div>
 
-  <div id="accent-tab" style="display:none">
-    <p>Accent colour settings will be shown here when I add them.</p>
-  </div>
-</div>
+    <script>
+      const sidebar = document.getElementById("sidebar");
+      const bg = window.getComputedStyle(sidebar).backgroundColor;
+      sidebar.style.backgroundColor = window.parent.getAccent(bg);
 
-<script>
-  const links = document.querySelectorAll('.sidebar a');
-  const tabs = {
-    Wallpaper: document.getElementById('wallpaper-tab'),
-    Accent: document.getElementById('accent-tab')
-  };
+      const links = document.querySelectorAll('.sidebar a');
+      const tabs = {
+        Wallpaper: document.getElementById('wallpaper-tab'),
+        Accent: document.getElementById('accent-tab')
+      };
 
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const tabName = link.textContent.trim();
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const tabName = link.textContent.trim();
 
-      Object.values(tabs).forEach(tab => tab.style.display = 'none');
+          Object.values(tabs).forEach(tab => tab.style.display = 'none');
 
-      if (tabs[tabName]) {
-        tabs[tabName].style.display = 'block';
-      }
-    });
-  });
+          if (tabs[tabName]) {
+            tabs[tabName].style.display = 'block';
+          }
+        });
+      });
 
-  document.querySelectorAll('.image-grid img').forEach(img => {
-    img.addEventListener('click', () => {
-      const bgUrl = `url('${img.src}')`;
-      const targetDiv = window.parent.document.getElementById('desktop');
-      if (targetDiv) {
-        targetDiv.style.backgroundImage = bgUrl;
-      }
-    });
-  });
-</script>
+      document.querySelectorAll('.image-grid img').forEach(img => {
+        img.addEventListener('click', () => {
+          const bgUrl = `url('${img.src}')`;
+          const targetDiv = window.parent.document.getElementById('desktop');
+          if (targetDiv) {
+            targetDiv.style.backgroundImage = bgUrl;
+          }
+        });
+      });
+    </script>
 </body>
+
 </html>
