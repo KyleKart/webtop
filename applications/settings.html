@@ -98,15 +98,18 @@
     </div>
 
     <script>
-      const sidebar = document.getElementById("sidebar");
+      const sidebar = document.querySelector('.sidebar'); // selects the first element with class 'sidebar'
 
-      function updateSidebarAccent() {
-        const bg = window.getComputedStyle(sidebar).backgroundColor;
-        sidebar.style.backgroundColor = window.parent.getAccent(bg);
-        requestAnimationFrame(updateSidebarAccent);
+      if (sidebar) {
+        function updateSidebarAccent() {
+          const bg = window.getComputedStyle(sidebar).backgroundColor;
+          sidebar.style.backgroundColor = window.parent.getAccent(bg);
+          requestAnimationFrame(updateSidebarAccent);
+        }
+        updateSidebarAccent();
+      } else {
+        console.warn('Sidebar element with class "sidebar" not found!');
       }
-
-      updateSidebarAccent();
 
       const links = document.querySelectorAll('.sidebar a');
       const tabs = {
