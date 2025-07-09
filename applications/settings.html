@@ -91,8 +91,7 @@
   </div>
 
   <div id="accent-tab" style="display:none">
-    <p>Accent color settings will appear here.</p>
-    <!-- Add your accent controls here later -->
+    <p>Accent colour settings will be shown here when I add them.</p>
   </div>
 </div>
 
@@ -108,17 +107,14 @@
       e.preventDefault();
       const tabName = link.textContent.trim();
 
-      // Hide all tabs
       Object.values(tabs).forEach(tab => tab.style.display = 'none');
 
-      // Show selected tab
       if (tabs[tabName]) {
         tabs[tabName].style.display = 'block';
       }
     });
   });
 
-  // Wallpaper click handler
   document.querySelectorAll('.image-grid img').forEach(img => {
     img.addEventListener('click', () => {
       const bgUrl = `url('${img.src}')`;
