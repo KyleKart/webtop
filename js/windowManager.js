@@ -15,14 +15,15 @@ export class WindowManager {
     windowEl.style.height = `${height}px`;
     windowEl.style.left = `${x}px`;
     windowEl.style.top = `${y}px`;
-    function updateAccent() {
-          windowEl.style.backgroundColor = window.getAccent("rgba(40, 40, 40, 0.60)");
-          requestAnimationFrame(updateAccent);
-        }
-        updateAccent();
 
     const header = window.parent.document.createElement('div');
     header.className = 'window-header';
+
+        function updateAccent() {
+          header.style.backgroundColor = window.getAccent("rgba(50, 50, 50, 0.9)");
+          requestAnimationFrame(updateAccent);
+        }
+        updateAccent();
 
     const titleEl = window.parent.document.createElement('div');
     titleEl.className = 'window-title';
