@@ -98,18 +98,6 @@
     </div>
 
     <script>
-      const sidebar = document.querySelector('.sidebar'); // selects the first element with class 'sidebar'
-
-      if (sidebar) {
-        function updateSidebarAccent() {
-          sidebar.style.backgroundColor = window.parent.getAccent("rgba(0, 0, 0, 0.4)");
-          requestAnimationFrame(updateSidebarAccent);
-        }
-        updateSidebarAccent();
-      } else {
-        console.warn('Sidebar element with class "sidebar" not found!');
-      }
-
       const links = document.querySelectorAll('.sidebar a');
       const tabs = {
         Wallpaper: document.getElementById('wallpaper-tab'),
