@@ -38,11 +38,11 @@ export class WindowManager {
     const closeBtn = this.createWindowButton(`❌`)
 
     const shadeBtn2 = this.createWindowIcon(`./icons/controls/shade_up.svg`);
-    const minimizeBtn2 = this.createWindowIcon('./icons/controls/minimize.svg');
-    const maximizeBtn2 = this.createWindowIcon(`./icons/controls/maximize.svg`);
-    const closeBtn2 = this.createWindowIcon(`./icons/controls/close.svg`)
+    const minimizeBtn2 = this.createWindowIcon('./icons/controls/minus.svg');
+    const maximizeBtn2 = this.createWindowIcon(`./icons/controls/maximize-1.svg`);
+    const closeBtn2 = this.createWindowIcon(`./icons/controls/x.svg`)
 
-    controls.append(minimizeBtn2, shadeBtn2, maximizeBtn2);
+    controls.append(minimizeBtn2, maximizeBtn2);
     header.append(closeBtn2, titleEl, controls);
 
     const contentEl = window.parent.document.createElement('div');

@@ -142,6 +142,11 @@ body {
   margin: 4px;
 }
 
+.window-button img {
+  width: 16px;
+  height: 16px;
+}
+
 .window-icon {
   width: 26px;
   height: 26px;
