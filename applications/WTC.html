@@ -234,10 +234,36 @@
     async function loadFile() {
       try {
         [fileHandle] = await window.showOpenFilePicker({
-          types: [{
-            description: 'JavaScript Files',
-            accept: { 'application/javascript': ['.js'] }
-          }]
+            types: [
+              {
+                description: 'JavaScript Files',
+                accept: { 'application/javascript': ['.js'] }
+              },
+              {
+                description: 'HTML Files',
+                accept: { 'text/html': ['.html', '.htm'] }
+              },
+              {
+                description: 'CSS Files',
+                accept: { 'text/css': ['.css'] }
+              },
+              {
+                description: 'JSON Files',
+                accept: { 'application/json': ['.json'] }
+              },
+              {
+                description: 'Markdown Files',
+                accept: { 'text/markdown': ['.md'] }
+              },
+              {
+                description: 'Plain Text',
+                accept: { 'text/plain': ['.txt'] }
+              },
+              {
+                description: 'All Files',
+                accept: { '*/*': ['.*'] }
+              }
+            ]
         });
 
         await readFile();
