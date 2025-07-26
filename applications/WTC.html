@@ -129,6 +129,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/css/css.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/xml/xml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/markdown/markdown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/clike/clike.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.js"></script>
 
   <script>
     var editor = CodeMirror(document.getElementById('editor'), {
@@ -165,10 +171,36 @@
         if (!fileHandle) {
           fileHandle = await window.showSaveFilePicker({
             suggestedName: "code.js",
-            types: [{
-              description: 'JavaScript Files',
-              accept: { 'application/javascript': ['.js'] }
-            }]
+            types: [
+              {
+                description: 'JavaScript Files',
+                accept: { 'application/javascript': ['.js'] }
+              },
+              {
+                description: 'HTML Files',
+                accept: { 'text/html': ['.html', '.htm'] }
+              },
+              {
+                description: 'CSS Files',
+                accept: { 'text/css': ['.css'] }
+              },
+              {
+                description: 'JSON Files',
+                accept: { 'application/json': ['.json'] }
+              },
+              {
+                description: 'Markdown Files',
+                accept: { 'text/markdown': ['.md'] }
+              },
+              {
+                description: 'Plain Text',
+                accept: { 'text/plain': ['.txt'] }
+              },
+              {
+                description: 'All Files',
+                accept: { '*/*': ['.*'] }
+              }
+            ]
           });
         }
 
@@ -177,6 +209,26 @@
         await writable.close();
       } catch (err) {
         console.error('Save cancelled or failed:', err);
+      }
+    }
+
+    function getModeFromFilename(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      switch (ext) {
+        case 'js': return 'javascript';
+        case 'html':
+        case 'htm': return 'htmlmixed';
+        case 'css': return 'css';
+        case 'json': return 'application/json';
+        case 'md': return 'markdown';
+        case 'txt': return 'text/plain';
+        case 'c':
+        case 'cpp':
+        case 'h':
+        case 'hpp': return 'text/x-c++src';
+        case 'java': return 'text/x-java';
+        case 'py': return 'python';
+        default: return 'text/plain';
       }
     }
 
@@ -206,6 +258,9 @@
         const text = await file.text();
         editor.setValue(text);
         document.getElementById("file-name").textContent = file.name;
+
+        const mode = getModeFromFilename(file.name);
+        editor.setOption("mode", mode);
       } catch (err) {
         console.error('Error reading file:', err);
       }
