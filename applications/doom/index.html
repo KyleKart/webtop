@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <title>DOOM</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+  <script src="https://kylekart.github.io/JStyle/jstyle.js"></script>
+  <jstyle>
+    html = {
+    margin: 0,
+    padding: 0,
+    background: "black",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh"
+    };
+    body = html;
 
-    canvas {
-      image-rendering: pixelated;
-      width: 100vw;
-      height: auto;
-      max-height: 100vh;
-      outline: none;
-    }
+    canvas = {
+    imageRendering: "pixelated",
+    width: "100vw",
+    height: "auto",
+    maxHeight: "100vh",
+    outline: "none"
+    };
 
-    #output {
-      display: none;
-    }
-  </style>
+    $output = {
+    display: "none",
+    };
+  </jstyle>
 </head>
 <body>
   <canvas id="screen" width="640" height="400" tabindex="0"></canvas>
