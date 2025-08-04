@@ -52,6 +52,36 @@
                 lineEl.scrollIntoView({ behavior: "smooth", block: "end" });
             }
         });
+
+        const thumbNormal = window.getAccent("rgba(0,0,0,0.5)");
+        const thumbHover = window.getAccent("rgba(0,0,0,0.9)");
+
+        const style = document.createElement("style");
+        style.textContent = `
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${thumbNormal};
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${thumbHover};
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+`;
+        document.head.appendChild(style);
+
     </script>
 </body>
 
