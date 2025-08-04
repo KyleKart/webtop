@@ -49,6 +49,7 @@
                 terminal.appendChild(lineEl);
 
                 terminal.scrollTop = terminal.scrollHeight;
+                lineEl.scrollIntoView({ behavior: "smooth", block: "end" });
             }
         });
     </script>
