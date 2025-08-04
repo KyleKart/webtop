@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>DOOM</title>
+
   <script src="https://kylekart.github.io/JStyle/jstyle.js"></script>
   <jstyle>
     html = {
@@ -30,6 +32,7 @@
     };
   </jstyle>
 </head>
+
 <body>
   <canvas id="screen" width="640" height="400" tabindex="0"></canvas>
   <div id="output"></div>
@@ -48,7 +51,7 @@
     }
 
     function appendOutput(style) {
-      return function(offset, length) {
+      return function (offset, length) {
         const lines = readWasmString(offset, length).split('\n');
         for (let line of lines) {
           if (!line) continue;
@@ -58,6 +61,8 @@
           output.appendChild(span);
           output.appendChild(document.createElement("br"));
           span.scrollIntoView({ behavior: "smooth", block: "end" });
+
+          window.parent.postMessage({ type: "term", line: line }, "*");
         }
       };
     }
@@ -127,4 +132,5 @@
     });
   </script>
 </body>
+
 </html>
