@@ -20,7 +20,6 @@
 
     .sidebar {
       width: 200px;
-      background: rgba(0, 0, 0, 0.4);
       padding: 20px;
     }
 
@@ -45,7 +44,6 @@
     .main-content {
       flex: 1;
       padding: 20px;
-      background: rgba(255, 255, 255, 0);
     }
 
     .image-grid {
@@ -169,8 +167,12 @@
 
       function applyAccent(colour) {
         const taskbar = window.parent.document.getElementById('taskbar');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
         if (taskbar) {
           taskbar.style.background = hexToRgba(colour, 0.6);
+          sidebar.style.background = window.parent.getAccent('rgba(0, 0, 0, 0.4)');
+          mainContent.style.background = window.parent.getAccent('rgba(255, 255, 255, 0)');
         }
       }
 
