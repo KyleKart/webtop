@@ -168,7 +168,7 @@
       function applyAccent(colour) {
         const taskbar = window.parent.document.getElementById('taskbar');
         const sidebar = document.querySelector('.sidebar');
-        const mainContent = window.parent.document.getElementById('window-content');
+        const mainContent = window.parent.document.querySelector('.window-content');
         if (taskbar) {
           taskbar.style.background = hexToRgba(colour, 0.6);
           sidebar.style.background = window.parent.getAccent('rgba(0, 0, 0, 0.4)');
