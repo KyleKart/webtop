@@ -66,6 +66,26 @@
       transform: scale(1.05);
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
+
+    .swatches {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .swatch {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .swatch:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+    }
   </style>
 </head>
 
@@ -93,7 +113,18 @@
       </div>
 
       <div id="accent-tab" style="display:none">
-        <p>Accent colour settings will be shown here when I add them.</p>
+        <p>Select an accent colour:</p>
+
+        <div class="swatches">
+          <div class="swatch" data-colour="#ff4757" style="background:#ff4757"></div>
+          <div class="swatch" data-colour="#1e90ff" style="background:#1e90ff"></div>
+          <div class="swatch" data-colour="#2ed573" style="background:#2ed573"></div>
+          <div class="swatch" data-colour="#ffa502" style="background:#ffa502"></div>
+          <div class="swatch" data-colour="#9c88ff" style="background:#9c88ff"></div>
+        </div>
+
+        <p>Or pick a custom colour:</p>
+        <input type="color" id="customColour" value="#ff4757" />
       </div>
     </div>
 
@@ -126,6 +157,25 @@
           }
         });
       });
+
+      function applyAccent(colour) {
+        const taskbar = window.parent.document.getElementById('taskbar');
+        if (taskbar) {
+          taskbar.style.background = colour;
+        }
+      }
+
+      document.querySelectorAll('.swatch').forEach(swatch => {
+        swatch.addEventListener('click', () => {
+          const colour = swatch.dataset.colour;
+          applyAccent(colour);
+        });
+      });
+
+      document.getElementById('customColour').addEventListener('input', (e) => {
+        applyAccent(e.target.value);
+      });
+
     </script>
 </body>
 
