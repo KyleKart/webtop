@@ -19,11 +19,11 @@ export class WindowManager {
     const header = window.parent.document.createElement('div');
     header.className = 'window-header';
 
-    function updateAccent() {
-      header.style.backgroundColor = window.getAccent("rgba(50, 50, 50, 0.6)");
-      requestAnimationFrame(updateAccent);
-    }
-    updateAccent();
+        function updateAccent() {
+          header.style.backgroundColor = window.getAccent("rgba(50, 50, 50, 0.6)");
+          requestAnimationFrame(updateAccent);
+        }
+        updateAccent();
 
     const titleEl = window.parent.document.createElement('div');
     titleEl.className = 'window-title';
@@ -113,51 +113,6 @@ export class WindowManager {
 
       if (iframe) iframe.style.pointerEvents = 'auto';
     });
-
-    function addResizers(windowEl) {
-      const resizers = [
-        { class: "right", dirs: ["right"] },
-        { class: "bottom", dirs: ["bottom"] },
-        { class: "corner", dirs: ["right", "bottom"] }
-      ];
-
-      resizers.forEach(r => {
-        const el = document.createElement("div");
-        el.classList.add("resizer", r.class);
-        windowEl.appendChild(el);
-        initResize(el, r.dirs, windowEl);
-      });
-    }
-
-    function initResize(resizer, dirs, windowEl) {
-      resizer.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-
-        const startX = e.clientX;
-        const startY = e.clientY;
-        const startWidth = parseInt(getComputedStyle(windowEl).width, 10);
-        const startHeight = parseInt(getComputedStyle(windowEl).height, 10);
-
-        function doResize(e) {
-          if (dirs.includes("right")) {
-            windowEl.style.width = startWidth + (e.clientX - startX) + "px";
-          }
-          if (dirs.includes("bottom")) {
-            windowEl.style.height = startHeight + (e.clientY - startY) + "px";
-          }
-        }
-
-        function stopResize() {
-          document.removeEventListener("mousemove", doResize);
-          document.removeEventListener("mouseup", stopResize);
-        }
-
-        document.addEventListener("mousemove", doResize);
-        document.addEventListener("mouseup", stopResize);
-      });
-    }
-
-    addResizers();
   }
 
   setupTaskButtonEvents(id, taskButton) {
@@ -217,30 +172,30 @@ export class WindowManager {
     win.taskButton.classList.remove('active');
   }
 
-  shadeWindow(id) {
-    const win = this.windows.get(id);
-    const windowEl = win.element;
+shadeWindow(id) {
+  const win = this.windows.get(id);
+  const windowEl = win.element;
 
-    if (!windowEl.dataset.originalHeight) {
-      windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
-    }
-
-    const isShaded = windowEl.classList.contains('shaded');
-
-    const windowIcons = windowEl.querySelectorAll('img.window-icon');
-    if (windowIcons.length <= 2) return;
-    const shadeImg = windowIcons[2];
-
-    if (isShaded) {
-      windowEl.style.height = windowEl.dataset.originalHeight;
-      windowEl.classList.remove('shaded');
-      shadeImg.src = './icons/controls/shade_up.svg';
-    } else {
-      windowEl.style.height = '32px';
-      windowEl.classList.add('shaded');
-      shadeImg.src = './icons/controls/shade_down.svg';
-    }
+  if (!windowEl.dataset.originalHeight) {
+    windowEl.dataset.originalHeight = windowEl.offsetHeight + 'px';
   }
+
+  const isShaded = windowEl.classList.contains('shaded');
+
+  const windowIcons = windowEl.querySelectorAll('img.window-icon');
+  if (windowIcons.length <= 2) return;
+  const shadeImg = windowIcons[2];
+
+  if (isShaded) {
+    windowEl.style.height = windowEl.dataset.originalHeight;
+    windowEl.classList.remove('shaded');
+    shadeImg.src = './icons/controls/shade_up.svg';
+  } else {
+    windowEl.style.height = '32px';
+    windowEl.classList.add('shaded');
+    shadeImg.src = './icons/controls/shade_down.svg';
+  }
+}
 
   restoreWindow(id) {
     const win = this.windows.get(id);
