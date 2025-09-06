@@ -29,6 +29,7 @@ window.addEventListener("message", (event) => {
     root.style.setProperty("--looks-transparent", transparent);
     root.style.setProperty("--looks-secondary", solid);
     root.style.setProperty("--looks-light-transparent", transparent);
+    root.style.setProperty("--motion-primary-transparent", transparent);
   }
 });
 
