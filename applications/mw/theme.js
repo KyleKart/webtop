@@ -27,12 +27,12 @@ document.head.appendChild(style);
     class Extension {
         getInfo() {
             return {
-                id: 'webtopTheme',
-                name: 'Theme',
+                id: 'toolsforwebtop',
+                name: 'Webtop Tools',
                 blocks: [
                     {
                         blockType: Scratch.BlockType.LABEL,
-                        text: 'Your current Webtop accent is in use!',
+                        text: 'Your current Webtop accent is in use.',
                     }
                 ]
             };
