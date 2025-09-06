@@ -26,6 +26,8 @@ document.head.appendChild(style);
 
 const menu = document.querySelector('.scratchCategoryMenu');
 const row = menu.querySelector('.scratchCategoryId-toolsforwebtop').closest('.scratchCategoryMenuRow');
+const bubble = row.querySelector('.scratchCategoryItemBubble');
+if (bubble) bubble.remove();
 menu.prepend(row);
 
     class Extension {
