@@ -28,6 +28,7 @@ window.addEventListener("message", (event) => {
     const [transparent, solid] = event.data.values;
     root.style.setProperty("--looks-transparent", transparent);
     root.style.setProperty("--looks-secondary", solid);
+    root.style.setProperty("--looks-light-transparent", transparent);
   }
 });
 
