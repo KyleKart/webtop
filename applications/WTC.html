@@ -142,8 +142,12 @@
   <script>
     const sidebar = document.getElementById("sidebar");
     const statusbar = document.getElementById("statusbar");
-    sidebar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
-    statusbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
+    function updateAccent() {
+      sidebar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
+      statusbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
+      requestAnimationFrame(updateAccent);
+    }
+    updateAccent();
 
     var editor = CodeMirror(document.getElementById('editor'), {
       lineNumbers: true,
