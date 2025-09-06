@@ -1,2 +1,5 @@
-document.documentElement.style.setProperty("--looks-transparent", window.parent.getAccent("rgba(255 107 107 0.35)"));
-document.documentElement.style.setProperty("--looks", window.parent.getAccent("rgba(255 107 107 1)"));
+setInterval(() => {
+  ["0.35","1"].forEach((a,i)=>
+    document.documentElement.style.setProperty(["--looks-transparent","--looks"][i], window.parent.getAccent(`rgba(255 107 107 ${a})`))
+  );
+}, 100);
