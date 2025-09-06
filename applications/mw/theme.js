@@ -10,7 +10,7 @@ window.addEventListener("message", (event) => {
   if (event.data.type === "accentResponse") {
     const [transparent, solid] = event.data.values;
     root.style.setProperty("--looks-transparent", transparent);
-    root.style.setProperty("--looks", solid);
+    root.style.setProperty("--looks-secondary", solid);
   }
 });
     class Extension {
