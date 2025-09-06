@@ -21,7 +21,7 @@ window.addEventListener("message", (event) => {
                 blocks: [
                     {
                         blockType: Scratch.BlockType.LABEL,
-                        text: 'Loaded Webtop theme!',
+                        text: 'Your current Webtop accent is in use!',
                     }
                 ]
             };
