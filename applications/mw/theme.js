@@ -17,11 +17,9 @@ window.addEventListener("message", (event) => {
 const style = document.createElement('style');
 style.textContent = `
 .scratchCategoryId-webtopTheme {
-    background-color: #222; /* example */
+    background-color: #222;
     color: #fff;
     border-radius: 6px;
-    padding: 5px;
-    font-weight: bold;
 }
 `;
 document.head.appendChild(style);
