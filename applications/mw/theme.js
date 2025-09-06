@@ -44,13 +44,14 @@ document.head.appendChild(style);
 const observer = new MutationObserver(() => {
   const menu = document.querySelector('.scratchCategoryMenu');
   if (!menu) return;
+
   const row = menu.querySelector('.scratchCategoryId-toolsforwebtop')?.closest('.scratchCategoryMenuRow');
   if (!row) return;
+
   row.querySelector('.scratchCategoryItemBubble')?.remove();
   menu.prepend(row);
+
   observer.disconnect();
 });
-observer.observe(document.body, { childList: true, subtree: true });
 
-if (bubble) bubble.remove();
-menu.prepend(row);
+observer.observe(document.body, { childList: true, subtree: true });
