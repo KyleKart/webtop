@@ -51,8 +51,14 @@ document.getElementById('search-button').addEventListener('click', () => {
 
 window.addEventListener("message", (event) => {
   if (event.data?.type === "term") {
-    const iframe = document.getElementById("window_terminal");
-    iframe.contentWindow.postMessage(event.data, "*");
+    event.source.postMessage(event.data, "*");
+  }
+  else if (event.data.type === "getAccent") {
+    const values = [
+      getAccent("rgba(255 107 107 0.35)"),
+      getAccent("rgba(255 107 107 1)")
+    ];
+    event.source.postMessage({ type: "accentResponse", values }, "*");
   }
 });
 

@@ -1,5 +1,32 @@
+(function(Scratch) {
+    'use strict';
+const root = document.documentElement;
+
 setInterval(() => {
-  ["0.35","1"].forEach((a,i)=>
-    document.documentElement.style.setProperty(["--looks-transparent","--looks"][i], window.parent.getAccent(`rgba(255 107 107 ${a})`))
-  );
+  window.parent.postMessage({ type: "getAccent" }, "*");
 }, 100);
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === "accentResponse") {
+    const [transparent, solid] = event.data.values;
+    root.style.setProperty("--looks-transparent", transparent);
+    root.style.setProperty("--looks", solid);
+  }
+});
+    class Extension {
+        getInfo() {
+            return {
+                id: 'webtopTheme',
+                name: 'Theme',
+                blocks: [
+                    {
+                        blockType: Scratch.BlockType.LABEL,
+                        text: 'Loaded Webtop theme!',
+                    }
+                ]
+            };
+        }
+    }
+
+    Scratch.extensions.register(new Extension());
+})(Scratch);
