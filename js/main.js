@@ -50,8 +50,9 @@ document.getElementById('search-button').addEventListener('click', () => {
 }); */
 
 window.addEventListener("message", (event) => {
-  if (event.data.type === "term") {
-    event.source.postMessage(event.data, "*");
+  if (event.data?.type === "term") {
+    const iframe = document.getElementById("window_terminal");
+    iframe.contentWindow.postMessage(event.data, "*");
   }
   else if (event.data.type === "getAccent") {
     const values = [
