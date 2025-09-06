@@ -1,0 +1,2 @@
+document.documentElement.style.setProperty("--looks-transparent", window.parent.getAccent("rgba(255 107 107 0.35)"));
+document.documentElement.style.setProperty("--looks", window.parent.getAccent("rgba(255 107 107 1)"));
