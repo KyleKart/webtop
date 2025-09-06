@@ -24,6 +24,10 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+const menu = document.querySelector('.scratchCategoryMenu');
+const row = menu.querySelector('.scratchCategoryId-toolsforwebtop').closest('.scratchCategoryMenuRow');
+menu.prepend(row);
+
     class Extension {
         getInfo() {
             return {
