@@ -55,8 +55,8 @@ window.addEventListener("message", (event) => {
   }
   else if (event.data.type === "getAccent") {
     const values = [
-      getAccent("rgba(255 107 107 0.35)"),
-      getAccent("rgba(255 107 107 1)")
+      getAccent("rgba(255, 107, 107, 0.35)"),
+      getAccent("rgba(255, 107, 107, 1)")
     ];
     event.source.postMessage({ type: "accentResponse", values }, "*");
   }
