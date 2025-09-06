@@ -1,5 +1,22 @@
 (function(Scratch) {
     'use strict';
+    class Extension {
+        getInfo() {
+            return {
+                id: 'toolsforwebtop',
+                name: 'Webtop Tools',
+                blocks: [
+                    {
+                        blockType: Scratch.BlockType.LABEL,
+                        text: 'Your current Webtop accent is in use.',
+                    }
+                ]
+            };
+        }
+    }
+    Scratch.extensions.register(new Extension());
+})(Scratch);
+
 const root = document.documentElement;
 
 setInterval(() => {
@@ -29,21 +46,3 @@ const row = menu.querySelector('.scratchCategoryId-toolsforwebtop').closest('.sc
 const bubble = row.querySelector('.scratchCategoryItemBubble');
 if (bubble) bubble.remove();
 menu.prepend(row);
-
-    class Extension {
-        getInfo() {
-            return {
-                id: 'toolsforwebtop',
-                name: 'Webtop Tools',
-                blocks: [
-                    {
-                        blockType: Scratch.BlockType.LABEL,
-                        text: 'Your current Webtop accent is in use.',
-                    }
-                ]
-            };
-        }
-    }
-
-    Scratch.extensions.register(new Extension());
-})(Scratch);
