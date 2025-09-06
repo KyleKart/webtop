@@ -38,7 +38,6 @@
 
     #sidebar {
       width: 32px;
-      background-color: rgba(50, 50, 50, 0.9);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -93,7 +92,6 @@
       display: flex;
       align-items: center;
       height: 25px;
-      background-color: rgba(50, 50, 50, 0.9);
       color: white;
       font-size: 12px;
       line-height: 25px;
@@ -142,6 +140,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.js"></script>
 
   <script>
+    const sidebar = document.getElementById("sidebar");
+    const statusbar = document.getElementById("statusbar");
+    sidebar.style.background = window.getAccent("rgba(50, 50, 50, 0.6)");
+    statusbar.style.background = window.getAccent("rgba(50, 50, 50, 0.6)");
+
     var editor = CodeMirror(document.getElementById('editor'), {
       lineNumbers: true,
       mode: "javascript",
@@ -235,32 +238,32 @@
     async function loadFile() {
       try {
         [fileHandle] = await window.showOpenFilePicker({
-            types: [
-              {
-                description: 'JavaScript Files',
-                accept: { 'application/javascript': ['.js'] }
-              },
-              {
-                description: 'HTML Files',
-                accept: { 'text/html': ['.html', '.htm'] }
-              },
-              {
-                description: 'CSS Files',
-                accept: { 'text/css': ['.css'] }
-              },
-              {
-                description: 'JSON Files',
-                accept: { 'application/json': ['.json'] }
-              },
-              {
-                description: 'Markdown Files',
-                accept: { 'text/markdown': ['.md'] }
-              },
-              {
-                description: 'Plain Text',
-                accept: { 'text/plain': ['.txt'] }
-              }
-            ]
+          types: [
+            {
+              description: 'JavaScript Files',
+              accept: { 'application/javascript': ['.js'] }
+            },
+            {
+              description: 'HTML Files',
+              accept: { 'text/html': ['.html', '.htm'] }
+            },
+            {
+              description: 'CSS Files',
+              accept: { 'text/css': ['.css'] }
+            },
+            {
+              description: 'JSON Files',
+              accept: { 'application/json': ['.json'] }
+            },
+            {
+              description: 'Markdown Files',
+              accept: { 'text/markdown': ['.md'] }
+            },
+            {
+              description: 'Plain Text',
+              accept: { 'text/plain': ['.txt'] }
+            }
+          ]
         });
 
         await readFile();
