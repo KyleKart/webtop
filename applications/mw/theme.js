@@ -4,7 +4,7 @@
         getInfo() {
             return {
                 id: 'toolsforwebtop',
-                name: 'Webtop Tools',
+                name: 'Webtop',
                 blocks: [
                     {
                         blockType: Scratch.BlockType.LABEL,
@@ -34,7 +34,7 @@ window.addEventListener("message", (event) => {
 const style = document.createElement('style');
 style.textContent = `
 .scratchCategoryId-toolsforwebtop {
-    color: #fff;
+
 }
 `;
 document.head.appendChild(style);
