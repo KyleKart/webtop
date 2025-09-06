@@ -50,7 +50,7 @@ document.getElementById('search-button').addEventListener('click', () => {
 }); */
 
 window.addEventListener("message", (event) => {
-  if (event.data?.type === "term") {
+  if (event.data.type === "term") {
     event.source.postMessage(event.data, "*");
   }
   else if (event.data.type === "getAccent") {

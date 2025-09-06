@@ -86,7 +86,7 @@ export class WindowManager {
     windowEl.addEventListener('mousedown', () => this.activateWindow(id));
 
     header.addEventListener('mousedown', (e) => {
-      if (e.button !== 0) return; // Only handle left-clicks
+      if (e.button !== 0) return;
       mouseDown = true;
       e.preventDefault();
 
