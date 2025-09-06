@@ -145,7 +145,7 @@
         function updateBackgrounds() {
             style.textContent = bgMap.map(({ selector, color, alpha }) => {
                 const accent = window.parent.getAccent(`rgba(${color}, ${alpha})`);
-                return `${selector} { background-color: ${accent}; }`;
+                return `${selector} { background-color: ${accent}; !important}`;
             }).join('\n');
         }
 
