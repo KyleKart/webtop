@@ -13,6 +13,19 @@ window.addEventListener("message", (event) => {
     root.style.setProperty("--looks-secondary", solid);
   }
 });
+
+const style = document.createElement('style');
+style.textContent = `
+.scratchCategoryId-webtopTheme {
+    background-color: #222; /* example */
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px;
+    font-weight: bold;
+}
+`;
+document.head.appendChild(style);
+
     class Extension {
         getInfo() {
             return {
