@@ -34,9 +34,7 @@ window.addEventListener("message", (event) => {
 const style = document.createElement('style');
 style.textContent = `
 .scratchCategoryId-toolsforwebtop {
-    background-color: #222;
     color: #fff;
-    border-radius: 6px;
 }
 `;
 document.head.appendChild(style);
