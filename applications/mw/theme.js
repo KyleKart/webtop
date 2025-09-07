@@ -35,7 +35,7 @@ window.addEventListener("message", (event) => {
     root.style.setProperty("--looks-transparent", transparent);
     root.style.setProperty("--looks-secondary", solid);
     root.style.setProperty("--looks-light-transparent", transparent);
-    root.style.setProperty("--motion-primary-transparent", transparent);
+    root.style.setProperty("--looks-secondary-dark", transparent);
 
     const base64 = baseDataUri.split(",")[1];
     let svgCode = atob(base64);
