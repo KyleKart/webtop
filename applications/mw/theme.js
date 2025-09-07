@@ -36,6 +36,7 @@ window.addEventListener("message", (event) => {
     root.style.setProperty("--looks-secondary", solid);
     root.style.setProperty("--looks-light-transparent", transparent);
     root.style.setProperty("--looks-secondary-dark", solid);
+    root.style.setProperty("--extensions-primary", solid);
 
     const base64 = baseDataUri.split(",")[1];
     let svgCode = atob(base64);
