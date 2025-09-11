@@ -271,6 +271,15 @@ body {
   gap: 15px;
 }
 
+#desktop-user-icons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .desktop-icon {
   width: 64px;
   text-align: center;
