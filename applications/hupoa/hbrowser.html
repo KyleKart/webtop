@@ -1,0 +1,1032 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huopa Proxy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<script src="theme.js"></script>
+
+<style>
+    body {
+      font-family: sans-serif;
+      overflow: hidden;
+      margin: 0;
+      background-color: rgba(25, 25, 25);
+      color: white;
+    }
+
+    .page {
+      width: 100%;
+      height: calc(100% - 6.75em);
+      position: absolute;
+      top: 6.75em;
+      left: 0;
+      border: none;
+      background-color: white;
+    }
+
+    #searchInput {
+        width: calc(100% - 7em);
+        height: 0.7em;
+        padding: 1em;
+        border-radius: 2em;
+        background-color: rgb(40, 40, 40);
+        border-color: rgb(60, 60, 60);
+        border-style: solid;
+        border-width: 1px;
+        position: absolute;
+        left: calc(50% - 1.5em);
+        top: 4.5em;
+        transform: translateX(-50%);
+        color: white;
+        transition: background-color 0.1s;
+        outline: none;
+    }
+
+    #searchInput:hover {
+        background-color: rgb(50, 50, 50);
+    }
+
+    #searchInput:focus {
+        border-color: #42c3ed;
+        border-width: 1.5px;
+    }
+
+    #newTabButton {
+        transition: ease-in 0.1s;
+        margin: 0 1em;
+        background-color: rgb(40, 40, 40);
+        border-style: none;
+        padding: 0.5em;
+        color: white;
+        border-radius: 50%;
+        height: 31px;
+        width: 31px;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    #tabBar {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        overflow-x: auto;
+    }
+
+    .tab {
+        cursor: pointer;
+        padding: 0.75em;
+        margin: 1em;
+        margin-right: 0;
+        background-color: rgb(40, 40, 40);
+        border-radius: 1em;
+        font-size: 0.66em;
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    #tabBar > * {
+        flex-shrink: 0;
+    }
+    .selectedTab {
+        background-color: rgb(55, 55, 55) !important;
+    }
+
+    .closeTab {
+        background-color: rgb(80, 80, 80);
+        border-style: none;
+        color: white;
+        margin-left: 0.5em;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+
+    .tabText {
+        padding-left: 0.25em;
+        cursor: pointer;
+    }
+
+    #innerTabs {
+        display: flex;
+    }
+
+    #devtools {
+        position: absolute;
+        right: 0;
+        width: 20em;
+        height: calc(100% - 6.75em);
+        bottom: 0;
+        background-color: rgb(40, 40, 40);
+        display: none;
+        border-left-style: solid;
+        border-color: rgb(70, 70, 70);
+        z-index: 1;
+        overflow: auto;
+    }
+
+    .devtoolsHeading {
+        display: inline;
+        margin: 0 1em;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none; 
+        -ms-user-select: none;
+    }
+
+    #devtoolsConsoleEval {
+        width: calc(100% - 2.5em);
+        margin: 0 auto;
+        display: block;
+        background-color: rgb(50, 50, 50);
+        border-radius: 0.5em;
+        padding: 0.5em;
+        outline: none;
+        color: white;
+        border-style: solid;
+        border-width: thin;
+        border-color: rgb(60, 60, 60);
+    }
+
+    #devtoolsToggle {
+        position: absolute;
+        top: 6.33em;
+        right: 1em;
+        background-color: rgb(50, 50, 50);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        color: white;
+        border-style: solid;
+        border-color: rgb(70, 70, 70);
+        font-size: x-small;
+        border-width: thin;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div id="tabBar">
+    <div id="innerTabs">
+        <div class="tab selectedTab" onclick="openTab(0)" id="tab0">
+            <label class="tabText">Loading...</label>
+            <button onclick="closeTab(0)" class="closeTab">×</button>
+        </div>
+    </div>
+    <button id="newTabButton" onclick="newTab()">+</button>
+</div>
+<button id="devtoolsToggle" onclick="toggleDevtools()">Dev</button>
+<div id="devtools">
+    <div style="margin: 0; background-color: rgb(40, 40, 40); position: fixed; padding: 1em; width: 100%; z-index: 2;">
+        <h3 class="devtoolsHeading" id="consoleButton">Console</h3>
+        <h3 class="devtoolsHeading" id="elementsButton">Elements</h3>
+    </div>
+    <div id="devtoolsConsole" style="margin-top: 60px;">
+        <div id="devtoolsConsoleData"></div>
+        <div style="border-style: none; border-bottom-style: solid; width: calc(100% - 1.5em); margin: auto; margin-bottom: 0.5em; border-color: rgb(100, 100, 100);"></div>
+        <input id="devtoolsConsoleEval">
+    </div>
+    <div id="devtoolsElemSelect" class="devtoolsHeading" style="position: fixed; background-color: rgb(40, 40, 40); padding: 0.5em 1em; width: 100%; margin: 0; margin-top: 3.25em; z-index: 2; display: none;">Select element</div>
+    <div style="display: none; margin-top: 60px;" id="devtoolsElements">
+        <div style="margin-top: 90px;" id="devtoolsElementTree"></div>
+    </div>
+</div>
+<input id="searchInput">
+<script type="module">
+    let devtoolsOpen = false;
+    let siteLogs = {}
+    let urls = {};
+    const url = new URL(window.location.href);
+    const kiosk = url.searchParams.get("kiosk");
+    let selectedTab = 0;
+    let newTabId = 1;
+    const searchInput = document.getElementById("searchInput");
+    let targetUrl = "https://www.startpage.com/";
+    if (kiosk) {
+        targetUrl = kiosk;
+        searchInput.remove();
+        document.getElementById("tabBar").remove();
+        document.getElementById("0").style.height = "100%";
+        document.getElementById("0").style.top = "0";
+    }
+    let devtoolsInputHandler;
+    let currentUrl = null;
+    const serverUrl = "https://allucat1000-huopaproxy-29.deno.dev/proxy";
+    const server = new URL(serverUrl);
+    const reloadHotkey = (e) => {
+        if (!selectedTab) return;
+        const isReload = (e.key === 'F5') || ((e.ctrlKey || e.metaKey) && e.code === 'KeyR');
+        if (!isReload) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (currentUrl) {
+            loadPage(currentUrl);
+        } else {
+            if (document.getElementById("0")) document.getElementById("0").remove();
+        }
+    };
+    window.addEventListener('keydown', reloadHotkey, { capture: true });
+
+    async function closeTab(id) {
+        if (devtoolsOpen) closeDevtools()
+        const tab = document.getElementById(id);
+        const tabMark = document.getElementById(`tab${id}`);
+        if (tab) tab.remove();
+        if (tabMark) tabMark.remove();
+        delete siteLogs[id];
+        delete urls[id];
+
+        const remainingTabs = document.getElementById("innerTabs").children;
+
+        if (remainingTabs.length === 0) {
+            urls = {};
+            selectedTab = null;
+            newTabId = 0;
+            siteLogs = {};
+            searchInput.disabled = true;
+            searchInput.value = "";
+            return;
+        }
+
+        if (id === selectedTab) {
+            const firstRemaining = remainingTabs[0];
+            const newId = firstRemaining.id.replace("tab", "");
+            openTab(newId);
+        }
+    }
+
+    async function toggleDevtools() {
+        if (selectedTab == null) { throw new Error("Unable to open devtools, no tab open!"); return; }
+        if (!devtoolsOpen) openDevtools(selectedTab); else closeDevtools();
+    }
+    window.toggleDevtools = toggleDevtools;
+
+    let lastHovered = null;
+    let savedColor = "";
+    let savedSelect = "";
+    let contextmenuOpen = false;
+    let elementFind = false;
+    let selectedElem = null;
+
+    function closeDevtools() {
+        const devtools = document.getElementById("devtools");
+        document.getElementById("devtoolsElementTree").innerHTML = "";
+        devtools.style.display = "none";
+        devtoolsOpen = false;
+        const input = document.getElementById("devtoolsConsoleEval");
+        input.removeEventListener("keydown", devtoolsInputHandler);
+        if (lastHovered) lastHovered.style.backgroundColor = savedColor;
+        lastHovered = null;
+        if (selectedElem) selectedElem.style.backgroundColor = savedSelect;
+        selectedElem = null;
+        if (selectedTab == null) return;
+        const frame = document.getElementById(selectedTab);
+        frame.style.width = "100%";
+    }
+
+    async function openDevtools(id) {
+        devtoolsOpen = true;
+        const devtools = document.getElementById("devtools");
+        devtools.style.display = "block";
+        document.getElementById("consoleButton").style.borderBottomStyle = "solid";
+        const consoleTabButton = document.getElementById("consoleButton");
+        const elementsTabButton = document.getElementById("elementsButton");
+        consoleTabButton.onclick = () => {
+            document.getElementById("consoleButton").style.borderBottomStyle = "solid";
+            document.getElementById("devtoolsConsole").style.display = "block";
+            document.getElementById("devtoolsElements").style.display = "none";
+            document.getElementById("devtoolsElemSelect").style.display = "none";
+            document.getElementById("elementsButton").style.borderBottomStyle = "none";
+        }
+        const consoleLogs = document.getElementById("devtoolsConsoleData");
+        const frame = document.getElementById(id);
+        if (!frame) { console.error("Unable to open devtools, unknown tab ID!"); closeDevtools(); return; }
+        elementsTabButton.onclick = () => {
+            document.getElementById("devtoolsConsole").style.display = "none";
+            document.getElementById("consoleButton").style.borderBottomStyle = "none";
+            document.getElementById("devtoolsElements").style.display = "block";
+            document.getElementById("devtoolsElemSelect").style.display = "block";
+            document.getElementById("elementsButton").style.borderBottomStyle = "solid";
+            const elemTree = document.getElementById("devtoolsElementTree");
+            elemTree.innerHTML = "";
+            elementRenderLoop(frame, elemTree);
+        }
+        frame.style.width = "calc(100% - 20em)";
+        consoleLogs.innerHTML = "";
+        let logs = [...siteLogs[id]].reverse();
+        const evalInput = document.getElementById("devtoolsConsoleEval");
+        devtoolsInputHandler = (e) => {
+            if (e.key == "Enter") {
+                e.preventDefault();
+                const val = evalInput.value;
+                evalInput.value = "";
+                siteLogs[id].push(["input", val]);
+                try {
+                    if (!frame.contentWindow.eval) closeDevtools();
+                    frame.contentWindow.eval(val);
+                } catch (e) {
+                    siteLogs[id].push(["error", e.message + " @ VM:1"]);
+                }
+            }
+        }
+        let closedElems = new WeakSet();
+
+        async function elementRenderLoop(el, renderTo) {
+            if (document.getElementById("devtoolsElements").style.display === "none") return;
+            if (!contextmenuOpen) {
+                renderTo.innerHTML = "";
+                renderElementTree(el.contentDocument, renderTo, true);
+            }
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            if (!devtoolsOpen) return;
+            elementRenderLoop(el, renderTo);
+        }
+        
+        let elemLink = new WeakMap()
+        let selectListenerOver = (e) => {
+            e.stopPropagation();
+            let el = e.target;
+            if (noHoverElems.includes(el.tagName)) return;
+            if (lastHovered && lastHovered !== el) {
+                lastHovered.style.backgroundColor = savedColor;
+            }
+            if (lastHovered !== el) savedColor = el.style.backgroundColor || "";
+            el.style.backgroundColor = "#1e90ff80";
+            lastHovered = el;
+        }
+        let noHoverElems = ["HTML","HEAD","META","LINK","SCRIPT","SOURCE","BASE","STYLE","TITLE"]
+        let selectListenerOut = (e) => {
+            e.stopPropagation();
+            let el = e.target
+            if (noHoverElems.includes(el.tagName)) return;
+            if (lastHovered === el) {
+                el.style.backgroundColor = savedColor;
+                lastHovered = null;
+            }
+        }
+        let selectListenerClick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            selectElem(e.target);
+            elementFind = false;
+            frame.contentDocument.removeEventListener("mouseover", selectListenerOver, true)
+            frame.contentDocument.removeEventListener("mouseout", selectListenerOut, true);
+            frame.contentDocument.removeEventListener("click", selectListenerClick, true)
+        }
+        document.getElementById("devtoolsElemSelect").onclick = () => {
+            if (!elementFind) {
+                frame.contentDocument.body.style.cursor = "crosshair";
+                elementFind = true;
+                frame.contentDocument.addEventListener("mouseover", selectListenerOver, true)
+                frame.contentDocument.addEventListener("mouseout", selectListenerOut, true);
+                frame.contentDocument.addEventListener("click", selectListenerClick, true)
+            } else {
+                elementFind = false;
+                frame.contentDocument.body.style.cursor = "";
+                frame.contentDocument.removeEventListener("mouseover", selectListenerOver, true)
+                frame.contentDocument.removeEventListener("mouseout", selectListenerOut, true);
+                frame.contentDocument.removeEventListener("click", selectListenerClick, true)
+            }
+        }
+        function selectElem(el) {
+            const oldRend = elemLink.get(selectedElem);
+            if (oldRend) oldRend.style.backgroundColor = "rgba(80, 80, 80, 0.7)";
+            if (selectedElem) if (selectedElem.style.backgroundColor !== "#1e90ff80") selectedElem.style.backgroundColor = savedSelect;
+            if (savedSelect !== "#1e90ff80") savedColor = el.style.backgroundColor; else savedSelect = "";
+            selectedElem = el;
+            selectedElem.style.backgroundColor = "#1e90ff80";
+            frame.contentDocument.body.style.cursor = "";
+            const rend = elemLink.get(el);
+            rend.focus();
+            rend.scrollIntoView({ behavior: "smooth", block: "center" });
+            rend.style.backgroundColor = "rgba(30, 50, 200, 0.7)";
+        }
+        function renderElementTree(el, renderTo, root = false, depth = 0) {
+            if (contextmenuOpen) return
+            const childrenRend = document.createElement("div");
+            if (!root) {
+                const rendEl = document.createElement("div");
+                rendEl.tabIndex = "-1";
+                rendEl.style = "margin: 0.25em; background-color: rgba(80, 80, 80, 0.7); padding: 0.25em; cursor: pointer; overflow-wrap: anywhere; user-select: none; -webkit-user-select: none; -ms-user-select: none;";
+                rendEl.style.marginLeft = depth + "px";
+                let attributeRender = []
+                if (el.attributes) {
+                    for (const attr of el.attributes) {
+                        let attrVal = attr.value;
+                        if (attr.name.toLowerCase() == "style") {
+                            attrVal = attrVal.replace("background-color: rgba(30, 144, 255, 0.5);", "");
+                        }
+                        if (attr.name.toLowerCase() == "srcdoc") {
+                            attrVal = "(...)";
+                        }
+                        attributeRender.push(`${attr.name}="${attrVal}"`);
+                    }
+                }
+                if (selectedElem == el) rendEl.style.backgroundColor = "rgba(30, 50, 200, 0.7)";
+                elemLink.set(el, rendEl);
+                let data = `<${el.tagName.toLowerCase()}>`;
+                if (attributeRender.length > 0) {
+                    data = `<${el.tagName.toLowerCase()} ${attributeRender.join(" ")}>`
+                }
+                let blocked = ["DIV","HTML","HEAD","BODY"];
+                let voidTags = ["AREA","BASE","BR","COL","EMBED","HR","IMG","INPUT","LINK","META","PARAM","SOURCE","TRACK","WBR"];
+                if (closedElems.has(el)) {
+                    childrenRend.style.display = "none";
+                    rendEl.style.backgroundColor = "rgba(60, 60, 60, 0.7)";
+                }
+                rendEl.onmouseenter = () => {
+                    if (noHoverElems.includes(el.tagName)) return;
+                    if (lastHovered && lastHovered !== el) {
+                        lastHovered.style.backgroundColor = savedColor;
+                    }
+                    if (lastHovered !== el) savedColor = el.style.backgroundColor || "";
+                    el.style.backgroundColor = "#1e90ff80";
+                    lastHovered = el;
+                };
+
+                rendEl.onmouseleave = () => {
+                    if (noHoverElems.includes(el.tagName)) return;
+                    if (lastHovered === el) {
+                        el.style.backgroundColor = savedColor;
+                        lastHovered = null;
+                    }
+                };
+                rendEl.onclick = () => {
+                    selectElem(el)
+                    if (childrenRend.style.display == "none") {
+                        childrenRend.style.display = "block";
+                        rendEl.style.backgroundColor = "rgba(80, 80, 80, 0.7)";
+                        closedElems.delete(el);
+                    } else {
+                        childrenRend.style.display = "none";
+                        rendEl.style.backgroundColor = "rgba(60, 60, 60, 0.7)";
+                        closedElems.add(el);
+                    }
+                };
+
+                rendEl.addEventListener("contextmenu", (e) => {
+                    e.preventDefault()
+                    if (contextmenuOpen) return;
+                    contextmenuOpen = true;
+                    const options = document.createElement("div");
+                    options.style = "background-color: 100, 100, 100, 0.7); border-style: solid; border-radius: 0.25em; margin: 0.5em; padding: 0; border-color: rgb(100, 100, 100); cursor: default;";
+                    const delButton = document.createElement("button");
+                    delButton.style = "border-radius: 0.25em; padding: 0.5em; margin: 0.5em; cursor: pointer; background-color: rgb(60, 60, 60, 0.7); color: white; border-style: solid; border-color: rgb(100, 100, 100);"
+                    delButton.textContent = "Delete";
+                    delButton.onclick = () => {
+                        contextmenuOpen = false;
+                        el.remove();
+                        options.remove();
+                    }
+                    const closeButton = document.createElement("button");
+                    closeButton.style = "border-radius: 0.25em; padding: 0.5em; margin: 0.5em; cursor: pointer; background-color: rgb(60, 60, 60, 0.7); color: white; border-style: solid; border-color: rgb(100, 100, 100);"
+                    closeButton.textContent = "Cancel";
+                    options.append(delButton, closeButton);
+                    closeButton.onclick = () => { contextmenuOpen = false; options.remove(); }
+                    rendEl.append(options);
+                })
+                if (el.textContent.trim() && !blocked.includes(el.tagName) && el.children.length < 1) {
+                    const child = document.createElement("p");
+                    child.style = "margin: 0.25em; background-color: rgba(60, 60, 60, 0.7); padding: 0.25em; overflow-wrap: anywhere;";
+                    child.style.marginLeft = depth + 10 + "px";
+                    if (el.textContent.length >= 500) child.textContent = el.textContent.slice(0, 500) + "..."; else child.textContent = el.textContent.slice(0, 500);
+                    childrenRend.append(child);
+                }
+                rendEl.textContent = data;
+                renderTo.append(rendEl)
+                renderTo.append(childrenRend);
+                if (el.textContent.trim() && !voidTags.includes(el.tagName)) {
+                    const closingTag = document.createElement("p");
+                    closingTag.style = "margin: 0.25em; background-color: rgba(110, 110, 110, 0.2); padding: 0.25em; user-select: none; -webkit-user-select: none; -ms-user-select: none; overflow-wrap: anywhere;";
+                    closingTag.style.marginLeft = depth + "px";
+                    closingTag.textContent = `</${el.tagName.toLowerCase()}>`;
+                    renderTo.append(closingTag)
+                }
+            }
+            if (root) renderTo.append(childrenRend);
+            for (const child of el.children) {
+                renderElementTree(child, childrenRend, false, depth + 10);
+            }
+        }
+        evalInput.addEventListener("keydown", devtoolsInputHandler) 
+        for (const log of logs) {
+            const logDiv = document.createElement("div");
+            logDiv.style = `
+            width: calc(100% - 2em);
+            padding: 0.5em;
+            background-color: rgba(77, 77, 77, 0.7);
+            border-color: rgb(65, 0, 0);
+            margin: 0.5em;
+            border-radius: 0.5em;
+            overflow-wrap: break-word;`
+            ;
+            logDiv.textContent = log[1];
+            if (log[0] == "error") logDiv.style.backgroundColor = "rgb(200, 0, 0)";
+            if (log[0] == "input") logDiv.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            if (log[0] == "warn") { logDiv.style.backgroundColor = "rgb(253, 178, 43)"; logDiv.style.color = "black"; };
+            consoleLogs.prepend(logDiv);
+        }
+        async function updateLogs() {
+            if (logs.length !== siteLogs[id].length) {
+                const oldLength = logs.length;
+                logs = [...siteLogs[id]];
+
+                for (let i = oldLength; i < logs.length; i++) {
+                    const log = logs[i];
+                    const logDiv = document.createElement("div");
+                    logDiv.style = `
+                        width: calc(100% - 2em);
+                        padding: 0.5em;
+                        background-color: rgba(77, 77, 77, 0.7);
+                        border-color: rgb(65, 0, 0);
+                        margin: 0.5em;
+                        border-radius: 0.5em;
+                        overflow-wrap: break-word;
+                    `;
+                    logDiv.textContent = log[1];
+                    if (log[0] === "error") logDiv.style.backgroundColor = "rgb(200, 0, 0)";
+                    if (log[0] === "warn")  logDiv.style.backgroundColor = "rgb(160, 200, 0)";
+                    consoleLogs.append(logDiv);
+                }
+            }
+            await new Promise(resolve => setTimeout(resolve, 250));
+            if (!devtoolsOpen) return;
+            updateLogs();
+        }
+
+        updateLogs()
+
+    }
+
+    async function newTab() {
+        searchInput.disabled = false;
+
+        const id = newTabId++;
+
+        const createdTab = document.createElement("div");
+        createdTab.classList.add("tab");
+        createdTab.id = `tab${id}`;
+        createdTab.onclick = () => openTab(id);
+
+        const siteName = document.createElement("label");
+        siteName.classList.add("tabText");
+        siteName.textContent = targetUrl;
+
+        const closeTabButton = document.createElement("button");
+        closeTabButton.classList.add("closeTab");
+        closeTabButton.onclick = () => closeTab(id);
+        closeTabButton.textContent = "×";
+
+        createdTab.append(siteName, closeTabButton);
+        document.getElementById("innerTabs").append(createdTab);
+
+        const newFrame = document.createElement("iframe");
+        newFrame.classList.add("page");
+        newFrame.style.display = "none";
+        newFrame.id = id;
+        document.body.append(newFrame);
+
+        urls[id] = targetUrl;
+
+        openTab(id);
+        loadPage(targetUrl);
+    }
+
+    async function openTab(id) {
+        if (devtoolsOpen) closeDevtools()
+        const newTab = document.getElementById(Number(id));
+        if (!newTab) throw new Error("Tried to access tab that doesn't exist! Id: " + id);
+
+        if (selectedTab !== null && selectedTab !== undefined) {
+            const oldTab = document.getElementById(selectedTab);
+            const oldTabMark = document.getElementById(`tab${selectedTab}`);
+            if (oldTabMark) oldTabMark.classList.remove("selectedTab");
+            if (oldTab) oldTab.style.display = "none";
+        }
+
+        selectedTab = Number(id);
+        const newTabMark = document.getElementById(`tab${selectedTab}`);
+        if (newTabMark) newTabMark.classList.add("selectedTab");
+        newTab.style.display = "block";
+        if (newTabMark) searchInput.value = urls[id];
+    }
+
+
+    window.newTab = newTab
+    window.closeTab = closeTab
+    window.openTab = openTab
+
+    function attachIframeHotkey() {
+        try {
+            const w = frame.contentWindow;
+            w.addEventListener('keydown', reloadHotkey, { capture: true });
+        } catch {}
+    }
+    if (!kiosk) {
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                if (searchInput.value) loadPage(searchInput.value, true);
+            }
+        })
+    }
+    function deproxify(u, currentRemoteBase) {
+        try {
+        const abs = new URL(u, currentRemoteBase);
+        if (abs.origin === server.origin && abs.pathname === server.pathname) {
+            const inner = abs.searchParams.get("url");
+            return inner ? inner : abs.href;
+        }
+        return abs.href;
+        } catch { return u; }
+    }
+
+    function rewriteUrl(baseServerUrl, targetUrl) {
+        try {
+            if (!targetUrl || targetUrl.startsWith("data:") || targetUrl.startsWith("javascript:") || targetUrl.startsWith("wss:") || targetUrl.startsWith("ws:")) {
+            return targetUrl;
+            }
+            const baseUrl = new URL(targetUrl).origin;
+            const resolved = new URL(targetUrl, baseUrl).href;
+            const proxied = new URL(baseServerUrl);
+            proxied.searchParams.append("url", resolved);
+            return proxied.href;
+        } catch (e) {
+            console.error("proxify failed for", targetUrl, e.message);
+            return targetUrl;
+        }
+    }
+    function hookConsole(frame, id) {
+        const win = frame.contentWindow;
+        if (win._consoleHooked) return;
+        win._consoleHooked = true;
+
+        const levels = ["log", "warn", "error", "info"];
+        for (const level of levels) {
+            const orig = win.console[level];
+            win.console[level] = (...args) => {
+                siteLogs[id].push([level, args.map(a => String(a)).join(" ") + " @ <anonymous:1>"]);
+            };
+        }
+
+        win.addEventListener("error", e => {
+            siteLogs[id].push(["error", e.message + " @ " + e.filename.split("/").pop() + ":" + e.lineno]);
+        });
+        win.addEventListener("unhandledrejection", e => {
+            siteLogs[id].push(["error", "Unhandled rejection: " + e.reason]);
+        });
+    }
+    function renderIntoIframe(html, remoteUrl) {
+        currentUrl = remoteUrl;
+        if (!kiosk) searchInput.value = currentUrl;
+
+        if (document.getElementById(selectedTab)) document.getElementById(selectedTab).remove();
+        const frame = document.createElement("iframe");
+        if (kiosk) {
+            frame.style.height = "100%";
+            frame.style.top = "0";
+        }
+        frame.id = selectedTab;
+        frame.classList.add("page");
+        document.body.append(frame);
+        const tab = document.getElementById(`tab${selectedTab}`);
+        if (tab) tab.children[0].textContent = remoteUrl;
+
+        frame.contentWindow.addEventListener("keydown", (e) => {
+            if (e.key.toLowerCase() === "r" && e.ctrlKey) {
+                e.preventDefault();
+                loadPag(currentUrl);
+            }
+        });
+
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        doc.open(); doc.write(html); doc.close();
+        attachIframeHotkey();
+
+        const win = frame.contentWindow;
+        win.setTitle = window.setTitle;
+ 
+        win.eval(`
+        document.requestStorageAccess = async () => Promise.resolve();
+        document.hasStorageAccess = async () => true;
+        const titleEl = document.querySelector("title");
+        if (titleEl) window.setTitle(titleEl.textContent);
+        `);
+
+        // Logs
+        siteLogs[selectedTab] = []
+        window.siteLogs = siteLogs
+        hookConsole(frame, selectedTab);
+
+        // Safe nav patches
+        win.open = (u) => { loadPage(deproxify(u, remoteUrl)); return null; };
+        try {
+            win.location.assign = (u) => loadPage(deproxify(u, remoteUrl));
+            win.location.replace = (u) => loadPage(deproxify(u, remoteUrl));
+            win.location.reload  = ()  => loadPage(remoteUrl);
+        } catch {}
+
+        // SRI
+
+        doc.querySelectorAll("link[integrity], script[integrity]").forEach(el => {
+            el.removeAttribute("integrity");
+            el.removeAttribute("crossorigin");
+        });
+
+        // Imports
+
+        const origImport = frame.contentWindow.__proto__.import;
+
+        win.__proto__.import = async function (path) {
+            if (typeof path === "string") {
+                if (!path.startsWith("http") && !path.startsWith("data:") && !path.startsWith("//")) {
+                    const abs = new URL(path, win.location.href).href;
+                    path = rewriteUrl(serverUrl, abs);
+                }
+            }
+            return origImport(path);
+        };
+
+        // Links
+        doc.addEventListener("click", e => {
+            const a = e.target.closest("a");
+            if (!a) return;
+            e.preventDefault();
+            const rawHref = a.getAttribute("href") || a.href;
+            const next = deproxify(rawHref, remoteUrl);
+            loadPage(next);
+        });
+
+        // Forms
+        win.history.pushState = () => {}
+        win.history.replaceState = () => {}
+
+        const submitHandler = e => {
+            const form = e.target.closest("form");
+            if (!form) return;
+
+            e.preventDefault();
+            
+            const rawAction = form.getAttribute("action") || "";
+            const action = deproxify(rawAction || remoteUrl, remoteUrl);
+            const fd = new FormData(form);
+            const params = new URLSearchParams(fd);
+            if ((form.method || "get").toLowerCase() === "post") {
+                fetch(server.href + "?url=" + encodeURIComponent(action), {
+                    method: "POST",
+                    body: params,
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    credentials: "include"
+                })
+                .then(r => r.text())
+                .then(html => renderIntoIframe(html, action));
+            } else {
+                const urlWithQs = action + (action.includes("?") ? "&" : "?") + params.toString();
+                loadPage(urlWithQs);
+            }
+        };
+        doc.addEventListener("submit", submitHandler, true);
+        doc.querySelectorAll("form").forEach(form => {
+            const nativeSubmit = form.submit;
+            form.submit = function() {
+                const ev = new Event("submit", { cancelable: true, bubbles: true });
+                if (form.dispatchEvent(ev)) {
+                    nativeSubmit.apply(form, arguments);
+                }
+            };
+        });
+        // Patch fetch
+    const origFetch = win.fetch;
+    win.fetch = function (input, init) {
+        if (typeof input === "string") {
+            input = rewriteUrl(serverUrl, input);
+        } else if (input instanceof Request) {
+            const newReq = new Request(rewriteUrl(serverUrl, input.url), {
+                method: input.method,
+                headers: input.headers,
+                body: input.body,
+                mode: input.mode,
+                credentials: input.credentials,
+                cache: input.cache,
+                redirect: input.redirect,
+                referrer: input.referrer,
+                integrity: input.integrity,
+            });
+            input = newReq;
+        }
+
+        return origFetch(input, init).catch(e => {
+            siteLogs[id].push([
+                "error",
+                e?.message || String(e),
+            ]);
+            throw e;
+        });
+    };
+
+        // Patch XMLHttpRequest
+        const origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url, ...rest) {
+            let rewrittenUrl = url;
+            try {
+                rewrittenUrl = rewriteUrl(serverUrl, url);
+            } catch (e) {
+                siteLogs[id].push([
+                    "error",
+                    `rewriteUrl failed for ${url}: ${e.message}`
+                ]);
+            }
+
+            try {
+                return origOpen.call(this, method, rewrittenUrl, ...rest);
+            } catch (e) {
+                siteLogs[id].push([
+                    "error",
+                    `${e.message} @ ${e.filename?.split("/").pop()}:${e.lineno}`
+                ]);
+                throw e;
+            }
+        };
+
+
+
+        // Meta refresh
+        doc.querySelectorAll('meta[http-equiv="refresh"]').forEach(meta => {
+            const content = meta.getAttribute("content") || "";
+            const match = content.match(/^\s*(\d+)\s*;\s*url=(.+)$/i);
+            if (match) {
+            const delay = parseInt(match[1], 10) * 1000;
+            const raw = match[2].trim();
+            const next = deproxify(raw, remoteUrl);
+            setTimeout(() => loadPage(next), delay);
+            }
+        });
+
+        const noop = () => {};
+
+        win.addEventListener("popstate", e => {} );
+        injectMutationObserver(win, serverUrl + "?url=" + encodeURIComponent(remoteUrl), serverUrl, targetUrl)
+    }
+    function injectMutationObserver(targetWindow, rewriteUrl, serverUrl, targetUrl) {
+        const attrMap = {
+            a: "href",
+            link: "href",
+            img: "src",
+            script: "src",
+            iframe: "src",
+            frame: "src",
+            embed: "src",
+            object: "data",
+            source: "src",
+            track: "src",
+            audio: "src",
+            video: "src",
+            form: "action",
+            area: "href",
+        };
+
+        const script = `
+            (function() {
+                const attrMap = ${JSON.stringify(attrMap)};
+                const serverUrl = "${serverUrl}";
+                const targetUrl = "${targetUrl}";
+
+                function rewriteUrlSafe(url) {
+                    try {
+                        const absoluteUrl = new URL(url, targetUrl).href;
+                        return serverUrl + "?url=" + encodeURIComponent(absoluteUrl);
+                    } catch {
+                        return url;
+                    }
+                }
+
+                function rewriteCss(css) {
+                    if (!css) return css;
+                    return css.replace(/url\(\\s*(['"]?)(.*?)\\1\s*\\)/g, (_, quote, url) => {
+                        let clean = url.trim();
+                        if (clean.startsWith("data:")) return \`url(\${url})\`;
+                        return \`url(\${rewriteUrlSafe(clean)})\`;
+                    });
+                }
+
+                function rewriteElement(el) {
+                    // title changing
+                    if (el.tagName && el.tagName.toLowerCase() === "title") {
+                        window.setTitle(el.textContent);
+                    }
+                    // attributes
+                    for (const [tag, attr] of Object.entries(attrMap)) {
+                        if (el.tagName && el.tagName.toLowerCase() === tag) {
+                            let val = el.getAttribute(attr);
+                            if (val && !val.startsWith("data:") && !val.startsWith("javascript:") && !val.startsWith("ws:") && !val.startsWith("wss:")) {
+                                el.setAttribute(attr, rewriteUrlSafe(val));
+                            }
+                        }
+                    }
+
+                    // inline styles
+                    if (el.hasAttribute && el.hasAttribute("style")) {
+                        el.setAttribute("style", rewriteCss(el.getAttribute("style")));
+                    }
+
+                    // style tags
+                    if (el.tagName && el.tagName.toLowerCase() === "style") {
+                        el.textContent = rewriteCss(el.textContent);
+                    }
+
+                    // srcsets
+                    if (el.tagName && ["img", "source"].includes(el.tagName.toLowerCase())) {
+                        let srcset = el.getAttribute("srcset");
+                        if (srcset) {
+                            let rewritten = srcset
+                                .split(",")
+                                .map(entry => {
+                                    let [url, size] = entry.trim().split(/\\s+/, 2);
+                                    return rewriteUrlSafe(url) + (size ? " " + size : "");
+                                })
+                                .join(", ");
+                            el.setAttribute("srcset", rewritten);
+                        }
+                    }
+                }
+
+                const observer = new MutationObserver(mutations => {
+                    for (const mutation of mutations) {
+                        if (mutation.type === "childList") {
+                            mutation.addedNodes.forEach(node => {
+                                if (node.nodeType === Node.ELEMENT_NODE) {
+                                    rewriteElement(node);
+                                    node.querySelectorAll && node.querySelectorAll("*").forEach(rewriteElement);
+                                }
+                            });
+                        } else if (mutation.type === "characterData" && mutation.target.parentNode?.tagName === "TITLE") {
+                            window.setTitle(mutation.target.parentNode.textContent);
+                        }
+                    }
+                });
+
+                observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+
+                document.querySelectorAll("*").forEach(rewriteElement);
+            })();
+        `;
+
+        const scriptEl = targetWindow.document.createElement("script");
+        scriptEl.textContent = script;
+        try {
+            targetWindow.document.body.appendChild(scriptEl);
+        } catch {}
+    }
+
+
+    async function loadPage(rawRemoteUrl, search = false) {
+        delete siteLogs[selectedTab];
+        if (devtoolsOpen) closeDevtools()
+        let remoteUrl = rawRemoteUrl;
+
+        if (rawRemoteUrl === "about:blank") {
+            if (document.getElementById(selectedTab)) document.getElementById(selectedTab).remove();
+            return;
+        }
+        if (!remoteUrl.startsWith("http://") && !remoteUrl.startsWith("https://") && !remoteUrl.includes(" ") && remoteUrl.includes(".")) {
+            remoteUrl = "http://" + remoteUrl;
+        }
+        if (search) {
+            if (!isValidURL(remoteUrl) && !remoteUrl.includes(" ") && !remoteUrl.includes(".") ) {
+                remoteUrl = "https://startpage.com/sp/search?q=" + rawRemoteUrl.replaceAll(" ", "+");
+            }
+        }
+        const raw = await fetch(server.href + "?url=" + encodeURIComponent(remoteUrl), {
+            credentials: 'include'
+        });
+        urls[selectedTab] = remoteUrl;
+        const html = await raw.text();
+        renderIntoIframe(html, remoteUrl);
+    }
+    function isValidURL(str) {
+        try {
+            const data = new URL(str);
+            if (data.protocol.startsWith("http")) return true;
+            return false;
+        } catch {
+            return false;
+        }
+    }
+    window.loadPage = loadPage;
+    function setTitle(content) {
+        const tabMark = document.getElementById(`tab${selectedTab}`);
+        if (tabMark) tabMark.children[0].textContent = content;
+    }
+    window.setTitle = setTitle;
+    loadPage(targetUrl);
+</script>
+</body>
+</html>
