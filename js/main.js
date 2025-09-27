@@ -35,23 +35,37 @@ if (params.get('dev') === 'true') {
 
     const devIconsHTML = `
       <div id="desktop-user-icons">
-        <div class="desktop-icon" data-title="Terminal" data-url="./applications/term.html" data-width="782" data-height="472">
-          <img src="./icons/term.png"/>
+        <div class="desktop-icon" data-title="RUN..." data-url="" data-width="782" data-height="472">
+          <img src="./icons/run.png"/>
         </div>
       </div>
     `;
 
     desktopIcons.insertAdjacentHTML('afterend', devIconsHTML);
     console.log('Dev icons added!');
+
+    const runIcon = document.querySelector('#desktop-user-icons .desktop-icon[data-title="RUN..."]');
+    if (runIcon) {
+      runIcon.addEventListener('click', () => {
+        let runURL = prompt("URL", "");
+        windowManager.createWindow({
+          title: `DEV`,
+          content: `<iframe src="${runURL}" width="100%" height="100%" style="border:none;"></iframe>`,
+          x: 200,
+          y: 150,
+          width: 800,
+          height: 600
+      });
+      });
+    }
+
     return true;
   }
 
-  // Try immediately first
   if (!addDevIcons()) {
-    // If not found, observe for it
     const observer = new MutationObserver(() => {
       if (addDevIcons()) {
-        observer.disconnect(); // Stop observing once added
+        observer.disconnect();
       }
     });
 
