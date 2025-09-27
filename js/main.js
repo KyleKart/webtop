@@ -28,7 +28,6 @@ window.getAccent = function(rgbaInput) {
 
 const params = new URLSearchParams(window.location.search);
 if (params.get('dev') === 'true') {
-  console.log('Dev mode is active!');
 
   const desktopIcons = document.getElementById('desktop-icons');
   if (desktopIcons) {
