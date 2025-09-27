@@ -29,8 +29,10 @@ window.getAccent = function(rgbaInput) {
 const params = new URLSearchParams(window.location.search);
 if (params.get('dev') === 'true') {
 
-  const desktopIcons = document.getElementById('desktop-icons');
-  if (desktopIcons) {
+  function addDevIcons() {
+    const desktopIcons = document.getElementById('desktop-icons');
+    if (!desktopIcons) return false;
+
     const devIconsHTML = `
       <div id="desktop-user-icons">
         <div class="desktop-icon" data-title="Terminal" data-url="./applications/term.html" data-width="782" data-height="472">
@@ -39,8 +41,19 @@ if (params.get('dev') === 'true') {
       </div>
     `;
 
-    // Insert the dev icons after #desktop-icons
     desktopIcons.insertAdjacentHTML('afterend', devIconsHTML);
+    console.log('Dev icons added!');
+    return true;
+  }
+
+  if (!addDevIcons()) {
+    const observer = new MutationObserver(() => {
+      if (addDevIcons()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 }
 
