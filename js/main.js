@@ -26,6 +26,25 @@ window.getAccent = function(rgbaInput) {
   return `rgba(${rgb}, ${alpha})`;
 };
 
+const params = new URLSearchParams(window.location.search);
+if (params.get('dev') === 'true') {
+  console.log('Dev mode is active!');
+
+  const desktopIcons = document.getElementById('desktop-icons');
+  if (desktopIcons) {
+    const devIconsHTML = `
+      <div id="desktop-user-icons">
+        <div class="desktop-icon" data-title="Terminal" data-url="./applications/term.html" data-width="782" data-height="472">
+          <img src="./icons/term.png"/>
+        </div>
+      </div>
+    `;
+
+    // Insert the dev icons after #desktop-icons
+    desktopIcons.insertAdjacentHTML('afterend', devIconsHTML);
+  }
+}
+
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {
