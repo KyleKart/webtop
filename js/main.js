@@ -28,33 +28,23 @@ window.getAccent = function(rgbaInput) {
 
 const params = new URLSearchParams(window.location.search);
 if (params.get('dev') === 'true') {
-
-  function addDevIcons() {
+  const waitForDesktopIcons = setInterval(() => {
     const desktopIcons = document.getElementById('desktop-icons');
-    if (!desktopIcons) return false;
+    if (desktopIcons) {
+      clearInterval(waitForDesktopIcons);
 
-    const devIconsHTML = `
-      <div id="desktop-user-icons">
-        <div class="desktop-icon" data-title="Terminal" data-url="./applications/term.html" data-width="782" data-height="472">
-          <img src="./icons/term.png"/>
+      const devIconsHTML = `
+        <div id="desktop-user-icons">
+          <div class="desktop-icon" data-title="Terminal" data-url="./applications/term.html" data-width="782" data-height="472">
+            <img src="./icons/term.png"/>
+          </div>
         </div>
-      </div>
-    `;
+      `;
 
-    desktopIcons.insertAdjacentHTML('afterend', devIconsHTML);
-    console.log('Dev icons added!');
-    return true;
-  }
-
-  if (!addDevIcons()) {
-    const observer = new MutationObserver(() => {
-      if (addDevIcons()) {
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
+      desktopIcons.insertAdjacentHTML('afterend', devIconsHTML);
+      console.log('Dev icons added!');
+    }
+  }, 50); // check every 50ms
 }
 
 document.getElementById('search-button').addEventListener('click', () => {
