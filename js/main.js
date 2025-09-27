@@ -46,7 +46,7 @@ if (params.get('dev') === 'true') {
 
     const runIcon = document.querySelector('#desktop-user-icons .desktop-icon[data-title="RUN..."]');
     if (runIcon) {
-      runIcon.addEventListener('click', () => {
+      runIcon.addEventListener('dblclick', () => {
         let runURL = prompt("URL", "");
         windowManager.createWindow({
           title: `DEV`,
