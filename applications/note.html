@@ -52,7 +52,6 @@ Welcome to your notepad editor!
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
     const instance = sceditor.create(document.getElementById('editor'), {
         format: 'bbcode',
         plugins: 'undo',
@@ -63,15 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
         height: '100%'
     });
 
-    instance.bind('ready', () => {
+    // Wait until SCEditor has created the toolbar
+    instance.bind('ready', function() {
         const toolbar = document.querySelector(".sceditor-toolbar");
-
-        function updateAccent() {
-            toolbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
-            requestAnimationFrame(updateAccent);
+        if (toolbar) {
+            function updateAccent() {
+                toolbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
+                requestAnimationFrame(updateAccent);
+            }
+            updateAccent();
         }
-
-        updateAccent();
     });
 });
 </script>
