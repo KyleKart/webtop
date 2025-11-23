@@ -65,7 +65,7 @@ Welcome to your notepad editor!
             });
         });
 
-    const toolbar = document.getElementById("sceditor-toolbar");
+    const toolbar = document.querySelector(".sceditor-toolbar");
     function updateAccent() {
       toolbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
       requestAnimationFrame(updateAccent);
