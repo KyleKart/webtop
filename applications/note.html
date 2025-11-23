@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minimal Notepad Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #editor {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sceditor-container {
+            height: 100% !important;
+            width: 100% !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .sceditor-container iframe,
+        .sceditor-container textarea {
+            height: calc(100% - 35px) !important;
+            background: transparent !important;
+        }
+
+        .sceditor-toolbar {
+            background: rgba(0, 0, 0, 0) !important;
+            border-bottom: none !important;
+        }
+
+        .sceditor-container iframe {
+            border: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <textarea id="example">
+Welcome to your notepad editor!
+</textarea>
+
+    <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            sceditor.create(document.getElementById('editor'), {
+                format: 'bbcode',
+                plugins: 'undo',
+                style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
+                icons: 'monocons',
+
+                toolbar: 'bold,italic,underline|font,size,color|',
+
+                width: '100%',
+                height: '100%'
+            });
+        });
+    </script>
+
+</body>
+
+</html>
