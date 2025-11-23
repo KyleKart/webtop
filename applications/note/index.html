@@ -23,14 +23,12 @@
             width: 100% !important;
             background: transparent !important;
             border: none !important;
-            color: white;
         }
 
         .sceditor-container iframe,
         .sceditor-container textarea {
             height: calc(100% - 35px) !important;
             background: transparent !important;
-            color: white;
         }
 
         .sceditor-toolbar {
@@ -73,12 +71,6 @@ Welcome to your notepad editor!
                 width: '100%',
                 height: '100%',
                 emoticonsEnabled: false
-            });
-
-            const editor = sceditor.instance(document.getElementById('editor'));
-
-            editor.bind('ready', () => {
-                editor.getBody().style.color = "white";
             });
         });
     </script>
