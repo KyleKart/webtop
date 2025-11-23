@@ -61,7 +61,7 @@ Welcome to your notepad editor!
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            sceditor.create(document.getElementById('editor'), {
+        const editor = sceditor.create(document.getElementById('editor'), {
                 format: 'bbcode',
                 plugins: 'undo',
                 style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
@@ -72,6 +72,7 @@ Welcome to your notepad editor!
                 width: '100%',
                 height: '100%'
             });
+            editor.css('body { color: white !important; }');
         });
     </script>
 
