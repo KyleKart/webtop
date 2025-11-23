@@ -32,7 +32,6 @@
         }
 
         .sceditor-toolbar {
-            background: rgba(0, 0, 0, 0) !important;
             border-bottom: none !important;
         }
 
@@ -65,6 +64,13 @@ Welcome to your notepad editor!
                 height: '100%'
             });
         });
+
+    const toolbar = document.getElementById("sceditor-toolbar");
+    function updateAccent() {
+      toolbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
+      requestAnimationFrame(updateAccent);
+    }
+    updateAccent();
     </script>
 
 </body>
