@@ -32,6 +32,7 @@
         }
 
         .sceditor-toolbar {
+            background: rgba(30, 30, 30, 0.6) !important;
             border-bottom: none !important;
         }
 
@@ -50,31 +51,22 @@ Welcome to your notepad editor!
     <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const instance = sceditor.create(document.getElementById('editor'), {
-        format: 'bbcode',
-        plugins: 'undo',
-        style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
-        icons: 'monocons',
-        toolbar: 'bold,italic,underline|font,size,color|source',
-        width: '100%',
-        height: '100%'
-    });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            sceditor.create(document.getElementById('editor'), {
+                format: 'bbcode',
+                plugins: 'undo',
+                style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
+                icons: 'monocons',
 
-    // Wait until SCEditor has created the toolbar
-    instance.bind('ready', function() {
-        const toolbar = document.querySelector(".sceditor-toolbar");
-        if (toolbar) {
-            function updateAccent() {
-                toolbar.style.background = window.parent.getAccent("rgba(50, 50, 50, 0.6)");
-                requestAnimationFrame(updateAccent);
-            }
-            updateAccent();
-        }
-    });
-});
-</script>
+                toolbar: 'bold,italic,underline|font,size,color|undo,redo|source',
+
+                width: '100%',
+                height: '100%'
+            });
+        });
+    </script>
 
 </body>
+
 </html>
