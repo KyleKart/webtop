@@ -71,7 +71,7 @@
 </head>
 
 <body>
-
+   <div id="toolbar"></div>
     <textarea id="editor"></textarea>
 
     <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
@@ -83,7 +83,8 @@
                 format: 'bbcode',
                 plugins: 'undo',
                 style: 'https://kylekart.github.io/webtop/applications/note/styles.css',
-                icons: 'material',
+                icons: 'monocons',
+                toolbarContainer: document.getElementById("toolbar"),
 
                 toolbar: 'cut,copy,paste,pastetext|bold,italic,underline,strike,subscript,superscript,font,size,color,left,center,right,justify,removeformat|source',
 
