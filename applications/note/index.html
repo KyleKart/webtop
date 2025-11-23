@@ -55,6 +55,22 @@
         .sceditor-toolbar .sceditor-group {
             display: inline-block;
         }
+
+        .sceditor-toolbar .sceditor-group:first-child {
+            position: absolute;
+            left: 5px;
+        }
+
+        .sceditor-toolbar .sceditor-group:nth-child(2) {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .sceditor-toolbar .sceditor-group:last-child {
+            position: absolute;
+            right: 5px;
+        }
     </style>
 </head>
 
