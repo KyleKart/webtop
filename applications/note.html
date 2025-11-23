@@ -74,6 +74,10 @@ Welcome to your notepad editor!
                 height: '100%',
                 emoticonsEnabled: false
             });
+                editor.once('ready', () => {
+        const doc = editor.getBody();
+        doc.style.color = "white";
+    });
         });
     </script>
 
