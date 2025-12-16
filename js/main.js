@@ -6,7 +6,7 @@ const windowManager = new WindowManager();
 const startMenu = startMenuManager();
 clockManager();
 
-window.getAccent = function(rgbaInput) {
+window.getAccent = function (rgbaInput) {
   const taskbar = window.parent.document.getElementById("taskbar");
   if (!taskbar) return rgbaInput;
 
@@ -55,7 +55,7 @@ if (params.get('dev') === 'true') {
           y: 150,
           width: 800,
           height: 600
-      });
+        });
       });
     }
 
@@ -76,14 +76,14 @@ if (params.get('dev') === 'true') {
 document.getElementById('search-button').addEventListener('click', () => {
   const query = document.getElementById('taskbar-input').value;
   if (query) {
-      windowManager.createWindow({
-          title: `Search: ${query}`,
-          content: `<iframe src="https://unduck.link?q=${encodeURIComponent(query)}" width="100%" height="100%" style="border:none;"></iframe>`,
-          x: 200,
-          y: 150,
-          width: 800,
-          height: 600
-      });
+    windowManager.createWindow({
+      title: `Search: ${query}`,
+      content: `<iframe src="https://unduck.link?q=${encodeURIComponent(query)}" width="100%" height="100%" style="border:none;"></iframe>`,
+      x: 200,
+      y: 150,
+      width: 800,
+      height: 600
+    });
   }
 });
 
@@ -115,7 +115,9 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
   const span = document.createElement('span');
   span.textContent = title;
   icon.appendChild(span);
-  icon.addEventListener('dblclick', (e) => {
+
+  const eventName = new URLSearchParams(location.search).get("icon") || "dblclick";
+  icon.addEventListener(eventName, (e) => {
     const title = icon.getAttribute('data-title');
     const url = icon.getAttribute('data-url');
     const width = icon.getAttribute('data-width');
@@ -147,8 +149,8 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
         height: height
       });
     }
-    if(title == "Doom") {
-        windowManager.createWindow({
+    if (title == "Doom") {
+      windowManager.createWindow({
         title: "Terminal [Doom]",
         content: `<iframe src="./applications/doom/term.html" id="window_terminal" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
         x: 200,
@@ -163,14 +165,14 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
 const optionMenu = document.getElementById('settings');
 
 optionMenu.addEventListener('click', (e) => {
-    windowManager.createWindow({
-      title: 'Settings',
-      content: `<iframe src="./applications/settings.html" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
-      x: 200,
-      y: 150,
-      width: 800,
-      height: 600
-    });
+  windowManager.createWindow({
+    title: 'Settings',
+    content: `<iframe src="./applications/settings.html" width="100%" height="100%" style="border:none;" allowtransparency="true"></iframe>`,
+    x: 200,
+    y: 150,
+    width: 800,
+    height: 600
+  });
 });
 
 window.addEventListener('beforeunload', (event) => {
@@ -275,11 +277,11 @@ async function replaceAllDesktopIcons() {
   for (const img of iconImgs) {
     const svg = await generateIconSVGFromImage(img.src);
     if (svg) {
-  const parser = new DOMParser();
-  const svgDoc = parser.parseFromString(svg, 'image/svg+xml');
-  const svgElement = svgDoc.documentElement;
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(svg, 'image/svg+xml');
+      const svgElement = svgDoc.documentElement;
 
-  img.parentNode.replaceChild(svgElement, img);
+      img.parentNode.replaceChild(svgElement, img);
     }
   }
 }

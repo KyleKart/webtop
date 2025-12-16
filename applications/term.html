@@ -106,6 +106,9 @@ CPU: ${navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : "Unk
 RAM: ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unknown"}
 Screen: ${window.parent.innerWidth}x${window.parent.innerHeight} @ ${window.devicePixelRatio}x`;
             },
+            "assign windows winbox": () => {
+                terminal.innerHTML = '';
+            },
         };
 
         function addInputLine() {
