@@ -284,8 +284,3 @@ async function replaceAllDesktopIcons() {
     }
   }
 }
-
-/* window.addEventListener('DOMContentLoaded', () => {
-  replaceAllDesktopIcons();
-});
-*/
