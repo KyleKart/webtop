@@ -271,7 +271,6 @@ async function generateIconSVGFromImage(imgUrl) {
 }
 
 async function replaceAllDesktopIcons() {
-  // Select all desktop icon images
   const iconImgs = document.querySelectorAll('.desktop-icon img');
 
   for (const img of iconImgs) {
@@ -286,7 +285,6 @@ async function replaceAllDesktopIcons() {
   }
 }
 
-// Run the replacement after DOM is loaded
 /* window.addEventListener('DOMContentLoaded', () => {
   replaceAllDesktopIcons();
 });
