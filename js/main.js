@@ -187,7 +187,7 @@ window.addEventListener('beforeunload', (event) => {
 async function generateIconSVGFromImage(imgUrl) {
   return new Promise((resolve) => {
     const img = new Image();
-    img.crossOrigin = 'anonymous'; // Important if icons are from other origins
+    img.crossOrigin = 'anonymous';
     img.src = imgUrl;
 
     img.onload = () => {
