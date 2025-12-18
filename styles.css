@@ -26,16 +26,19 @@ body {
 #taskbar {
   position: fixed;
   height: var(--taskbar-height);
+  bottom: 0;
+  left: 20px;
+  right: 20px;
   background: rgba(30, 30, 30, 0.6);
   backdrop-filter: blur(10px);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  padding: 0 10px;
   z-index: 1000;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
+
 #search-button {
   padding: 8px 10px;
   border: none;
