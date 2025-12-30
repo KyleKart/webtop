@@ -104,7 +104,7 @@ body {
   gap: 5px;
   margin: 0 10px;
   padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.2s ease-in-out;
   height: 100%;
 }
