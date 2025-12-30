@@ -87,6 +87,7 @@ body {
   cursor: pointer;
   height: var(--taskbar-height);
   width: 40px;
+  border-radius: 12px
 }
 
 #settings:hover {
