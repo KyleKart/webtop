@@ -49,25 +49,3 @@ window.addEventListener("message", (event) => {
     demoImg.src = newDataUri;
   }
 });
-
-const style = document.createElement('style');
-style.textContent = `
-.scratchCategoryId-toolsforwebtop {
-}
-`;
-document.head.appendChild(style);
-
-const observer = new MutationObserver(() => {
-  const menu = document.querySelector('.scratchCategoryMenu');
-  if (!menu) return;
-
-  const row = menu.querySelector('.scratchCategoryId-toolsforwebtop')?.closest('.scratchCategoryMenuRow');
-  if (!row) return;
-
-  row.querySelector('.scratchCategoryItemBubble')?.remove();
-  menu.prepend(row);
-
-  observer.disconnect();
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
