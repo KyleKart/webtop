@@ -57,7 +57,6 @@ export class WindowManager {
     taskButton.textContent = title;
     this.taskList.appendChild(taskButton);
 
-    // Store window data
     const windowData = {
       element: windowEl,
       taskButton,
@@ -152,10 +151,13 @@ setupWindowEvents(id, windowEl, header) {
       const win = this.windows.get(id);
       if (win.isMinimized) {
         this.restoreWindow(id);
+        this.checkTaskbarContact();
       } else if (this.activeWindow === id) {
         this.minimizeWindow(id);
+        this.checkTaskbarContact();
       } else {
         this.activateWindow(id);
+        this.checkTaskbarContact();
       }
     });
   }
