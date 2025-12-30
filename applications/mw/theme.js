@@ -60,7 +60,7 @@ document.head.appendChild(style);
 const transparencyStyle = document.createElement('style');
 transparencyStyle.textContent = `
   * {
-    opacity: 0.85; /* Adjust to your liking, e.g., 0.9, 0.8 */
+    opacity: 0.85;
   }
 `;
 document.head.appendChild(transparencyStyle);
