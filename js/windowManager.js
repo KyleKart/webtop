@@ -75,6 +75,31 @@ export class WindowManager {
 
     return id;
   }
+
+  checkTaskbarContact() {
+  const taskbar = document.getElementById("taskbar");
+  const windows = document.querySelectorAll(".window");
+
+  let touching = false;
+
+  windows.forEach(win => {
+    const w = win.getBoundingClientRect();
+    const t = taskbar.getBoundingClientRect();
+
+    const tolerance = 2;
+
+    if (w.bottom >= t.top - tolerance) {
+      touching = true;
+    }
+  });
+
+  if (touching) {
+    taskbar.classList.add("attached");
+    return;
+  }
+
+  taskbar.classList.remove("attached");
+}
   
 setupWindowEvents(id, windowEl, header) {
   let mouseDown = false;
@@ -106,7 +131,7 @@ setupWindowEvents(id, windowEl, header) {
     windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
     windowEl.style.top  = `${e.clientY - clickDifferenceY}px`;
 
-    checkTaskbarContact();
+    this.checkTaskbarContact();
   });
 
   window.parent.document.addEventListener('mouseup', () => {
@@ -117,31 +142,6 @@ setupWindowEvents(id, windowEl, header) {
 
     checkTaskbarContact();
   });
-}
-
-checkTaskbarContact() {
-  const taskbar = document.getElementById("taskbar");
-  const windows = document.querySelectorAll(".window");
-
-  let touching = false;
-
-  windows.forEach(win => {
-    const w = win.getBoundingClientRect();
-    const t = taskbar.getBoundingClientRect();
-
-    const tolerance = 2;
-
-    if (w.bottom >= t.top - tolerance) {
-      touching = true;
-    }
-  });
-
-  if (touching) {
-    taskbar.classList.add("attached");
-    return;
-  }
-
-  taskbar.classList.remove("attached");
 }
 
   setupTaskButtonEvents(id, taskButton) {
