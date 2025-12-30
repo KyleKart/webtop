@@ -57,14 +57,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-const transparencyStyle = document.createElement('style');
-transparencyStyle.textContent = `
-  * {
-    opacity: 0.85;
-  }
-`;
-document.head.appendChild(transparencyStyle);
-
 const observer = new MutationObserver(() => {
   const menu = document.querySelector('.scratchCategoryMenu');
   if (!menu) return;
