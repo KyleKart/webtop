@@ -27,8 +27,8 @@ body {
   position: fixed;
   height: var(--taskbar-height);
   bottom: 0;
-  left: 14px;
-  right: 14px;
+  left: 16px;
+  right: 16px;
   background: rgba(30,30,30,0.6);
   backdrop-filter: blur(10px);
   border-radius: 12px 12px 0 0;
@@ -54,7 +54,7 @@ body {
 }
 
 #taskbar.attached .taskbar-inner {
-  padding: 0 14px;
+  padding: 0 16px;
 }
 
 #search-button {
