@@ -25,27 +25,38 @@ body {
 
 #taskbar {
   position: fixed;
-  height: var(--taskbar-height);
   bottom: 0;
-  left: 12px;
-  right: 12px;
-  background: rgba(30, 30, 30, 0.6);
+  left: 0;
+  right: 0;
+  height: var(--taskbar-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(30,30,30,0.6);
   backdrop-filter: blur(10px);
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+  transition: border-radius .15s ease, box-shadow .15s ease;
+}
+
+.taskbar-inner {
+  max-width: calc(100% - 24px);
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 10px;
-  z-index: 1000;
-
-  transition: left .15s ease, right .15s ease, border-radius .15s ease;
 }
 
 #taskbar.attached {
-  left: 0;
-  right: 0;
   border-radius: 0;
   box-shadow: none;
+}
+
+#taskbar.attached .taskbar-inner {
+  max-width: 100%;
 }
 
 #search-button {
