@@ -106,7 +106,6 @@ setupWindowEvents(id, windowEl, header) {
     windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
     windowEl.style.top  = `${e.clientY - clickDifferenceY}px`;
 
-    // 👇 check while moving
     checkTaskbarContact();
   });
 
@@ -116,7 +115,6 @@ setupWindowEvents(id, windowEl, header) {
 
     if (iframe) iframe.style.pointerEvents = 'auto';
 
-    // 👇 final check after drop (prevents weird states)
     checkTaskbarContact();
   });
 }
