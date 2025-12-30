@@ -241,18 +241,19 @@ body {
 }
 
 .task-button {
-    flex: 1;
     height: 100%;
     background: transparent;
     border: none;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 0;
+
+    padding: 0 10px;
     box-sizing: border-box;
 }
 
