@@ -33,7 +33,7 @@ window.addEventListener("message", (event) => {
   if (event.data.type === "accentResponse") {
     const [transparent, solid] = event.data.values;
     root.style.setProperty("--looks-transparent", transparent);
-    root.style.setProperty("--looks-secondary", transparent);
+    root.style.setProperty("--looks-secondary", solid);
     root.style.setProperty("--looks-light-transparent", transparent);
     root.style.setProperty("--looks-secondary-dark", solid);
     root.style.setProperty("--extensions-primary", solid);
