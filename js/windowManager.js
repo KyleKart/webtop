@@ -122,7 +122,10 @@ setupWindowEvents(id, windowEl, header) {
     clickDifferenceY = e.clientY - rect.top;
   });
 
-  header.addEventListener('dblclick', () => this.maximizeWindow(id));
+  header.addEventListener('dblclick', () => {
+  this.maximizeWindow(id); 
+  this.checkTaskbarContact();
+  });
 
   window.parent.document.addEventListener('mousemove', (e) => {
     if (!mouseDown) return;
@@ -140,7 +143,7 @@ setupWindowEvents(id, windowEl, header) {
 
     if (iframe) iframe.style.pointerEvents = 'auto';
 
-    checkTaskbarContact();
+    this.checkTaskbarContact();
   });
 }
 
