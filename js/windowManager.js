@@ -75,45 +75,76 @@ export class WindowManager {
 
     return id;
   }
+  
+setupWindowEvents(id, windowEl, header) {
+  let mouseDown = false;
+  let clickDifferenceX = 0;
+  let clickDifferenceY = 0;
 
-  setupWindowEvents(id, windowEl, header) {
-    let mouseDown = false;
-    let clickDifferenceX = 0;
-    let clickDifferenceY = 0;
+  const iframe = windowEl.querySelector('iframe');
 
-    const iframe = windowEl.querySelector('iframe');
+  windowEl.addEventListener('mousedown', () => this.activateWindow(id));
 
-    windowEl.addEventListener('mousedown', () => this.activateWindow(id));
+  header.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    mouseDown = true;
+    e.preventDefault();
 
-    header.addEventListener('mousedown', (e) => {
-      if (e.button !== 0) return;
-      mouseDown = true;
-      e.preventDefault();
+    if (iframe) iframe.style.pointerEvents = 'none';
 
-      if (iframe) iframe.style.pointerEvents = 'none';
+    const rect = windowEl.getBoundingClientRect();
+    clickDifferenceX = e.clientX - rect.left;
+    clickDifferenceY = e.clientY - rect.top;
+  });
 
-      const rect = windowEl.getBoundingClientRect();
-      clickDifferenceX = e.clientX - rect.left;
-      clickDifferenceY = e.clientY - rect.top;
-    });
+  header.addEventListener('dblclick', () => this.maximizeWindow(id));
 
-    header.addEventListener('dblclick', () => this.maximizeWindow(id));
+  window.parent.document.addEventListener('mousemove', (e) => {
+    if (!mouseDown) return;
+    e.preventDefault();
 
+    windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
+    windowEl.style.top  = `${e.clientY - clickDifferenceY}px`;
 
-    window.parent.document.addEventListener('mousemove', (e) => {
-      if (!mouseDown) return;
-      e.preventDefault();
-      windowEl.style.left = `${e.clientX - clickDifferenceX}px`;
-      windowEl.style.top = `${e.clientY - clickDifferenceY}px`;
-    });
+    // 👇 check while moving
+    checkTaskbarContact();
+  });
 
-    window.parent.document.addEventListener('mouseup', () => {
-      if (!mouseDown) return;
-      mouseDown = false;
+  window.parent.document.addEventListener('mouseup', () => {
+    if (!mouseDown) return;
+    mouseDown = false;
 
-      if (iframe) iframe.style.pointerEvents = 'auto';
-    });
+    if (iframe) iframe.style.pointerEvents = 'auto';
+
+    // 👇 final check after drop (prevents weird states)
+    checkTaskbarContact();
+  });
+}
+
+checkTaskbarContact() {
+  const taskbar = document.getElementById("taskbar");
+  const windows = document.querySelectorAll(".window");
+
+  let touching = false;
+
+  windows.forEach(win => {
+    const w = win.getBoundingClientRect();
+    const t = taskbar.getBoundingClientRect();
+
+    const tolerance = 2;
+
+    if (w.bottom >= t.top - tolerance) {
+      touching = true;
+    }
+  });
+
+  if (touching) {
+    taskbar.classList.add("attached");
+    return;
   }
+
+  taskbar.classList.remove("attached");
+}
 
   setupTaskButtonEvents(id, taskButton) {
     taskButton.addEventListener('click', () => {
