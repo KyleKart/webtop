@@ -2,6 +2,7 @@
     'use strict';
 
     const extSupport = document.createElement("script");
+    extSupport.type = "module";
     extSupport.src = "https://kylekart.github.io/webtop/js/extSupport.js";
     document.head.appendChild(extSupport);
 
