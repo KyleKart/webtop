@@ -42,7 +42,18 @@
                                 defaultValue: 150
                             }
                         }
-                    }
+                    },
+                {
+                    opcode: "getAccent",
+                    blockType: Scratch.BlockType.REPORTER,
+                    text: "get [TYPE] accent colour",
+                    arguments: {
+                        TYPE: {
+                            type: Scratch.ArgumentType.STRING,
+                            menu: "accentTypes",
+                            defaultValue: "solid"
+                        }
+                    }                }
                 ]
             };
         }
@@ -57,6 +68,22 @@
                 height: args.HEIGHT
             });
         }
+
+    getAccent(args) {
+        const type = args.TYPE.toLowerCase();
+        return new Promise((resolve) => {
+            function handleMessage(event) {
+                if (event.data?.type === "accentResponse") {
+                    window.removeEventListener("message", handleMessage);
+                    const [transparent, solid] = event.data.values;
+                    resolve(type === "solid" ? solid : transparent);
+                }
+            }
+
+            window.addEventListener("message", handleMessage);
+            window.parent.postMessage({ type: "getAccent" }, "*");
+        });
+    }
     }
     Scratch.extensions.register(new Extension());
 })(Scratch);
