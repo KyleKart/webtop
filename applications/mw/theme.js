@@ -53,8 +53,12 @@
                             menu: "accentTypes",
                             defaultValue: "solid"
                         }
-                    }                }
-                ]
+                    }                
+                }
+                ],
+            menus: {
+                accentTypes: ["solid", "transparent"]
+            }
             };
         }
 
