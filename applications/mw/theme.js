@@ -1,5 +1,10 @@
-(function(Scratch) {
+(function (Scratch) {
     'use strict';
+
+    const extSupport = document.createElement("script");
+    extSupport.src = "https://kylekart.github.io/webtop/js/extSupport.js";
+    document.head.appendChild(extSupport);
+
     class Extension {
         getInfo() {
             return {
@@ -9,9 +14,47 @@
                     {
                         blockType: Scratch.BlockType.LABEL,
                         text: 'Your current Webtop accent is in use.',
+                    },
+                    {
+                        opcode: 'newWindow',
+                        blockType: Scratch.BlockType.COMMAND,
+                        text: 'new window content:[CONTENT] x:[X] y:[Y] width:[WIDTH] height:[HEIGHT]',
+                        arguments: {
+                            CONTENT: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'Hello'
+                            },
+                            X: {
+                                type: Scratch.ArgumentType.NUMBER,
+                                defaultValue: 0
+                            },
+                            Y: {
+                                type: Scratch.ArgumentType.NUMBER,
+                                defaultValue: 0
+                            },
+                            WIDTH: {
+                                type: Scratch.ArgumentType.NUMBER,
+                                defaultValue: 200
+                            },
+                            HEIGHT: {
+                                type: Scratch.ArgumentType.NUMBER,
+                                defaultValue: 150
+                            }
+                        }
                     }
                 ]
             };
+        }
+
+        newWindow(args) {
+            if (!window.windowManager) return;
+            window.windowManager.createWindow?.({
+                content: args.CONTENT,
+                x: args.X,
+                y: args.Y,
+                width: args.WIDTH,
+                height: args.HEIGHT
+            });
         }
     }
     Scratch.extensions.register(new Extension());
@@ -20,7 +63,7 @@
 const root = document.documentElement;
 
 setInterval(() => {
-  window.parent.postMessage({ type: "getAccent" }, "*");
+    window.parent.postMessage({ type: "getAccent" }, "*");
 }, 100);
 
 const baseDataUri = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScyMCcgaGVpZ2h0PScyMCcgZmlsbD0nYmx1ZScvPjwvc3ZnPg==";
@@ -30,24 +73,24 @@ demoImg.id = "accentSvg";
 document.body.appendChild(demoImg);
 
 window.addEventListener("message", (event) => {
-  if (event.data.type === "accentResponse") {
-    const [transparent, solid] = event.data.values;
-    root.style.setProperty("--looks-transparent", transparent);
-    root.style.setProperty("--looks-secondary", solid);
-    root.style.setProperty("--looks-light-transparent", transparent);
-    root.style.setProperty("--looks-secondary-dark", solid);
-    root.style.setProperty("--extensions-primary", solid);
+    if (event.data.type === "accentResponse") {
+        const [transparent, solid] = event.data.values;
+        root.style.setProperty("--looks-transparent", transparent);
+        root.style.setProperty("--looks-secondary", solid);
+        root.style.setProperty("--looks-light-transparent", transparent);
+        root.style.setProperty("--looks-secondary-dark", solid);
+        root.style.setProperty("--extensions-primary", solid);
 
-    const base64 = baseDataUri.split(",")[1];
-    let svgCode = atob(base64);
+        const base64 = baseDataUri.split(",")[1];
+        let svgCode = atob(base64);
 
-    svgCode = svgCode.replace(/fill=['"][^'"]*['"]/g, `fill="${solid}"`);
+        svgCode = svgCode.replace(/fill=['"][^'"]*['"]/g, `fill="${solid}"`);
 
-    const newBase64 = btoa(svgCode);
-    const newDataUri = "data:image/svg+xml;base64," + newBase64;
+        const newBase64 = btoa(svgCode);
+        const newDataUri = "data:image/svg+xml;base64," + newBase64;
 
-    demoImg.src = newDataUri;
-  }
+        demoImg.src = newDataUri;
+    }
 });
 
 const style = document.createElement('style');
