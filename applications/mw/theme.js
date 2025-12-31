@@ -49,3 +49,11 @@ window.addEventListener("message", (event) => {
     demoImg.src = newDataUri;
   }
 });
+
+const style = document.createElement('style');
+style.textContent = `
+  .gui_body-wrapper_-N0sA.box_box_2jjDp {
+  background-color: transparent;
+  }
+`;
+document.head.appendChild(style);
