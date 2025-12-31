@@ -52,8 +52,17 @@ window.addEventListener("message", (event) => {
 
 const style = document.createElement('style');
 style.textContent = `
-  .gui_body-wrapper_-N0sA.box_box_2jjDp {
-  background-color: transparent;
-  }
+    .gui_body-wrapper_-N0sA.box_box_2jjDp {
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+
+    .Popover-body {
+        background: transparent !important;
+    }
+
+    .interface_container_2nBns {
+        background-color: transparent !important;
+    }
 `;
 document.head.appendChild(style);
