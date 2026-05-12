@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webtop 2.0</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-url: url('https://kylekart.github.io/webtop/backgrounds/borealis2.png');
+            --glass-dark: rgba(10, 10, 10, 0.88);
+            --border: rgba(255, 255, 255, 0.12);
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --accent: #4285f4;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            overflow: hidden;
+            background: var(--bg-url) no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+        }
+
+        .desktop {
+            height: calc(100% - 64px);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .widget {
+            width: 320px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .widget h3 { margin: 0 0 8px 0; font-size: 0.7rem; font-weight: 800; opacity: 0.4; text-transform: uppercase; letter-spacing: 2px; }
+
+        .shelf {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 45px;
+            background: var(--glass-dark);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--border);
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 1000;
+            left: 32px;
+            right: 32px;
+        }
+
+        .shelf-start { flex: 1; display: flex; align-items: left; }
+        .shelf-center { display: flex; align-items: center; gap: 8px; }
+        .shelf-end { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+
+        .app-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            padding: 0 5px;
+            width: auto;
+            height: 35px;
+            transition: all 0.2s ease;
+            border-radius: 12px;
+        }
+
+        .app-item svg {
+            height: 24px;
+            width: auto;
+        }
+
+        .app-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .app-item:hover, .launcher-item {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .app-item:hover .app-label {
+            color: var(--text-main);
+        }
+
+        .status-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: default;
+        }
+
+        .time-module {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        #clock { font-size: 14px; color: var(--text-main); }
+        #date { font-size: 14px; color: var(--text-dim); margin-top: 2px; }
+
+        .gemini-icon {
+            background: linear-gradient(135deg, #4285f4, #9b72cb, #d96570);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .icon-grid {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 72px);
+            grid-auto-flow: column;
+            grid-template-rows: repeat(auto-fill, 72px);
+            height: calc(100% - 150px);
+            pointer-events: none;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+            pointer-events: auto;
+        }
+
+        .desktop-icon svg {
+            height: 24px;
+            width: auto;
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .desktop-icon span {
+            font-size: 12px;
+            margin-top: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="desktop">
+        <div class="widget" style="display:none;">
+            <h3>Kernel Metadata</h3>
+            <p>Timezone: UTC-4<br>Format: ISO-8601<br>Status: Nominal</p>
+        </div>
+        <div class="icon-grid">
+            <div class="desktop-icon">
+                <i data-lucide="hard-drive"></i>
+                <span>Root</span>
+            </div>
+            <div class="desktop-icon">
+                <i data-lucide="folder-kanban"></i>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon">
+                <i data-lucide="file"></i>
+                <span>file.txt</span>
+            </div>
+            <div class="desktop-icon">
+                <i data-lucide="trash-2"></i>
+                <span>Trash</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="shelf">
+        <div class="shelf-start">
+            <div class="app-item"><i data-lucide="grip"></i></div>
+        </div>
+
+        <div class="shelf-center">
+            <div class="app-item"><i data-lucide="globe"></i><span class="app-label">Browser</span></div>
+            <div class="app-item"><i data-lucide="terminal"></i><span class="app-label">Terminal</span></div>
+            <div class="app-item"><i data-lucide="folder"></i><span class="app-label">Files</span></div>
+            <div class="app-item"><i data-lucide="command"></i><span class="app-label">Command</span></div>
+        </div>
+
+        <div class="shelf-end">
+            <div class="status-group">
+                <i data-lucide="wifi" size="16"></i>
+                <i data-lucide="battery-full" size="16"></i>
+                <div class="time-module">
+                    <span id="clock">00:00</span>
+                    <span id="date">0000-00-00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function updateDateTime() {
+            const now = new Date();
+            
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hh}:${mm}`;
+
+            const yyyy = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            document.getElementById('date').textContent = `${yyyy}-${month}-${dd}`;
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
+</body>
+</html>
