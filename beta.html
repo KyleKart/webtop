@@ -313,7 +313,7 @@
 
     <div class="shelf">
         <div class="shelf-start">
-            <div class="app-item"><i data-lucide="grip"></i></div>
+            <div class="app-item" id="apps-menu"><i data-lucide="grip"></i></div>
         </div>
 
         <div class="shelf-center">
@@ -353,6 +353,27 @@
 
         setInterval(updateDateTime, 1000);
         updateDateTime();
+
+        const trigger = document.getElementById('apps-menu');
+        const menu = document.getElementById('start-menu');
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = menu.style.display === 'flex';
+            menu.style.display = isVisible ? 'none' : 'flex';
+
+            if (!isVisible) {
+                setTimeout(() => {
+                    document.querySelector('.search-input')?.focus();
+                }, 50);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && e.target !== trigger) {
+                menu.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
