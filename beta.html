@@ -107,15 +107,15 @@
         }
 
         .time-module {
-            display: flex;
+            /* display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: center; */
             line-height: 1.1;
         }
 
         #clock { font-size: 14px; color: var(--text-main); }
-        #date { font-size: 14px; color: var(--text-dim); margin-top: 2px; }
+        #date { font-size: 14px; color: var(--text-dim); }
 
         .gemini-icon {
             background: linear-gradient(135deg, #4285f4, #9b72cb, #d96570);
@@ -214,8 +214,8 @@
                 <i data-lucide="wifi" size="16"></i>
                 <i data-lucide="battery-full" size="16"></i>
                 <div class="time-module">
+                    <span id="date">0000-00-00</span>
                     <span id="clock">00:00</span>
-                    <span id="date" style="display: none;">0000-00-00</span>
                 </div>
             </div>
         </div>
