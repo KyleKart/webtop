@@ -359,19 +359,22 @@
 
         trigger.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isVisible = menu.style.display === 'absolute';
-            menu.style.display = isVisible ? 'none' : 'absolute';
 
-            if (!isVisible) {
+            const isHidden = menu.hasAttribute('hidden');
+
+            if (isHidden) {
+                menu.removeAttribute('hidden');
                 setTimeout(() => {
                     document.querySelector('.search-input')?.focus();
                 }, 50);
+            } else {
+                menu.setAttribute('hidden', '');
             }
         });
 
         document.addEventListener('click', (e) => {
             if (!menu.contains(e.target) && e.target !== trigger) {
-                menu.style.display = 'none';
+                menu.setAttribute('hidden', '');
             }
         });
     </script>
