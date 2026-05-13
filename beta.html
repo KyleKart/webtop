@@ -359,8 +359,8 @@
 
         trigger.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isVisible = menu.style.display === 'flex';
-            menu.style.display = isVisible ? 'none' : 'flex';
+            const isVisible = menu.style.display === 'absolute';
+            menu.style.display = isVisible ? 'none' : 'absolute';
 
             if (!isVisible) {
                 setTimeout(() => {
