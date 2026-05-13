@@ -208,7 +208,7 @@
         }
 
         .start-menu {
-            position: none;
+            position: absolute;
             bottom: 48px;
             left: 72px;
             width: 320px;
@@ -360,7 +360,7 @@
         trigger.addEventListener('click', (e) => {
             e.stopPropagation();
             const isVisible = menu.style.display === 'absolute';
-            menu.style.display = isVisible ? 'none' : 'absolute';
+            menu.style.display = isVisible ? 'none' : 'absolulte';
 
             if (!isVisible) {
                 setTimeout(() => {
