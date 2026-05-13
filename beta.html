@@ -208,19 +208,54 @@
         }
 
         .start-menu {
-    position: absolute;
-    bottom: 48px; 
-    
-    left: 48px; 
-    
-    width: 320px;
-    height: auto;
-    max-height: 80vh;
-    
-    background: #1a1a1a;
-    border: 1px solid #333;
-    z-index: 9999;
-}
+            position: absolute;
+            bottom: 48px;
+
+            left: 48px;
+
+            width: 320px;
+            height: auto;
+            max-height: 80vh;
+
+            background: #1a1a1a;
+            border: 1px solid #333;
+            z-index: 9999;
+        }
+
+        .search-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-top: 1px solid #333;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            background: #000;
+            border: 1px solid #333;
+            padding: 4px 8px;
+        }
+
+        .search-container:focus-within {
+            border-color: #0055ff;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .settings-btn:hover {
+            background: #333;
+        }
     </style>
 </head>
 
@@ -252,29 +287,32 @@
     </div>
 
     <div id="start-menu" class="start-menu">
-    <div class="app-grid">
-        <div class="app-item">
-            <i data-lucide="terminal"></i>
-            <span>Konsole</span>
+        <div class="app-grid">
+            <div class="app-item">
+                <i data-lucide="terminal"></i>
+                <span>Konsole</span>
+            </div>
+            <div class="app-item">
+                <i data-lucide="shopping-bag"></i>
+                <span>Discover</span>
+            </div>
+            <div class="app-item active">
+                <i data-lucide="folder"></i>
+                <span>Dolphin</span>
+            </div>
         </div>
-        <div class="app-item">
-            <i data-lucide="shopping-bag"></i>
-            <span>Discover</span>
-        </div>
-        <div class="app-item active">
-            <i data-lucide="folder"></i>
-            <span>Dolphin</span>
-        </div>
-    </div>
 
-    <div class="search-section">
-        <div class="search-wrapper">
-            <i data-lucide="search" class="search-icon"></i>
-            <input type="text" class="search-bar" placeholder="Search...">
+        <div class="search-section">
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search...">
+            </div>
+
+            <button class="settings-btn">
+                <i data-lucide="sliders-horizontal"></i>
+            </button>
         </div>
-        <i data-lucide="sliders-horizontal" class="settings-icon"></i>
     </div>
-</div>
 
     <div class="shelf">
         <div class="shelf-start">
