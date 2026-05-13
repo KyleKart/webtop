@@ -254,7 +254,7 @@
                 <i data-lucide="battery-full" size="16"></i>
                 <div class="time-module">
                     <span id="clock">00:00</span>
-                    <span id="date">0000-00-00</span>
+                    <span id="date">00-00</span>
                 </div>
             </div>
         </div>
@@ -273,7 +273,7 @@
             const yyyy = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const dd = String(now.getDate()).padStart(2, '0');
-            document.getElementById('date').textContent = `${yyyy}-${month}-${dd}`;
+            document.getElementById('date').textContent = `${month}-${dd}`;
         }
 
         setInterval(updateDateTime, 1000);
