@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +16,11 @@
             --accent: #4285f4;
         }
 
-        body, html {
-            margin: 0; padding: 0; height: 100%;
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             overflow: hidden;
             background: var(--bg-url) no-repeat center center fixed;
@@ -41,11 +45,20 @@
             border-radius: 12px;
         }
 
-        .widget h3 { margin: 0 0 8px 0; font-size: 0.7rem; font-weight: 800; opacity: 0.4; text-transform: uppercase; letter-spacing: 2px; }
+        .widget h3 {
+            margin: 0 0 8px 0;
+            font-size: 0.7rem;
+            font-weight: 800;
+            opacity: 0.4;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
         .shelf {
             position: fixed;
-            bottom: 0; left: 0; right: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
             height: 48px;
             background: var(--glass-dark);
             backdrop-filter: blur(30px);
@@ -59,9 +72,25 @@
             right: 48px;
         }
 
-        .shelf-start { flex: 1; display: flex; align-items: left; }
-        .shelf-center { display: flex; align-items: center; gap: 8px; }
-        .shelf-end { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+        .shelf-start {
+            flex: 1;
+            display: flex;
+            align-items: left;
+        }
+
+        .shelf-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shelf-end {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+        }
 
         .app-item {
             display: flex;
@@ -89,7 +118,8 @@
             white-space: nowrap;
         }
 
-        .app-item:hover, .launcher-item {
+        .app-item:hover,
+        .launcher-item {
             background: rgba(255, 255, 255, 0.08);
         }
 
@@ -107,15 +137,23 @@
         }
 
         .time-module {
-            /* display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
             line-height: 1.1;
+            padding: 0 6px;
         }
 
-        #clock { font-size: 14px; color: var(--text-main); }
-        #date { font-size: 14px; color: var(--text-dim); }
+        #clock {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        #date {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
 
         .gemini-icon {
             background: linear-gradient(135deg, #4285f4, #9b72cb, #d96570);
@@ -160,7 +198,7 @@
         .desktop-icon span {
             font-size: 12px;
             margin-top: 8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             font-weight: 500;
             text-align: center;
             width: 100%;
@@ -170,6 +208,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="desktop">
@@ -226,7 +265,7 @@
 
         function updateDateTime() {
             const now = new Date();
-            
+
             const hh = String(now.getHours()).padStart(2, '0');
             const mm = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hh}:${mm}`;
@@ -241,4 +280,5 @@
         updateDateTime();
     </script>
 </body>
+
 </html>
