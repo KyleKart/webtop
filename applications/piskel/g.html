@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!-- Changed the application title -->
+  <title>Piskel: Remix Edition</title>
+  <meta name="description" content="Piskel is a free online editor for animated sprites and pixel art.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="logo.png">
+  <link rel="stylesheet" type="text/css" href="css/piskel.css">
+
+  <!-- Added a custom style injection for neon accents -->
+  <style>
+    .piskel-remix-accent {
+      border: 1px solid #9d4edd !important;
+      box-shadow: 0 0 5px #9d4edd;
+    }
+    .remix-btn {
+      background-color: #e63946;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+    .remix-btn:hover {
+      background-color: #ff4d6d;
+    }
+  </style>
+</head>
+
+<body class="piskel-remix-accent">
+  <!-- Main Application Wrapper -->
+  <div id="wrapper">
+    
+    <!-- Top Header / Menu Bar -->
+    <div id="header" style="display: flex; align-items: center; justify-content: space-between;">
+      <h2>Piskel - Forked & Remixed</h2>
+      <!-- Added a brand new functional UI button -->
+      <button class="remix-btn" onclick="triggerChaosMode()">Activate Chaos Mode</button>
+    </div>
+
+    <!-- Primary Canvas and Workspace Container -->
+    <div id="main-container">
+      
+      <!-- Left Toolbar (Tools, Brushes) -->
+      <div id="toolbar" class="piskel-remix-accent">
+        <!-- Original tools load here dynamically via Piskel application scripts -->
+      </div>
+
+      <!-- Center Frame Management -->
+      <div id="frames-container">
+        <!-- Animation frames vertical list -->
+      </div>
+
+      <!-- Center Drawing Canvas Area -->
+      <div id="canvas-container">
+        <!-- Drawing board -->
+      </div>
+
+      <!-- Right Sidebar (Preview, Layers, Palettes) -->
+      <div id="right-sidebar">
+        <!-- Preview Window -->
+        <div id="preview-panel" class="piskel-remix-accent"></div>
+        
+        <!-- Layers Management -->
+        <div id="layers-panel" class="piskel-remix-accent"></div>
+        
+        <!-- Color Palettes -->
+        <div id="palettes-panel" class="piskel-remix-accent">
+          <h3>Palettes (Modified)</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Templates & Core Piskel Scripts -->
+  <div style="display:none;" id="templates-container"></div>
+  
+  <script src="js/piskel-packaged.js"></script>
+
+  <!-- Added custom JavaScript behavior for the new elements -->
+  <script>
+    function triggerChaosMode() {
+      alert("Chaos Mode Activated! (This is a placeholder for your custom canvas effects).");
+      console.log("Remix modification successfully triggered.");
+    }
+
+    // A placeholder function you can expand to alter drawing behavior
+    function injectRandomPalette() {
+      console.log("Injecting randomized color swatches...");
+    }
+    
+    window.addEventListener('DOMContentLoaded', (event) => {
+        injectRandomPalette();
+    });
+  </script>
+</body>
+</html>
