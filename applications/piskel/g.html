@@ -1,104 +1,381 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <!-- Changed the application title -->
-  <title>Piskel: Remix Edition</title>
-  <meta name="description" content="Piskel is a free online editor for animated sprites and pixel art.">
+  <title>[SYS] Piskel - Terminal Workspace</title>
+  <meta name="description" content="">
+  <meta name="author" content="Julian Descottes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="shortcut icon" href="logo.png">
-  <link rel="stylesheet" type="text/css" href="css/piskel.css">
-
-  <!-- Added a custom style injection for neon accents -->
-  <style>
-    .piskel-remix-accent {
-      border: 1px solid #9d4edd !important;
-      box-shadow: 0 0 5px #9d4edd;
-    }
-    .remix-btn {
-      background-color: #e63946;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 3px;
-    }
-    .remix-btn:hover {
-      background-color: #ff4d6d;
-    }
-  </style>
 </head>
+<body>
+  <div
+    id="loading-mask"
+    style="
+    position:fixed;
+    top:0;right:0;bottom:0;left:0;
+    background:black;
+    opacity:1;
+    text-align:center;
+    z-index : 20000;
+    transition:opacity 0.5s;
+    color:#00ff00;
+    font-family:monospace;">
+      <span style="position:relative; top:45%; font-size:18px; letter-spacing:2px;">[ LOADING SYSTEM MODULES ... ]</span>
+  </div>
+  <style type="text/css">
+  #main-wrapper {
+    margin-top: 40px;
+  }
 
-<body class="piskel-remix-accent">
-  <!-- Main Application Wrapper -->
-  <div id="wrapper">
-    
-    <!-- Top Header / Menu Bar -->
-    <div id="header" style="display: flex; align-items: center; justify-content: space-between;">
-      <h2>Piskel - Forked & Remixed</h2>
-      <!-- Added a brand new functional UI button -->
-      <button class="remix-btn" onclick="triggerChaosMode()">Activate Chaos Mode</button>
-    </div>
+  /* Modified header to look like a high-contrast industrial dashboard terminal */
+  .fake-piskelapp-header {
+    position: relative;
+    text-align: left;
+    padding-left: 15px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-family: monospace;
+    background: #111111;
+    color: #ffffff;
+    border-bottom: 2px solid #333333;
+    z-index: 100;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    <!-- Primary Canvas and Workspace Container -->
-    <div id="main-container">
-      
-      <!-- Left Toolbar (Tools, Brushes) -->
-      <div id="toolbar" class="piskel-remix-accent">
-        <!-- Original tools load here dynamically via Piskel application scripts -->
+  .piskel-name.piskel-name-saving {
+    color: #ff3333;
+    font-weight: bold;
+  }
+
+  /* Eliminated rounded corners, forced strict squared edges */
+  .new-piskel-desktop {
+    position: absolute;
+    display: flex;
+    top: 7px;
+    right: 7px;
+    height: 26px;
+    width: 26px;
+    border-radius: 0px !important; 
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    color: black;
+    background: #ffffff;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333333;
+  }
+  
+  .new-piskel-desktop:hover {
+    background: #00ff00;
+  }
+
+  /* Global theme override overrides for an Industrial/Terminal aesthetic */
+  body, .main-wrapper, .column, .toolbox-container, .sticky-section {
+    font-family: monospace !important;
+  }
+
+  .toolbox-container, .sticky-section, .button, input, select, textarea {
+    border-radius: 0px !important; /* Forced square alignment across all widgets */
+  }
+
+  .terminal-sys-log {
+    font-size: 12px;
+    color: #00ff00;
+    background: #000000;
+    padding: 2px 8px;
+    border: 1px solid #222222;
+    margin-left: 20px;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+  }
+</style>
+<div class="fake-piskelapp-header">
+  <div>
+    <strong>SYS://PISKEL_FORK</strong>
+    <span class="terminal-sys-log" id="sys-status-readout">STATUS: ONLINE</span>
+  </div>
+  <a
+    href="index.html"
+    target="_blank"
+    class="new-piskel-desktop button button-primary"
+    title="Create a new sprite"
+    rel="tooltip"
+    data-placement="left"
+    >+</a>
+  <span class="piskel-name"></span>
+</div>
+
+  <div id="main-wrapper" class="main-wrapper">
+    <div class="sticky-section left-sticky-section" id="tool-section">
+  <div class="sticky-section-wrap">
+    <div class="vertical-centerer">
+      <div class="pen-size-container size-picker-container" title="Pen size<br/>from 1 to 4 pixels" rel="tooltip" data-placement="top">
+        <div class="pen-size-option size-picker-option" data-size="1" style="border-radius:0px;"></div>
+        <div class="pen-size-option size-picker-option" data-size="2" style="border-radius:0px;"></div>
+        <div class="pen-size-option size-picker-option" data-size="3" style="border-radius:0px;"></div>
+        <div class="pen-size-option size-picker-option" data-size="4" style="border-radius:0px;"></div>
       </div>
-
-      <!-- Center Frame Management -->
-      <div id="frames-container">
-        <!-- Animation frames vertical list -->
-      </div>
-
-      <!-- Center Drawing Canvas Area -->
-      <div id="canvas-container">
-        <!-- Drawing board -->
-      </div>
-
-      <!-- Right Sidebar (Preview, Layers, Palettes) -->
-      <div id="right-sidebar">
-        <!-- Preview Window -->
-        <div id="preview-panel" class="piskel-remix-accent"></div>
-        
-        <!-- Layers Management -->
-        <div id="layers-panel" class="piskel-remix-accent"></div>
-        
-        <!-- Color Palettes -->
-        <div id="palettes-panel" class="piskel-remix-accent">
-          <h3>Palettes (Modified)</h3>
+      <ul id="tools-container" class="tools-wrapper"></ul>
+      <div class="palette-wrapper">
+        <div
+          class="tool-icon tool-color-picker"
+          data-initial-title="Primary - left mouse button"
+          rel="tooltip"
+          data-placement="right"
+        >
+          <input id="color-picker" class="color" type="text"/>
         </div>
+        <div
+          class="tool-icon tool-color-picker"
+          data-initial-title="Secondary - right mouse button"
+          rel="tooltip"
+          data-placement="right"
+        >
+          <input id="secondary-color-picker" class="secondary-color-picker color" type="text" />
+        </div>
+        <div
+          class="swap-colors-button icon-common-swapcolors-arrow-grey"
+          title="Swap colors (X)"
+          rel="tooltip"
+          data-placement="right"
+        ></div>
       </div>
-
     </div>
   </div>
 
-  <!-- Application Templates & Core Piskel Scripts -->
-  <div style="display:none;" id="templates-container"></div>
-  
-  <script src="js/piskel-packaged.js"></script>
-
-  <!-- Added custom JavaScript behavior for the new elements -->
-  <script>
-    function triggerChaosMode() {
-      alert("Chaos Mode Activated! (This is a placeholder for your custom canvas effects).");
-      console.log("Remix modification successfully triggered.");
-    }
-
-    // A placeholder function you can expand to alter drawing behavior
-    function injectRandomPalette() {
-      console.log("Injecting randomized color swatches...");
-    }
-    
-    window.addEventListener('DOMContentLoaded', (event) => {
-        injectRandomPalette();
-    });
+  <script type="text/template" id="drawingTool-item-template">
+    <li rel="tooltip" data-placement="{{tooltipposition}}" class="{{cssclass}}" data-tool-id="{{toolid}}" title="{{title}}"></li>
   </script>
-</body>
+</div>
+
+
+    <div id="column-wrapper" class="column-wrapper">
+      <div class='column left-column'>
+        <div id="preview-list-wrapper" class="preview-list-wrapper">
+  <div id="preview-list-scroller" class="preview-list-scroller">
+    <ul class="preview-list" id="preview-list"></ul>
+  </div>
+  <div class="top-overflow"></div>
+  <div class="bottom-overflow"></div>
+</div>
+      </div>
+
+      <div class='column main-column'>
+        <div id="drawing-canvas-container" class="drawing-canvas-container canvas-container">
+          <div class="canvas-background"></div>
+        </div>
+      </div>
+
+      <div class="column right-column">
+        <div id="animated-preview-container" class="preview-container">
+  <div class="canvas-container-wrapper minimap-container">
+    <div class="preview-contextual-actions">
+      <div class="preview-drop-down">
+        <div class="preview-disable-overlay" rel="tooltip" data-placement="left"></div>
+        <div class="preview-contextual-action  original-size-button" rel="tooltip" data-placement="left">1x</div>
+        <div class="preview-contextual-action  best-size-button" rel="tooltip" data-placement="left"></div>
+        <div class="preview-contextual-action  full-size-button" rel="tooltip" data-placement="left">Full</div>
+      </div>
+      <div class="preview-contextual-action  toggle-grid-button  icon-minimap-grid-white"
+        title="Toggle grid" rel="tooltip" data-placement="bottom"></div>
+      <div class="preview-contextual-action  open-popup-preview-button  icon-minimap-popup-preview-arrow-white"
+           title="Open preview in popup" rel="tooltip" data-placement="bottom"></div>
+    </div>
+
+    <div id="animated-preview-canvas-container" class="canvas-container">
+      <div class="canvas-background"></div>
+    </div>
+  </div>
+  <div>
+    <div rel="tooltip"
+         data-placement="bottom"
+         class="piskel-icon-onion preview-toggle-onion-skin"></div>
+    <span id="display-fps" class="display-fps"></span>
+    <input id="preview-fps" class="range-fps" type="range" min="0" max="24"/>
+  </div>
+</div>
+        <div class="toolbox-container layers-list-container">
+  <h3 class="toolbox-title layers-title">Layers
+    <div rel="tooltip"
+         data-placement="left"
+         class="layers-toggle-preview piskel-icon-eye"></div>
+  </h3>
+  <div class="toolbox-buttons">
+    <button data-action="add" class="button layers-button piskel-icon-plus" rel="tooltip" data-placement="top" ></button>
+    <button data-action="up" class="button layers-button piskel-icon-arrow-up-fat" title="Move layer up" rel="tooltip" data-placement="top" ></button>
+    <button data-action="down" class="button layers-button piskel-icon-arrow-down-fat" title="Move layer down" rel="tooltip" data-placement="top" ></button>
+    <button data-action="edit" class="button layers-button piskel-icon-pencil" title="Edit layer name" rel="tooltip" data-placement="top"></button>
+    <button data-action="merge" class="button layers-button piskel-icon-merge" title="Merge with layer below" rel="tooltip" data-placement="top" ></button>
+    <button data-action="delete" class="button layers-button piskel-icon-close" title="Delete selected layer" rel="tooltip" data-placement="top" ></button>
+  </div>
+
+  <ul class="layers-list"></ul>
+
+  <script type="text/template" id="layer-item-template">
+    <li class="layer-item {{isselected:current-layer-item}}" data-layer-index="{{layerindex}}" style="border-radius:0px;">
+        <span class="layer-name" data-placement="top">{{layername}}</span>
+        <span class="layer-item-opacity" title="Layer opacity ({{opacity}})" rel="tooltip" data-placement="top">&#945;</span>
+    </li>
+  </script>
+    
+  <script type="text/template" id="layer-name-input-template">
+    <input class="textfield layer-name-input" type="text" autocomplete="off" value="{{layername}}" style="border-radius:0px;" />
+  </script>
+</div>
+
+        <div class="toolbox-container transformations-container">
+  <h3 class="toolbox-title transformations-title">
+    Transform
+    <span class="transformations-show-more-link piskel-icon-plus" title="View more tools" rel="tooltip" data-placement="top"></span>
+  </h3>
+  <ul class="tools-wrapper"></ul>
+</div>
+        <div class="toolbox-container palettes-list-container">
+  <h3 class="toolbox-title palettes-title">Palettes</h3>
+  <div class="toolbox-buttons">
+    <button class="button palettes-list-button create-palette-button piskel-icon-plus" data-action="add" title="Create a new palette" rel="tooltip" data-placement="top" ></button>
+    <select class="button palettes-list-select" style="border-radius:0px;"></select>
+    <button class="button palettes-list-button edit-palette-button  piskel-icon-pencil" data-action="edit" title="Manage this palette" rel="tooltip" data-placement="top"></button>
+  </div>
+  <div class="palettes-list-colors"></div>
+  <script type="text/template" id="palette-color-template">
+    <div class="palettes-list-color" data-color="{{color}}" data-color-index="{{index}}" title="{{title}}" style="border-radius:0px;">
+      <div data-color="{{color}}" style="background:{{color}}; border-radius:0px;"></div>
+    </div>
+  </script>
+</div>
+        <div class="pull-bottom cursor-coordinates"></div>
+      </div>
+    </div>
+
+    <div id="application-action-section" data-pskl-controller="settings" class="sticky-section right-sticky-section">
+      <div class="sticky-section-wrap">
+        <div class="vertical-centerer">
+  <div data-setting="user" class="tool-icon icon-settings-gear-white" title="<span class='highlight'>PREFERENCES</span></br>" rel="tooltip" data-placement="left"></div>
+  <div data-setting="resize" class="tool-icon  icon-settings-resize-white" title="<span class='highlight'>RESIZE</span></br>Resize the drawing area" rel="tooltip" data-placement="left"></div>
+  <div data-setting="save" class="tool-icon  icon-settings-save-white" title="<span class='highlight'>SAVE</span></br>Save to your gallery, save locally" rel="tooltip" data-placement="left" ></div>
+  <div data-setting="export" class="tool-icon  icon-settings-export-white" title="<span class='highlight'>EXPORT</span></br>Export layout options" rel="tooltip" data-placement="left"></div>
+  <div data-setting="import" class="tool-icon  icon-settings-open-folder-white" title="<span class='highlight'>IMPORT</span></br>Import raw image payload" rel="tooltip" data-placement="left"></div>
+</div>
+        <div class="drawer vertical-centerer">
+          <div class="drawer-content" id="drawer-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dialog-container-wrapper">
+    <div id="dialog-container"></div>
+  </div>
+
+  <div style="display:none">
+  <script type="text/template" id="progress-bar-template">
+    <div class="progress-bar-container">
+      <div class="progress-bar-name">{{name}}</div>
+      <div class="progress-bar-item progress-bar" style="border-radius:0px;"></div>
+      <div class="progress-bar-item progress-bar-status">{{status}}%</div>
+    </div>
+  </script>
+  </div>
+
+  <script type="text/javascript">
+    (function () {
+  var version = '-2025-05-26-10-16';
+  var versionHasNotBeenReplaced = version.indexOf('@@') === 0;
+  if (versionHasNotBeenReplaced)  {
+    version = '';
+  }
+
+  if (!window.piskelReadyCallbacks) {
+    window.piskelReadyCallbacks = [];
+  }
+
+  window._onPiskelReady = function () {
+    var loadingMask = document.getElementById('loading-mask');
+    loadingMask.style.opacity = 0;
+    window.setTimeout(function () {loadingMask.parentNode.removeChild(loadingMask);}, 600);
+    pskl.app.init();
+    pskl._releaseVersion = '0.15.2-SNAPSHOT';
+    
+    // Injected terminal status update hook when Piskel finishes internal initialization
+    var readout = document.getElementById('sys-status-readout');
+    if(readout) readout.innerText = "STATUS: LIVE_SNAPSHOT_0.15.2";
+
+    delete window.pskl_exports;
+    delete window.loadDebugScripts;
+    delete window.done;
+
+    for (var i = 0; i < window.piskelReadyCallbacks.length; i++) {
+      window.piskelReadyCallbacks[i]();
+    }
+  };
+
+  var prefixPath = function (path) {
+    if (window.pskl && window.pskl.appEngineToken_) {
+      return '../' + path;
+    } else {
+      return path;
+    }
+  };
+
+  var loadScript = function (src, callback) {
+    src = prefixPath(src);
+    var script = window.document.createElement('script');
+    script.setAttribute('src',src);
+    script.setAttribute('onload',callback);
+    window.document.body.appendChild(script);
+  };
+
+  var loadStyle = function (src) {
+    src = prefixPath(src);
+    var link = document.createElement('link');
+    link.setAttribute('href', src);
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('type', 'text/css');
+    document.head.appendChild(link);
+  };
+
+  if (window.location.href.indexOf('debug') != -1) {
+    window.pskl_exports = {};
+    var scriptIndex = 0;
+    window.loadNextScript = function () {
+      if (scriptIndex == window.pskl_exports.scripts.length) {
+        window._onPiskelReady();
+      } else {
+        loadScript(window.pskl_exports.scripts[scriptIndex], 'loadNextScript()');
+        scriptIndex ++;
+      }
+    };
+    loadScript('piskel-script-list.js', 'loadNextScript()');
+
+    var styles;
+    window.loadStyles = function () {
+      styles = window.pskl_exports.styles;
+      for (var i = 0 ; i < styles.length ; i++) {
+        loadStyle(styles[i]);
+      }
+    };
+    loadScript('piskel-style-list.js', 'loadStyles()');
+  } else {
+    var script;
+    if (window.location.href.indexOf('pack') != -1) {
+      script = 'js/piskel-packaged' + version + '.js';
+    } else {
+      script = 'js/piskel-packaged-min' + version + '.js';
+    }
+
+    loadStyle('css/piskel-style-packaged' + version + '.css');
+    loadScript(script, '_onPiskelReady()');
+  }
+})();
+  </script>
+  </body>
 </html>
