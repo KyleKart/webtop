@@ -380,41 +380,50 @@
 
   <script type="text/javascript">
 (function() {
-  // Check if native Piskel core successfully boots after a small window window
+  // Wait to see if Piskel actually renders its workspace properly
   setTimeout(function() {
-    if (window.pskl && window.pskl.app) {
-      console.log("[SYS] Native Piskel environment detected. Custom script idling.");
+    var nativeCanvasBackground = document.querySelector('#drawing-canvas-container .canvas-background');
+    
+    // Strict Verification: If the native application successfully booted, 
+    // it will have injected style or child elements into the canvas background.
+    // If it's completely empty or missing components, the native engine failed.
+    if (nativeCanvasBackground && nativeCanvasBackground.children.length > 0) {
+      console.log("[SYS] Native Piskel core verified operational. Custom script idling.");
       return;
     }
     
-    // Otherwise, boot our lightweight industrial fallback grid system
+    // Forcefully override the broken native state and mount the working matrix canvas
+    console.warn("[SYS] Piskel core structural breakdown detected (Components Undefined). Forcing custom canvas override...");
     launchCustomMatrixEngine();
-  }, 1200);
+  }, 1500); // 1.5 seconds gives the native scripts plenty of time to try initializing
 
   function launchCustomMatrixEngine() {
-    console.log("[SYS] Initiating Fallback Pixel Engine...");
+    console.log("[SYS] Initiating Standalone Pixel Engine...");
     
-    // Clean up the bootloader mask
+    // Force clear the loading mask if it got stuck during the native crash
     var mask = document.getElementById('loading-mask');
     if (mask) {
       var loadText = mask.querySelector('span');
-      if (loadText) loadText.innerText = "[ INJECTING STANDALONE CANVAS... ]";
+      if (loadText) loadText.innerText = "[ OVERRIDING SYSTEM ERROR: MOUNTING MATRIX... ]";
       setTimeout(function() {
         mask.style.opacity = 0;
         setTimeout(function() { mask.remove(); }, 500);
       }, 400);
     }
 
-    // Update your custom terminal dashboard system readout
+    // Update your industrial terminal system readout
     var statusReadout = document.getElementById('sys-status-readout');
-    if (statusReadout) statusReadout.innerText = "STATUS: FALLBACK_MATRIX_LIVE";
+    if (statusReadout) {
+      statusReadout.innerText = "STATUS: OVERRIDE_MATRIX_LIVE";
+      statusReadout.style.color = "#ff3333"; // Alert styling for manual bypass mode
+    }
 
-    // Setup the workspace target container
+    // Capture workspace container
     var canvasContainer = document.getElementById('drawing-canvas-container');
     if (!canvasContainer) return;
-    canvasContainer.innerHTML = ''; // Wipe missing framework fragments
+    canvasContainer.innerHTML = ''; // Wipe out any stale, non-functional framework shells
 
-    // Create a square drawing canvas context
+    // Create the square drawing canvas element
     var canvas = document.createElement('canvas');
     canvas.id = 'fallback-matrix-canvas';
     canvas.width = 512;
@@ -426,53 +435,34 @@
     canvasContainer.appendChild(canvas);
 
     var ctx = canvas.getContext('2d');
-    var matrixResolution = 32; // 32x32 retro matrix grid size
+    var matrixResolution = 32; // 32x32 pixel matrix
     var pixelSize = canvas.width / matrixResolution;
     
-    // Initialize blank transparency grid map
+    // Initialize standard blank matrix map
     var pixelMap = Array(matrixResolution).fill(null).map(function() {
       return Array(matrixResolution).fill(null);
     });
 
     var isPainting = false;
-    var currentMode = 'pencil'; // 'pencil' or 'eraser'
+    var currentMode = 'pencil'; 
 
-    // Attempt to hijack template buttons for interactive script controls
-    var drawBtn = document.getElementById('tool-pencil');
-    var eraseBtn = document.getElementById('tool-eraser');
-    var clearBtn = document.getElementById('clear-canvas-btn');
+    // Wire into the color input that's natively present in your HTML
     var colorInput = document.getElementById('color-picker');
 
-    // Quick helper to switch active modes visually
-    function setMode(mode) {
-      currentMode = mode;
-      if (drawBtn && eraseBtn) {
-        if (mode === 'pencil') {
-          drawBtn.style.background = '#222'; drawBtn.style.color = '#00ff00';
-          eraseBtn.style.background = '#111'; eraseBtn.style.color = '#aaa';
-        } else {
-          eraseBtn.style.background = '#222'; eraseBtn.style.color = '#ff3333';
-          drawBtn.style.background = '#111'; drawBtn.style.color = '#aaa';
-        }
-      }
-    }
-
-    if (drawBtn) drawBtn.onclick = function() { setMode('pencil'); };
-    if (eraseBtn) eraseBtn.onclick = function() { setMode('eraser'); };
+    // Setup clear canvas control logic
+    var clearBtn = document.getElementById('clear-canvas-btn');
     if (clearBtn) {
       clearBtn.onclick = function() {
-        if(confirm("[SYS] Clear current active layout buffer?")) {
-          pixelMap = Array(matrixResolution).fill(null).map(function() { return Array(matrixResolution).fill(null); });
-          renderFrame();
-        }
+        pixelMap = Array(matrixResolution).fill(null).map(function() { return Array(matrixResolution).fill(null); });
+        renderFrame();
       };
     }
 
-    // Main Renderer Loop
+    // Main Layout Renderer Loop
     function renderFrame() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw active pixels from memory grid
+      // Render saved structural elements from matrix memory
       for (var r = 0; r < matrixResolution; r++) {
         for (var c = 0; c < matrixResolution; c++) {
           if (pixelMap[r][c]) {
@@ -482,7 +472,7 @@
         }
       }
 
-      // Draw faint industrial grid overlays
+      // Draw faint industrial grid lines
       ctx.strokeStyle = '#252525';
       ctx.lineWidth = 1;
       for (var i = 0; i <= matrixResolution; i++) {
@@ -498,7 +488,7 @@
       }
     }
 
-    // Plot individual coordinate modifications
+    // Plot grid tracking updates
     function plotPixel(e) {
       var rect = canvas.getBoundingClientRect();
       var mouseX = e.clientX - rect.left;
@@ -510,22 +500,22 @@
       if (col >= 0 && col < matrixResolution && row >= 0 && row < matrixResolution) {
         if (currentMode === 'pencil') {
           var targetColor = '#00ff00';
+          // Pull value dynamically from your index.html picker layout element
           if (colorInput) targetColor = colorInput.value || '#00ff00';
           pixelMap[row][col] = targetColor;
         } else {
-          pixelMap[row][col] = null; // transparent / wipe
+          pixelMap[row][col] = null;
         }
         renderFrame();
       }
     }
 
-    // Interactive mouse listeners
+    // Direct mouse bindings
     canvas.addEventListener('mousedown', function(e) { isPainting = true; plotPixel(e); });
     canvas.addEventListener('mousemove', function(e) { if (isPainting) plotPixel(e); });
     window.addEventListener('mouseup', function() { isPainting = false; });
 
-    // Initial canvas system paint sequence
-    setMode('pencil');
+    // Initial paint run
     renderFrame();
   }
 })();
