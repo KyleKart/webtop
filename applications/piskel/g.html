@@ -377,5 +377,158 @@
   }
 })();
   </script>
+
+  <script type="text/javascript">
+(function() {
+  // Check if native Piskel core successfully boots after a small window window
+  setTimeout(function() {
+    if (window.pskl && window.pskl.app) {
+      console.log("[SYS] Native Piskel environment detected. Custom script idling.");
+      return;
+    }
+    
+    // Otherwise, boot our lightweight industrial fallback grid system
+    launchCustomMatrixEngine();
+  }, 1200);
+
+  function launchCustomMatrixEngine() {
+    console.log("[SYS] Initiating Fallback Pixel Engine...");
+    
+    // Clean up the bootloader mask
+    var mask = document.getElementById('loading-mask');
+    if (mask) {
+      var loadText = mask.querySelector('span');
+      if (loadText) loadText.innerText = "[ INJECTING STANDALONE CANVAS... ]";
+      setTimeout(function() {
+        mask.style.opacity = 0;
+        setTimeout(function() { mask.remove(); }, 500);
+      }, 400);
+    }
+
+    // Update your custom terminal dashboard system readout
+    var statusReadout = document.getElementById('sys-status-readout');
+    if (statusReadout) statusReadout.innerText = "STATUS: FALLBACK_MATRIX_LIVE";
+
+    // Setup the workspace target container
+    var canvasContainer = document.getElementById('drawing-canvas-container');
+    if (!canvasContainer) return;
+    canvasContainer.innerHTML = ''; // Wipe missing framework fragments
+
+    // Create a square drawing canvas context
+    var canvas = document.createElement('canvas');
+    canvas.id = 'fallback-matrix-canvas';
+    canvas.width = 512;
+    canvas.height = 512;
+    canvas.style.backgroundColor = '#151515';
+    canvas.style.border = '2px solid #333333';
+    canvas.style.cursor = 'crosshair';
+    canvas.style.imageRendering = 'pixelated';
+    canvasContainer.appendChild(canvas);
+
+    var ctx = canvas.getContext('2d');
+    var matrixResolution = 32; // 32x32 retro matrix grid size
+    var pixelSize = canvas.width / matrixResolution;
+    
+    // Initialize blank transparency grid map
+    var pixelMap = Array(matrixResolution).fill(null).map(function() {
+      return Array(matrixResolution).fill(null);
+    });
+
+    var isPainting = false;
+    var currentMode = 'pencil'; // 'pencil' or 'eraser'
+
+    // Attempt to hijack template buttons for interactive script controls
+    var drawBtn = document.getElementById('tool-pencil');
+    var eraseBtn = document.getElementById('tool-eraser');
+    var clearBtn = document.getElementById('clear-canvas-btn');
+    var colorInput = document.getElementById('color-picker');
+
+    // Quick helper to switch active modes visually
+    function setMode(mode) {
+      currentMode = mode;
+      if (drawBtn && eraseBtn) {
+        if (mode === 'pencil') {
+          drawBtn.style.background = '#222'; drawBtn.style.color = '#00ff00';
+          eraseBtn.style.background = '#111'; eraseBtn.style.color = '#aaa';
+        } else {
+          eraseBtn.style.background = '#222'; eraseBtn.style.color = '#ff3333';
+          drawBtn.style.background = '#111'; drawBtn.style.color = '#aaa';
+        }
+      }
+    }
+
+    if (drawBtn) drawBtn.onclick = function() { setMode('pencil'); };
+    if (eraseBtn) eraseBtn.onclick = function() { setMode('eraser'); };
+    if (clearBtn) {
+      clearBtn.onclick = function() {
+        if(confirm("[SYS] Clear current active layout buffer?")) {
+          pixelMap = Array(matrixResolution).fill(null).map(function() { return Array(matrixResolution).fill(null); });
+          renderFrame();
+        }
+      };
+    }
+
+    // Main Renderer Loop
+    function renderFrame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw active pixels from memory grid
+      for (var r = 0; r < matrixResolution; r++) {
+        for (var c = 0; c < matrixResolution; c++) {
+          if (pixelMap[r][c]) {
+            ctx.fillStyle = pixelMap[r][c];
+            ctx.fillRect(c * pixelSize, r * pixelSize, pixelSize, pixelSize);
+          }
+        }
+      }
+
+      // Draw faint industrial grid overlays
+      ctx.strokeStyle = '#252525';
+      ctx.lineWidth = 1;
+      for (var i = 0; i <= matrixResolution; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * pixelSize, 0);
+        ctx.lineTo(i * pixelSize, canvas.height);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, i * pixelSize);
+        ctx.lineTo(canvas.width, i * pixelSize);
+        ctx.stroke();
+      }
+    }
+
+    // Plot individual coordinate modifications
+    function plotPixel(e) {
+      var rect = canvas.getBoundingClientRect();
+      var mouseX = e.clientX - rect.left;
+      var mouseY = e.clientY - rect.top;
+
+      var col = Math.floor(mouseX / (rect.width / matrixResolution));
+      var row = Math.floor(mouseY / (rect.height / matrixResolution));
+
+      if (col >= 0 && col < matrixResolution && row >= 0 && row < matrixResolution) {
+        if (currentMode === 'pencil') {
+          var targetColor = '#00ff00';
+          if (colorInput) targetColor = colorInput.value || '#00ff00';
+          pixelMap[row][col] = targetColor;
+        } else {
+          pixelMap[row][col] = null; // transparent / wipe
+        }
+        renderFrame();
+      }
+    }
+
+    // Interactive mouse listeners
+    canvas.addEventListener('mousedown', function(e) { isPainting = true; plotPixel(e); });
+    canvas.addEventListener('mousemove', function(e) { if (isPainting) plotPixel(e); });
+    window.addEventListener('mouseup', function() { isPainting = false; });
+
+    // Initial canvas system paint sequence
+    setMode('pencil');
+    renderFrame();
+  }
+})();
+</script>
   </body>
 </html>
